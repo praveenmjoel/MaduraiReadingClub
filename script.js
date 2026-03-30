@@ -33,9 +33,9 @@ document.body.classList.add('js-ready');
 
 const CURRENT_BOOK = {
   show   : true,
-  title  : 'The God of Small Things',
-  author : 'Arundhati Roy',
-  date   : '12 Apr 2025',
+  title  : 'Homo Deus',
+  author : 'Yuval Noah Harari',
+  date   : '5 Apr 2026',
 };
 
 
