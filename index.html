@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madurai Reading Club — Read. Discuss. Connect.</title>
+  <meta name="description" content="A community for deep, intellectual conversations around books. Based in Madurai, Tamil Nadu." />
+
+  <!-- Google Fonts: Cormorant Garamond (display) + Playfair Display (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">
+        <span class="nav-logo-line1">Madurai</span>
+        <span class="nav-logo-line2">Reading Club</span>
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu" role="list">
+        <li><a href="#home"        class="nav-link">Home</a></li>
+        <li><a href="#about"       class="nav-link">About</a></li>
+        <li><a href="#book-club"   class="nav-link">Book Club</a></li>
+        <li><a href="#join"        class="nav-link">Join</a></li>
+        <li><a href="#past-books"  class="nav-link">Past Books</a></li>
+        <li><a href="#bookmarks"   class="nav-link">Bookmarks</a></li>
+        <li><a href="#author-meet" class="nav-link">Author Meet</a></li>
+        <li><a href="#contact"     class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO — "I'd rather be reading."
+       ============================================================ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <!-- Decorative lines -->
+    <div class="hero-deco-lines">
+      <div class="deco-line"></div>
+      <div class="deco-line"></div>
+      <div class="deco-line"></div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Madurai Reading Club</p>
+      <h1 class="hero-headline">
+        I'd rather<br>
+        <em>be reading.</em>
+      </h1>
+      <p class="hero-subline">A community for those who believe books change lives.</p>
+      <a href="#about" class="hero-cta">
+        <span>Discover More</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT THE CLUB
+       ============================================================ -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">To make Madurai<br>read like never before.</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text fade-up">
+          <p class="about-lead">We didn't start a book club.<br>We started a movement.</p>
+          <p>Born in January 2025, the Madurai Reading Club began with a simple belief — that in a city as ancient and intellectually rich as Madurai, there was a hunger for deeper conversation. For books that challenge. For ideas that linger.</p>
+          <p>What started as a small gathering of curious minds has grown into a vibrant community of readers who meet, discuss, debate, and discover — one book at a time.</p>
+          <p>We are not a lecture series. We are not a library. We are a living conversation — shaped by every voice that joins us.</p>
+        </div>
+
+        <div class="about-aside fade-up delay-1">
+          <div class="about-stat">
+            <span class="stat-number">Jan 2025</span>
+            <span class="stat-label">Founded</span>
+          </div>
+          <div class="about-quote">
+            <blockquote>
+              "To build a community<br>for deep, intellectual<br>conversations."
+            </blockquote>
+          </div>
+          <div class="about-stat">
+            <span class="stat-number">Fortnightly</span>
+            <span class="stat-label">Book Discussions</span>
+          </div>
+          <div class="about-stat">
+            <span class="stat-number">Madurai</span>
+            <span class="stat-label">Tamil Nadu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FORTNIGHTLY BOOK DISCUSSION — Flagship Section
+       ============================================================ -->
+  <section class="section book-club" id="book-club">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="section-header fade-up">
+        <span class="section-label">The Heart of It All</span>
+        <h2 class="section-title">The Fortnightly<br>Book Discussion.</h2>
+        <p class="section-intro">This is not a book report.<br>This is where ideas come alive.</p>
+      </div>
+
+      <!-- How It Works -->
+      <div class="how-it-works fade-up">
+        <h3 class="subsection-title">How It Works</h3>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-body">
+              <h4>Vote</h4>
+              <p>Members choose one book from five curated options. Democratic, community-driven, and always surprising.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-body">
+              <h4>Read</h4>
+              <p>Two weeks to immerse yourself. Read deeply. Mark pages. Let questions form. Let ideas brew.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-body">
+              <h4>Discuss</h4>
+              <p>Every alternate Sunday, we gather for rich, layered conversation — not summaries, but explorations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Experience -->
+      <div class="experience">
+        <div class="experience-text fade-up">
+          <h3 class="subsection-title">The Experience</h3>
+          <p>Our discussions are designed to go beyond the surface. We explore themes, dissect ideas, share personal reflections, and challenge each other's readings with curiosity — not debate.</p>
+          <p>Sessions are alive and interactive — with videos that bring context, <strong>Kahoot quizzes</strong> that spark friendly competition, and live <strong>polls</strong> that capture the room's pulse.</p>
+          <p>After an hour of deep discussion, we unwind over <strong>networking and high tea</strong> — because the best conversations often happen in the in-between moments.</p>
+          <p>And every attendee leaves with something tangible: a <strong>beautiful, custom-designed bookmark</strong> — a small piece of the session to carry home.</p>
+        </div>
+
+        <div class="experience-details fade-up delay-1">
+          <div class="detail-row">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <div class="detail-text">
+              <span class="detail-label">Venue</span>
+              <span class="detail-value">Knowledge Hive, Anna Nagar, Madurai</span>
+              <span class="detail-note">Our proud patron &amp; home</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+            </div>
+            <div class="detail-text">
+              <span class="detail-label">When</span>
+              <span class="detail-value">Alternate Sundays</span>
+              <span class="detail-note">Every two weeks</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div class="detail-text">
+              <span class="detail-label">Format</span>
+              <span class="detail-value">1-Hour Discussion</span>
+              <span class="detail-note">Followed by networking &amp; high tea</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+              </svg>
+            </div>
+            <div class="detail-text">
+              <span class="detail-label">Interactive</span>
+              <span class="detail-value">Videos · Kahoot · Polls</span>
+              <span class="detail-note">Engaging, never passive</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M19 3H5a2 2 0 0 0-2 2v16l4-3 3 3 3-3 4 3V5a2 2 0 0 0-2-2z"/>
+              </svg>
+            </div>
+            <div class="detail-text">
+              <span class="detail-label">Keepsake</span>
+              <span class="detail-value">Custom Bookmark</span>
+              <span class="detail-note">Designed for every session</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       JOIN THE COMMUNITY
+       ============================================================ -->
+  <section class="section join" id="join">
+    <div class="container">
+      <div class="join-inner fade-up">
+        <span class="section-label">Open Doors</span>
+        <h2 class="section-title">Join the<br>Community.</h2>
+
+        <div class="join-values">
+          <div class="value-card">
+            <div class="value-glyph">∞</div>
+            <p>Open to everyone — regardless of how much you've read, or what you read.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-glyph">♡</div>
+            <p>One rule only: <em>Be respectful.</em> Of books, of ideas, of each other.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-glyph">✦</div>
+            <p>No membership fee. This is a community, not a subscription.</p>
+          </div>
+        </div>
+
+        <p class="join-note">Run entirely by passionate individuals who love books and believe in the power of conversation.</p>
+
+        <div class="join-form-wrap">
+          <div class="join-form-header">
+            <h3>Ready to join?</h3>
+            <p>Fill in the form below and we'll be in touch.</p>
+          </div>
+          <!--
+            INSTRUCTIONS: Replace the src below with your actual Google Form embed URL.
+            In Google Forms → Send → Embed → Copy the src URL from the <iframe> tag.
+          -->
+          <div class="form-container">
+            <iframe
+              class="join-form"
+              src="about:blank"
+              data-src="https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/viewform?embedded=true"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="Join Madurai Reading Club">
+            </iframe>
+            <div class="form-placeholder" id="formPlaceholder">
+              <div class="form-placeholder-inner">
+                <div class="form-placeholder-icon">✦</div>
+                <h4>Google Form Placeholder</h4>
+                <p>Replace the <code>data-src</code> attribute in the <code>&lt;iframe&gt;</code> inside <code>index.html</code> with your Google Form embed URL to activate this form.</p>
+                <a href="https://docs.google.com/forms" target="_blank" rel="noopener" class="form-placeholder-link">Open Google Forms →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PAST DISCUSSIONS — Book Cover Gallery
+       ============================================================ -->
+  <section class="section gallery-section" id="past-books">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">The Journey</span>
+        <h2 class="section-title">Past Discussions.</h2>
+        <p class="section-intro">Every book we've read together. Every conversation we've had.</p>
+      </div>
+
+      <!--
+        HOW TO ADD YOUR BOOK COVERS:
+          1. Create a folder called  images/books/  next to index.html
+          2. Place your book cover files inside it (JPG / PNG / WEBP)
+          3. Open script.js and add the filenames to GALLERY_CONFIG.books.files
+             e.g.  files: ['sapiens.jpg', 'atomic-habits.jpg', 'alchemist.jpg']
+        The gallery will automatically shuffle, cycle and crossfade them.
+      -->
+      <div class="masonry-gallery fade-up" id="pastBooksGallery">
+        <!-- Slots are generated by script.js →  GalleryCycler -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BOOKMARKS GALLERY
+       ============================================================ -->
+  <section class="section gallery-section bookmarks-section" id="bookmarks">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Crafted with Care</span>
+        <h2 class="section-title">Our Bookmarks.</h2>
+        <p class="section-intro">Every session leaves you with a piece of it — beautifully designed, one of a kind.</p>
+      </div>
+
+      <!--
+        HOW TO ADD YOUR BOOKMARK IMAGES — two options:
+
+        OPTION A (automatic — recommended):
+          1. Create folder  images/bookmarks/  next to index.html
+          2. Place your wide-format bookmark images inside (JPG / PNG / WEBP)
+          3. Create  images/bookmarks/manifest.json  with just:
+               ["session-01.jpg", "session-02.jpg", "session-03.jpg"]
+             The gallery will discover and cycle them automatically.
+
+        OPTION B (manual fallback):
+          Add filenames to GALLERY_CONFIG.bookmarks.files in script.js.
+
+        Layout: interlocking collage — wide items (span 2 cols) alternate with
+        narrow items (span 1 col) to create a brick-wall offset pattern.
+        Aspect ratio matches the ~4.3:1 panoramic bookmark format.
+      -->
+      <div class="collage-gallery fade-up" id="bookmarksGallery">
+        <!-- Slots are generated by script.js → GalleryCycler (collage mode) -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       AUTHOR MEET
+       ============================================================ -->
+  <section class="section author-meet" id="author-meet">
+    <div class="container">
+      <div class="author-inner fade-up">
+        <span class="section-label">An Invitation</span>
+        <h2 class="section-title">Meet the Author.</h2>
+
+        <div class="author-content">
+          <p class="author-lead">Are you a published author?<br>We'd love to have you.</p>
+
+          <p class="author-body">The Madurai Reading Club believes the most powerful literary experience is when readers get to speak directly with the mind behind the words. We invite published authors to engage with our community — for an evening of genuine, unhurried conversation.</p>
+
+          <div class="author-terms">
+            <div class="term-row">
+              <span class="term-check">✓</span>
+              <p>Open to all published authors — fiction, non-fiction, poetry, regional literature, and beyond.</p>
+            </div>
+            <div class="term-row">
+              <span class="term-check">✓</span>
+              <p>Community-run event — no fee charged to attendees, and no speaker fee offered. Pure literary exchange.</p>
+            </div>
+            <div class="term-row">
+              <span class="term-check">✓</span>
+              <p>An authentic, intimate gathering of readers who are genuinely curious about your work and your world.</p>
+            </div>
+          </div>
+
+          <div class="author-cta-block">
+            <p class="author-cta-label">Interested? Reach out to us.</p>
+            <a href="mailto:praveen@khive.in" class="author-email-link">
+              praveen@khive.in
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Find Us</span>
+        <h2 class="section-title">Come Visit.</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info fade-up">
+          <div class="contact-block">
+            <span class="contact-label">Address</span>
+            <address>
+              Knowledge Hive<br>
+              First Floor, 23 HIG, 80 Feet Rd<br>
+              Above Titan Showroom<br>
+              New LIG Colony, Anna Nagar<br>
+              Madurai, Tamil Nadu 625020
+            </address>
+          </div>
+          <div class="contact-block">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+919150377955" class="contact-value">+91 91503 77955</a>
+          </div>
+          <div class="contact-block">
+            <span class="contact-label">Email</span>
+            <a href="mailto:praveen@khive.in" class="contact-value">praveen@khive.in</a>
+          </div>
+          <div class="contact-block">
+            <span class="contact-label">Sessions</span>
+            <span class="contact-value">Alternate Sundays</span>
+          </div>
+        </div>
+
+        <div class="contact-map fade-up delay-1">
+          <!--
+            INSTRUCTIONS: Replace the src below with the actual Google Maps embed URL for Knowledge Hive.
+            Go to Google Maps → search "Knowledge Hive Anna Nagar Madurai" → Share → Embed a map → Copy src.
+          -->
+          <div class="map-placeholder">
+            <div class="map-placeholder-inner">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              <p>Knowledge Hive<br><em>Anna Nagar, Madurai</em></p>
+              <a href="https://maps.google.com?q=Anna+Nagar+Madurai+Tamil+Nadu" target="_blank" rel="noopener" class="map-link">Open in Google Maps →</a>
+              <span class="map-note">Replace this placeholder with a Google Maps iframe embed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-name">Madurai Reading Club</span>
+          <p class="footer-tagline">To make Madurai read like never before.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#about">About</a>
+          <a href="#book-club">Book Club</a>
+          <a href="#join">Join</a>
+          <a href="#past-books">Past Books</a>
+          <a href="#bookmarks">Bookmarks</a>
+          <a href="#author-meet">Author Meet</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Madurai Reading Club &mdash; A community built on curiosity.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Lightbox for gallery -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-frame">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
