@@ -4,19 +4,39 @@
 
    CONTENTS
    ────────
-   1.  GALLERY CONFIGURATION  ← the only section you need to edit
-   2.  Manifest loader        ← auto-reads images/{folder}/manifest.json
-   3.  GalleryCycler class    ← builds & animates both galleries
-   4.  Navigation             ← scroll state + active link tracking
+   0.  CURRENT BOOK  ← ★ UPDATE THIS EVERY TWO WEEKS ★
+   1.  GALLERY CONFIGURATION
+   2.  Manifest loader
+   3.  GalleryCycler class
+   4.  Navigation
    5.  Mobile hamburger menu
    6.  Scroll-triggered fade-in (IntersectionObserver)
    7.  Hero parallax
    8.  Lightbox
    9.  Google Form iframe activation
    10. Smooth anchor scroll
+   11. Now-Reading ribbon
    ============================================================= */
 
 'use strict';
+
+// Mark body so CSS fade-up animations only activate when JS is running
+document.body.classList.add('js-ready');
+
+
+/* ╔═══════════════════════════════════════════════════════════╗
+   ║  0.  CURRENT BOOK  —  ★ UPDATE THIS EVERY TWO WEEKS ★   ║
+   ╚═══════════════════════════════════════════════════════════╝
+   Change title, author, and date below.
+   Date format: "12 Apr 2025"  or  "April 12, 2025"  — your choice.
+   Set  show: false  to hide the ribbon without deleting anything.  */
+
+const CURRENT_BOOK = {
+  show   : true,
+  title  : 'The God of Small Things',
+  author : 'Arundhati Roy',
+  date   : '12 Apr 2025',
+};
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -520,15 +540,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
    ─────────────────────────────────────────────────────────────
    1. Try to load manifest.json from each image folder.
    2. Fall back to the files[] arrays in GALLERY_CONFIG.
-   3. Build each gallery, then re-observe any new .fade-up elements
-      created dynamically by GalleryCycler.
+   3. Dedicated IntersectionObserver triggers collage entrance
+      animation (items-ready) when the gallery scrolls into view.
    ──────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
 
   const booksEl     = document.getElementById('pastBooksGallery');
   const bookmarksEl = document.getElementById('bookmarksGallery');
 
-  // Attempt manifest.json for both galleries simultaneously
   const [bookFiles, bmFiles] = await Promise.all([
     loadManifest(GALLERY_CONFIG.books.folder,     GALLERY_CONFIG.books.files),
     loadManifest(GALLERY_CONFIG.bookmarks.folder, GALLERY_CONFIG.bookmarks.files),
@@ -551,12 +570,52 @@ document.addEventListener('DOMContentLoaded', async () => {
       onItemClick : openLightbox,
     });
 
-    // Re-observe the bookmarks gallery container so the entrance
-    // animation fires correctly after items are rendered into the DOM
-    fadeObserver.observe(bookmarksEl);
+    // Dedicated observer: triggers the staggered item entrance animation
+    // when the collage scrolls into view (separate from the fade-up system)
+    const collageObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => bookmarksEl.classList.add('items-ready'))
+      );
+      collageObserver.disconnect();
+    }, { threshold: 0.05 });
+    collageObserver.observe(bookmarksEl);
   }
 
 });
+
+
+/* ─────────────────────────────────────────────────────────────
+   11. NOW-READING RIBBON
+   ──────────────────────────────────────────────────────────── */
+(function buildNowReading() {
+  if (!CURRENT_BOOK.show) return;
+
+  const ribbon = document.createElement('aside');
+  ribbon.className = 'now-reading';
+  ribbon.setAttribute('aria-label', 'Currently reading');
+  ribbon.innerHTML = `
+    <button class="nr-dismiss" aria-label="Dismiss">&#x2715;</button>
+    <p class="nr-eyebrow">Now Reading</p>
+    <p class="nr-title">${CURRENT_BOOK.title}</p>
+    <p class="nr-author">by ${CURRENT_BOOK.author}</p>
+    <div class="nr-divider"></div>
+    <p class="nr-date">
+      <span class="nr-date-label">Discussion</span>
+      <span>${CURRENT_BOOK.date} &nbsp;·&nbsp; 4 PM</span>
+    </p>
+  `;
+
+  document.body.appendChild(ribbon);
+
+  // Slide in after a short delay so it doesn't compete with page load
+  setTimeout(() => ribbon.classList.add('nr-visible'), 900);
+
+  ribbon.querySelector('.nr-dismiss').addEventListener('click', () => {
+    ribbon.classList.remove('nr-visible');
+    setTimeout(() => ribbon.remove(), 400);
+  });
+}());
 
 
 /* ─── Branding ───────────────────────────────────────────────── */
