@@ -1233,12 +1233,37 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 }
 .footer-links a:hover { color: var(--clr-gold); }
 
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 .footer-bottom p {
   font-size: 0.72rem;
   color: rgba(250, 247, 242, 0.2);
   letter-spacing: 0.06em;
-  text-align: center;
 }
+.footer-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(250, 247, 242, 0.28);
+  transition: color 0.3s;
+  text-decoration: none;
+}
+.footer-instagram:hover { color: var(--clr-gold); }
+
+.contact-instagram {
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+.contact-instagram:hover { color: var(--clr-gold) !important; }
 
 
 /* ═══════════════════════════════════════════════════════════════
