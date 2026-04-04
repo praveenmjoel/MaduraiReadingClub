@@ -35,7 +35,7 @@ const CURRENT_BOOK = {
   show   : true,
   title  : 'Homo Deus',
   author : 'Yuval Noah Harari',
-  date   : '5 Apr 2026',
+  date   : '12 Apr 2026',
 };
 
 
@@ -614,6 +614,41 @@ document.addEventListener('DOMContentLoaded', async () => {
   ribbon.querySelector('.nr-dismiss').addEventListener('click', () => {
     ribbon.classList.remove('nr-visible');
     setTimeout(() => ribbon.remove(), 400);
+  });
+}());
+
+
+/* ─────────────────────────────────────────────────────────────
+   12. AUTHOR MEET CARD
+   ──────────────────────────────────────────────────────────── */
+(function buildAuthorMeet() {
+  const card = document.createElement('aside');
+  card.className = 'author-meet-card';
+  card.setAttribute('aria-label', 'Upcoming Author Meet');
+  card.innerHTML = `
+    <button class="amc-dismiss" aria-label="Dismiss">&#x2715;</button>
+    <p class="amc-eyebrow">Author Meet &amp; Conversation</p>
+    <p class="amc-title">Latshmihar</p>
+    <p class="amc-sub">Celebrating <em>Koothondru Kooditru</em></p>
+    <p class="amc-award">Sahitya Akademi Yuva Puraskar Award Winner</p>
+    <div class="amc-divider"></div>
+    <p class="amc-date">
+      <span class="amc-date-label">Date &amp; Time</span>
+      <span>Sunday, 05 Apr 2026 &nbsp;·&nbsp; 4–5 PM</span>
+    </p>
+    <p class="amc-date">
+      <span class="amc-date-label">Venue</span>
+      <span>Knowledge Hive, Anna Nagar, Madurai</span>
+    </p>
+  `;
+
+  document.body.appendChild(card);
+
+  setTimeout(() => card.classList.add('amc-visible'), 1400);
+
+  card.querySelector('.amc-dismiss').addEventListener('click', () => {
+    card.classList.remove('amc-visible');
+    setTimeout(() => card.remove(), 400);
   });
 }());
 
