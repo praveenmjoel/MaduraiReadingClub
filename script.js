@@ -502,25 +502,13 @@ document.addEventListener('keydown', e => {
    9.  CUSTOM JOIN FORM — posts silently to Google Forms
    ──────────────────────────────────────────────────────────── */
 (function initJoinForm() {
-  const form          = document.getElementById('joinForm');
-  const successEl     = document.getElementById('cjfSuccess');
-  const studentToggle = document.getElementById('cjfStudentToggle');
-  const studentFields = document.getElementById('cjfStudentFields');
-  const submitBtn     = form ? form.querySelector('.cjf-submit') : null;
+  const form      = document.getElementById('joinForm');
+  const successEl = document.getElementById('cjfSuccess');
+  const submitBtn = form ? form.querySelector('.cjf-submit') : null;
 
   if (!form) return;
 
   const GF_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScyUgBQy52o3MQgrGxnrYWcRIqSyt2wqT_HOLYq5UevzsN01Q/formResponse';
-
-  // Show / hide student fields based on radio selection
-  studentToggle.addEventListener('change', e => {
-    if (e.target.value === 'Yes') {
-      studentFields.classList.add('cjf-visible');
-    } else {
-      studentFields.classList.remove('cjf-visible');
-      studentFields.querySelectorAll('input').forEach(i => i.checked = false);
-    }
-  });
 
   // Submit
   form.addEventListener('submit', async e => {
@@ -547,7 +535,7 @@ document.addEventListener('keydown', e => {
     }
 
     // Show success regardless — Google Forms silently records the submission
-    form.querySelectorAll('.cjf-grid, .cjf-field, .cjf-student-fields, .cjf-submit')
+    form.querySelectorAll('.cjf-grid, .cjf-field, .cjf-submit')
         .forEach(el => (el.style.display = 'none'));
     successEl.hidden = false;
   });

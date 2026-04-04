@@ -1541,59 +1541,62 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 
 /* ── Custom Join Form ──────────────────────────────────────── */
 .custom-join-form {
-  margin-top: 2rem;
+  padding: 2.5rem 2.75rem 3rem;
   width: 100%;
 }
 .cjf-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem 2rem;
-  margin-bottom: 1.5rem;
+  gap: 0 2.5rem;
+  margin-bottom: 0;
 }
 .cjf-field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.cjf-grid .cjf-field {
-  margin-bottom: 0;
+  margin-bottom: 2rem;
 }
 .cjf-label {
   font-family: var(--ff-body);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--clr-text-mid);
+  color: var(--clr-text-soft);
 }
 .cjf-req {
   color: var(--clr-gold);
   margin-left: 0.15em;
 }
 .cjf-input {
-  font-family: var(--ff-body);
-  font-size: 0.95rem;
+  font-family: var(--ff-display);
+  font-size: 1.05rem;
   color: var(--clr-text);
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--clr-cream-mid);
   border-radius: 0;
-  padding: 0.5rem 0;
+  padding: 0.45rem 0;
   width: 100%;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s;
   -webkit-appearance: none;
 }
 .cjf-input::placeholder {
-  color: var(--clr-text-soft);
-  font-size: 0.88rem;
+  font-family: var(--ff-display);
+  font-style: italic;
+  color: rgba(122, 106, 136, 0.45);
+  font-size: 1rem;
 }
 .cjf-input:focus {
   border-bottom-color: var(--clr-gold);
 }
+.cjf-input[type="date"] {
+  font-family: var(--ff-body);
+  font-size: 0.9rem;
+}
 .cjf-input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: pointer;
 }
 
@@ -1601,16 +1604,16 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 .cjf-radio-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  padding-top: 0.25rem;
+  gap: 0.5rem 1.75rem;
+  padding-top: 0.35rem;
 }
 .cjf-radio-label {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
   cursor: pointer;
-  font-family: var(--ff-body);
-  font-size: 0.88rem;
+  font-family: var(--ff-display);
+  font-size: 1rem;
   color: var(--clr-text-mid);
   user-select: none;
   transition: color 0.2s;
@@ -1643,43 +1646,21 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
   background: var(--clr-gold);
 }
 
-/* Student conditional section */
-.cjf-student-fields {
-  display: none;
-  padding: 1.25rem 1.5rem;
-  border-left: 2px solid rgba(196,164,74,0.2);
-  margin-bottom: 1.5rem;
-  animation: cjf-fade-in 0.3s ease;
-}
-.cjf-student-fields.cjf-visible {
-  display: block;
-}
-@keyframes cjf-fade-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.cjf-student-fields .cjf-field {
-  margin-bottom: 1.25rem;
-}
-.cjf-student-fields .cjf-field:last-child {
-  margin-bottom: 0;
-}
-
 /* Submit button */
 .cjf-submit {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   font-family: var(--ff-body);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--clr-purple-ink);
   background: var(--clr-gold);
   border: none;
   border-radius: 2px;
-  padding: 0.85rem 1.8rem;
+  padding: 0.9rem 2rem;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
   margin-top: 0.5rem;
@@ -1699,7 +1680,7 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 .cjf-success {
   margin-top: 2rem;
   text-align: center;
-  padding: 2rem;
+  padding: 2.5rem;
   border: 1px solid rgba(196,164,74,0.2);
   border-radius: 3px;
 }
@@ -1710,17 +1691,19 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 }
 .cjf-success-title {
   font-family: var(--ff-display);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: var(--clr-text);
   margin-bottom: 0.4rem;
 }
 .cjf-success-body {
   font-family: var(--ff-body);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--clr-text-soft);
+  line-height: 1.6;
 }
 @media (max-width: 640px) {
   .cjf-grid { grid-template-columns: 1fr; }
+  .custom-join-form { padding: 2rem 1.5rem 2.5rem; }
 }
 
 
