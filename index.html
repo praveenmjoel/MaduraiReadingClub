@@ -281,29 +281,85 @@
             <h3>Ready to join?</h3>
             <p>Fill in the form below and we'll be in touch.</p>
           </div>
-          <!--
-            INSTRUCTIONS: Replace the src below with your actual Google Form embed URL.
-            In Google Forms → Send → Embed → Copy the src URL from the <iframe> tag.
-          -->
-          <div class="form-container">
-            <iframe
-              class="join-form"
-              src="about:blank"
-              data-src="https://forms.gle/zKZjgPaqERax4VhWA"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
-              title="Join Madurai Reading Club">
-            </iframe>
-            <div class="form-placeholder" id="formPlaceholder">
-              <div class="form-placeholder-inner">
-                <div class="form-placeholder-icon">✦</div>
-                <h4>Google Form Placeholder</h4>
-                <p>Replace the <code>data-src</code> attribute in the <code>&lt;iframe&gt;</code> inside <code>index.html</code> with your Google Form embed URL to activate this form.</p>
-                <a href="https://docs.google.com/forms" target="_blank" rel="noopener" class="form-placeholder-link">Open Google Forms →</a>
+
+          <form class="custom-join-form" id="joinForm" novalidate>
+
+            <div class="cjf-grid">
+              <div class="cjf-field">
+                <label class="cjf-label" for="cjf-name">Name <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="text" id="cjf-name" name="entry.687177433" placeholder="Your full name" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="cjf-mobile">Mobile Number <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="tel" id="cjf-mobile" name="entry.2056487195" placeholder="+91 00000 00000" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="cjf-email">Email ID <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="email" id="cjf-email" name="entry.350432692" placeholder="you@example.com" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="cjf-dob">Date of Birth <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="date" id="cjf-dob" name="entry.240434518" required />
               </div>
             </div>
-          </div>
+
+            <div class="cjf-field">
+              <label class="cjf-label">Are you a student? <span class="cjf-req">*</span></label>
+              <div class="cjf-radio-group" id="cjfStudentToggle">
+                <label class="cjf-radio-label">
+                  <input type="radio" name="entry.2050319011" value="Yes" required />
+                  <span class="cjf-radio-custom"></span>
+                  <span>Yes</span>
+                </label>
+                <label class="cjf-radio-label">
+                  <input type="radio" name="entry.2050319011" value="No" />
+                  <span class="cjf-radio-custom"></span>
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="cjf-student-fields" id="cjfStudentFields">
+              <div class="cjf-field">
+                <label class="cjf-label">Level of Study</label>
+                <div class="cjf-radio-group">
+                  <label class="cjf-radio-label">
+                    <input type="radio" name="entry.2071127740" value="School" />
+                    <span class="cjf-radio-custom"></span>
+                    <span>School</span>
+                  </label>
+                  <label class="cjf-radio-label">
+                    <input type="radio" name="entry.2071127740" value="UG" />
+                    <span class="cjf-radio-custom"></span>
+                    <span>UG</span>
+                  </label>
+                  <label class="cjf-radio-label">
+                    <input type="radio" name="entry.2071127740" value="PG" />
+                    <span class="cjf-radio-custom"></span>
+                    <span>PG</span>
+                  </label>
+                </div>
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="cjf-institution">Institution</label>
+                <input class="cjf-input" type="text" id="cjf-institution" name="entry.979352479" placeholder="Your school or college" />
+              </div>
+            </div>
+
+            <button class="cjf-submit" type="submit">
+              <span class="cjf-submit-text">Join the Club</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="cjf-success" id="cjfSuccess" hidden>
+              <div class="cjf-success-icon">✦</div>
+              <p class="cjf-success-title">You're in.</p>
+              <p class="cjf-success-body">We'll be in touch soon. Welcome to the Madurai Reading Club.</p>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>

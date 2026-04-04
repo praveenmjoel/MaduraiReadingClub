@@ -499,24 +499,59 @@ document.addEventListener('keydown', e => {
 
 
 /* ─────────────────────────────────────────────────────────────
-   9.  GOOGLE FORM IFRAME ACTIVATION
+   9.  CUSTOM JOIN FORM — posts silently to Google Forms
    ──────────────────────────────────────────────────────────── */
-const formIframe      = document.querySelector('.join-form');
-const formPlaceholder = document.getElementById('formPlaceholder');
+(function initJoinForm() {
+  const form          = document.getElementById('joinForm');
+  const successEl     = document.getElementById('cjfSuccess');
+  const studentToggle = document.getElementById('cjfStudentToggle');
+  const studentFields = document.getElementById('cjfStudentFields');
+  const submitBtn     = form ? form.querySelector('.cjf-submit') : null;
 
-if (formIframe) {
-  const realSrc = formIframe.getAttribute('data-src') || '';
-  if (realSrc && !realSrc.includes('YOUR_FORM_ID_HERE')) {
-    const formObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        formIframe.src = realSrc;
-        if (formPlaceholder) formPlaceholder.style.display = 'none';
-        formObserver.disconnect();
-      }
-    }, { threshold: 0.1 });
-    formObserver.observe(formIframe);
-  }
-}
+  if (!form) return;
+
+  const GF_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScyUgBQy52o3MQgrGxnrYWcRIqSyt2wqT_HOLYq5UevzsN01Q/formResponse';
+
+  // Show / hide student fields based on radio selection
+  studentToggle.addEventListener('change', e => {
+    if (e.target.value === 'Yes') {
+      studentFields.classList.add('cjf-visible');
+    } else {
+      studentFields.classList.remove('cjf-visible');
+      studentFields.querySelectorAll('input').forEach(i => i.checked = false);
+    }
+  });
+
+  // Submit
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    // Basic HTML5 validation
+    if (!form.checkValidity()) {
+      form.querySelectorAll(':invalid')[0]?.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.cjf-submit-text').textContent = 'Submitting…';
+
+    try {
+      // no-cors: Google Forms accepts the POST; response is opaque — that's fine
+      await fetch(GF_ACTION, {
+        method : 'POST',
+        mode   : 'no-cors',
+        body   : new FormData(form),
+      });
+    } catch (_) {
+      // no-cors fetch throws on network errors only; a TypeError from opaque response is normal
+    }
+
+    // Show success regardless — Google Forms silently records the submission
+    form.querySelectorAll('.cjf-grid, .cjf-field, .cjf-student-fields, .cjf-submit')
+        .forEach(el => (el.style.display = 'none'));
+    successEl.hidden = false;
+  });
+}());
 
 
 /* ─────────────────────────────────────────────────────────────

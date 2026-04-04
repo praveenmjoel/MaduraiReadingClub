@@ -1539,6 +1539,191 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 }
 
 
+/* ── Custom Join Form ──────────────────────────────────────── */
+.custom-join-form {
+  margin-top: 2rem;
+  width: 100%;
+}
+.cjf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+}
+.cjf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.cjf-grid .cjf-field {
+  margin-bottom: 0;
+}
+.cjf-label {
+  font-family: var(--ff-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--clr-text-mid);
+}
+.cjf-req {
+  color: var(--clr-gold);
+  margin-left: 0.15em;
+}
+.cjf-input {
+  font-family: var(--ff-body);
+  font-size: 0.95rem;
+  color: var(--clr-text);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--clr-cream-mid);
+  border-radius: 0;
+  padding: 0.5rem 0;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.cjf-input::placeholder {
+  color: var(--clr-text-soft);
+  font-size: 0.88rem;
+}
+.cjf-input:focus {
+  border-bottom-color: var(--clr-gold);
+}
+.cjf-input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+/* Radio group */
+.cjf-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding-top: 0.25rem;
+}
+.cjf-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  font-family: var(--ff-body);
+  font-size: 0.88rem;
+  color: var(--clr-text-mid);
+  user-select: none;
+  transition: color 0.2s;
+}
+.cjf-radio-label:hover { color: var(--clr-text); }
+.cjf-radio-label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.cjf-radio-custom {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--clr-cream-mid);
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.cjf-radio-label input[type="radio"]:checked ~ .cjf-radio-custom {
+  border-color: var(--clr-gold);
+}
+.cjf-radio-label input[type="radio"]:checked ~ .cjf-radio-custom::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--clr-gold);
+}
+
+/* Student conditional section */
+.cjf-student-fields {
+  display: none;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid rgba(196,164,74,0.2);
+  margin-bottom: 1.5rem;
+  animation: cjf-fade-in 0.3s ease;
+}
+.cjf-student-fields.cjf-visible {
+  display: block;
+}
+@keyframes cjf-fade-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cjf-student-fields .cjf-field {
+  margin-bottom: 1.25rem;
+}
+.cjf-student-fields .cjf-field:last-child {
+  margin-bottom: 0;
+}
+
+/* Submit button */
+.cjf-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--ff-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-purple-ink);
+  background: var(--clr-gold);
+  border: none;
+  border-radius: 2px;
+  padding: 0.85rem 1.8rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+.cjf-submit:hover {
+  background: var(--clr-gold-light);
+  transform: translateY(-1px);
+}
+.cjf-submit:active { transform: translateY(0); }
+.cjf-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success state */
+.cjf-success {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid rgba(196,164,74,0.2);
+  border-radius: 3px;
+}
+.cjf-success-icon {
+  font-size: 1.4rem;
+  color: var(--clr-gold);
+  margin-bottom: 0.75rem;
+}
+.cjf-success-title {
+  font-family: var(--ff-display);
+  font-size: 1.6rem;
+  color: var(--clr-text);
+  margin-bottom: 0.4rem;
+}
+.cjf-success-body {
+  font-family: var(--ff-body);
+  font-size: 0.9rem;
+  color: var(--clr-text-soft);
+}
+@media (max-width: 640px) {
+  .cjf-grid { grid-template-columns: 1fr; }
+}
+
+
 /* ── Author Meet Card ──────────────────────────────────────── */
 .author-meet-card {
   position: fixed;
