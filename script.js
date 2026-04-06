@@ -642,7 +642,50 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* ─────────────────────────────────────────────────────────────
-   12. AUTHOR MEET CARD
+   12. SPREAD THE WORD — Share button
+   ──────────────────────────────────────────────────────────── */
+(function initShare() {
+  const btn = document.getElementById('shareBtn');
+  if (!btn) return;
+
+  const SHARE_TITLE = 'Madurai Reading Club';
+  const SHARE_TEXT  =
+    'For those who believe books are meant to be discussed, not just read.\n\n' +
+    'Join the Madurai Reading Club.\n' +
+    'https://www.maduraireadingclub.com/#join';
+  const SHARE_URL   = 'https://www.maduraireadingclub.com/#join';
+
+  function showFeedback() {
+    btn.classList.add('shared');
+    btn.setAttribute('aria-label', 'Thanks for sharing!');
+    setTimeout(() => {
+      btn.classList.remove('shared');
+      btn.setAttribute('aria-label', 'Share Madurai Reading Club');
+    }, 3000);
+  }
+
+  btn.addEventListener('click', async () => {
+    // Mobile — native share sheet
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url: SHARE_URL });
+        showFeedback();
+      } catch (err) {
+        // User dismissed — no feedback needed
+      }
+      return;
+    }
+
+    // Desktop fallback — WhatsApp
+    const encoded = encodeURIComponent(SHARE_TEXT);
+    window.open('https://wa.me/?text=' + encoded, '_blank', 'noopener');
+    showFeedback();
+  });
+}());
+
+
+/* ─────────────────────────────────────────────────────────────
+   13. AUTHOR MEET CARD
    ──────────────────────────────────────────────────────────── */
 (function buildAuthorMeet() {
   const card = document.createElement('aside');
