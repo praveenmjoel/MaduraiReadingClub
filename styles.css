@@ -67,7 +67,7 @@ img, svg { display: block; max-width: 100%; }
 a        { text-decoration: none; color: inherit; }
 ul       { list-style: none; }
 address  { font-style: normal; }
-button   { cursor: pointer; font: inherit; }
+button   { cursor: pointer; font: inherit; -webkit-appearance: none; appearance: none; background: transparent; border: none; padding: 0; }
 
 :focus-visible {
   outline: 2px solid var(--clr-gold);
@@ -405,35 +405,42 @@ button   { cursor: pointer; font: inherit; }
 
 /* Share button */
 .hero-share {
+  -webkit-appearance: none;
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  background: none;
+  background: transparent;
   border: none;
+  outline: none;
   cursor: pointer;
   padding: 0;
+  margin: 0;
   font-family: var(--ff-body);
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.45);
+  color: rgba(250, 247, 242, 0.5);
   transition: color 0.3s;
   position: relative;
+  -webkit-font-smoothing: antialiased;
 }
-.hero-share:hover {
+.hero-share:hover,
+.hero-share:focus-visible {
   color: var(--clr-gold);
 }
 .hero-share:hover .hero-share-icon {
   stroke: var(--clr-gold);
 }
 .hero-share-icon {
-  stroke: rgba(250, 247, 242, 0.35);
+  stroke: rgba(250, 247, 242, 0.4);
   transition: stroke 0.3s;
   flex-shrink: 0;
+  fill: none;
 }
 .hero-share-label {
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 .hero-share.shared .hero-share-label {
   opacity: 0;
@@ -449,6 +456,7 @@ button   { cursor: pointer; font: inherit; }
   transition: opacity 0.3s;
   font-size: 0.65rem;
   letter-spacing: 0.18em;
+  font-weight: 500;
 }
 .hero-share.shared::after {
   opacity: 1;
