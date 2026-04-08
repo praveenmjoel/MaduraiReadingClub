@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const encodedName = name.split('/').map(encodeURIComponent).join('/');
       const files = await fetchJSON(`images/events/${encodedName}/manifest.json`);
       if (!files || files.length === 0) return null;
-      const images = files.map(f => `images/events/${name}/${f}`);
+      const images = files.map(f => `images/events/${encodedName}/${encodeURIComponent(f)}`);
       return { name, images };
     }));
 
