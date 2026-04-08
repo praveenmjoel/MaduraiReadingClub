@@ -1,0 +1,28 @@
+HOW TO ADD EVENT PHOTOS
+========================
+
+1. Create a subfolder inside  images/events/
+   Name it exactly as you want the event title to appear on the website.
+   Example:  images/events/Author Meet — Latshmihar/
+
+2. Drop your photos into that folder (JPG, PNG, or WEBP).
+
+3. Create a file called  manifest.json  inside that folder.
+   List the photo filenames in the order you want them to appear:
+
+   Example  images/events/Author Meet — Latshmihar/manifest.json :
+   [
+     "DSC_001.jpg",
+     "DSC_002.jpg",
+     "group-photo.jpg"
+   ]
+
+4. Open  images/events/manifest.json  (this file's sibling) and add
+   the folder name to the array:
+
+   ["Author Meet — Latshmihar"]
+
+   For multiple events:
+   ["Author Meet — Latshmihar", "Homo Deus Discussion"]
+
+5. Commit and push — the gallery updates automatically.

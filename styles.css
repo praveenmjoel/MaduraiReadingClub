@@ -1805,6 +1805,158 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 }
 
 
+/* ══════════════════════════════════════════════════════════════
+   EVENTS GALLERY
+   ══════════════════════════════════════════════════════════════ */
+.events-section {
+  background: var(--clr-purple-ink);
+}
+.events-section .section-label {
+  color: rgba(196, 164, 74, 0.7);
+}
+.events-section .section-title,
+.events-section .section-intro {
+  color: var(--clr-cream);
+}
+.events-section .section-intro {
+  color: rgba(250, 247, 242, 0.5);
+}
+
+/* Gallery wrapper */
+.events-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+/* ── Empty state ── */
+.events-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  border: 1px dashed rgba(196, 164, 74, 0.15);
+  border-radius: 3px;
+}
+.events-empty-glyph {
+  font-size: 1.8rem;
+  color: rgba(196, 164, 74, 0.3);
+  margin-bottom: 1rem;
+}
+.events-empty p {
+  font-family: var(--ff-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: rgba(250, 247, 242, 0.25);
+}
+
+/* ── Per-event album block ── */
+.event-album {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.event-album.ev-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Event title row */
+.event-album-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.event-album-title {
+  font-family: var(--ff-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 400;
+  color: var(--clr-cream);
+  line-height: 1.15;
+}
+.event-album-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(196,164,74,0.3), transparent);
+}
+.event-album-count {
+  font-family: var(--ff-body);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(196, 164, 74, 0.5);
+  white-space: nowrap;
+}
+
+/* ── Photo grid — editorial mosaic ── */
+.event-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 4px;
+}
+
+/* Generic photo tile */
+.event-photo {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255,255,255,0.04);
+  border-radius: 1px;
+}
+.event-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94),
+              filter  0.55s ease;
+  filter: brightness(0.92);
+}
+.event-photo:hover img {
+  transform: scale(1.04);
+  filter: brightness(1);
+}
+.event-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(10,2,16,0.45));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.event-photo:hover::after { opacity: 1; }
+
+/* Mosaic span patterns — assigned by JS based on index */
+.event-photo[data-span="hero"]    { grid-column: span 7; grid-row: span 5; }
+.event-photo[data-span="tall"]    { grid-column: span 5; grid-row: span 5; }
+.event-photo[data-span="wide"]    { grid-column: span 8; grid-row: span 3; }
+.event-photo[data-span="sq"]      { grid-column: span 4; grid-row: span 3; }
+.event-photo[data-span="sm"]      { grid-column: span 3; grid-row: span 3; }
+.event-photo[data-span="strip"]   { grid-column: span 6; grid-row: span 3; }
+.event-photo[data-span="thumb"]   { grid-column: span 4; grid-row: span 2; }
+
+@media (max-width: 768px) {
+  .event-photo-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 70px;
+  }
+  .event-photo[data-span="hero"]  { grid-column: span 6; grid-row: span 4; }
+  .event-photo[data-span="tall"]  { grid-column: span 3; grid-row: span 4; }
+  .event-photo[data-span="wide"]  { grid-column: span 6; grid-row: span 3; }
+  .event-photo[data-span="sq"]    { grid-column: span 3; grid-row: span 3; }
+  .event-photo[data-span="sm"]    { grid-column: span 3; grid-row: span 2; }
+  .event-photo[data-span="strip"] { grid-column: span 6; grid-row: span 2; }
+  .event-photo[data-span="thumb"] { grid-column: span 3; grid-row: span 2; }
+}
+@media (max-width: 480px) {
+  .event-photo-grid { gap: 3px; grid-auto-rows: 60px; }
+  .event-photo[data-span="hero"]  { grid-column: span 6; grid-row: span 3; }
+  .event-photo[data-span="tall"]  { grid-column: span 3; grid-row: span 3; }
+}
+
+
 /* ── Author Meet Card ──────────────────────────────────────── */
 .author-meet-card {
   position: fixed;

@@ -642,7 +642,130 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* ─────────────────────────────────────────────────────────────
-   12. SPREAD THE WORD — Share button
+   12. EVENTS GALLERY
+   ─────────────────────────────────────────────────────────────
+   Folder structure:
+     images/events/manifest.json          → ["Event Name 1", "Event Name 2"]
+     images/events/Event Name 1/manifest.json → ["photo1.jpg", "photo2.jpg"]
+
+   Mosaic span pattern cycles through these data-span values,
+   giving a varied editorial grid regardless of photo count.
+   ──────────────────────────────────────────────────────────── */
+(function buildEventsGallery() {
+
+  const container = document.getElementById('eventsGallery');
+  if (!container) return;
+
+  /* Span pattern — repeats to fill any number of photos */
+  const SPAN_PATTERN = [
+    'hero','tall',        /* row 1: large feature + tall side  */
+    'wide','sq',          /* row 2: wide + square              */
+    'strip','sm','sm',    /* row 3: strip + two smalls         */
+    'sq','sq','sq',       /* row 4: three squares              */
+    'wide','thumb','thumb',/* row 5: wide + two thumbs        */
+  ];
+
+  async function fetchJSON(url) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch { return null; }
+  }
+
+  function buildAlbum(name, images) {
+    const album = document.createElement('div');
+    album.className = 'event-album';
+
+    /* Header */
+    album.innerHTML = `
+      <div class="event-album-header">
+        <h3 class="event-album-title">${name}</h3>
+        <div class="event-album-line"></div>
+        <span class="event-album-count">${images.length} photo${images.length !== 1 ? 's' : ''}</span>
+      </div>
+    `;
+
+    /* Photo grid */
+    const grid = document.createElement('div');
+    grid.className = 'event-photo-grid';
+
+    images.forEach((src, i) => {
+      const span = SPAN_PATTERN[i % SPAN_PATTERN.length];
+      const fig  = document.createElement('figure');
+      fig.className = 'event-photo';
+      fig.setAttribute('data-span', span);
+      fig.setAttribute('role', 'button');
+      fig.setAttribute('tabindex', '0');
+      fig.setAttribute('aria-label', `View photo ${i + 1} from ${name}`);
+
+      const img = document.createElement('img');
+      img.src     = src;
+      img.alt     = `${name} — photo ${i + 1}`;
+      img.loading = 'lazy';
+
+      fig.appendChild(img);
+      fig.addEventListener('click', () => openLightbox(src, img.alt));
+      fig.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') openLightbox(src, img.alt);
+      });
+
+      grid.appendChild(fig);
+    });
+
+    album.appendChild(grid);
+
+    /* Scroll-triggered entrance */
+    const obs = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      album.classList.add('ev-visible');
+      obs.disconnect();
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    obs.observe(album);
+
+    return album;
+  }
+
+  async function init() {
+    const eventNames = await fetchJSON('images/events/manifest.json');
+
+    if (!eventNames || eventNames.length === 0) {
+      container.innerHTML = `
+        <div class="events-empty">
+          <div class="events-empty-glyph">✦</div>
+          <p>Photos from our events will appear here.</p>
+        </div>`;
+      return;
+    }
+
+    const albums = await Promise.all(eventNames.map(async name => {
+      const encodedName = name.split('/').map(encodeURIComponent).join('/');
+      const files = await fetchJSON(`images/events/${encodedName}/manifest.json`);
+      if (!files || files.length === 0) return null;
+      const images = files.map(f => `images/events/${name}/${f}`);
+      return { name, images };
+    }));
+
+    albums
+      .filter(Boolean)
+      .forEach(({ name, images }) => container.appendChild(buildAlbum(name, images)));
+
+    if (container.children.length === 0) {
+      container.innerHTML = `
+        <div class="events-empty">
+          <div class="events-empty-glyph">✦</div>
+          <p>Photos from our events will appear here.</p>
+        </div>`;
+    }
+  }
+
+  init();
+}());
+
+
+/* ─────────────────────────────────────────────────────────────
+   13. SPREAD THE WORD — Share button
+   ──────────────────────────────────────────────────────────── */
    ──────────────────────────────────────────────────────────── */
 (function initShare() {
   const btn = document.getElementById('shareBtn');
@@ -687,7 +810,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 /* ─────────────────────────────────────────────────────────────
    13. AUTHOR MEET CARD
    ──────────────────────────────────────────────────────────── */
+/* ── Set to true to re-enable for a future Author Meet event ── */
+const SHOW_AUTHOR_MEET = false;
+
 (function buildAuthorMeet() {
+  if (!SHOW_AUTHOR_MEET) return;
+
   const card = document.createElement('aside');
   card.className = 'author-meet-card';
   card.setAttribute('aria-label', 'Upcoming Author Meet');
