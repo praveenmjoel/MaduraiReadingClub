@@ -766,7 +766,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 /* ─────────────────────────────────────────────────────────────
    13. SPREAD THE WORD — Share button
    ──────────────────────────────────────────────────────────── */
-   ──────────────────────────────────────────────────────────── */
 (function initShare() {
   const btn = document.getElementById('shareBtn');
   if (!btn) return;
