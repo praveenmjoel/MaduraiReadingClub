@@ -651,12 +651,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       comment at the bottom of the buildVoting() function        */
 
 const FIREBASE_CONFIG = {
-  apiKey            : 'YOUR_API_KEY',
-  authDomain        : 'YOUR_PROJECT_ID.firebaseapp.com',
-  projectId         : 'YOUR_PROJECT_ID',
-  storageBucket     : 'YOUR_PROJECT_ID.appspot.com',
-  messagingSenderId : 'YOUR_SENDER_ID',
-  appId             : 'YOUR_APP_ID',
+  apiKey: "AIzaSyB1_gn1WARrjSw9Sk68dP97sjw2Cif6Ct4",
+  authDomain: "madurai-reading-club.firebaseapp.com",
+  projectId: "madurai-reading-club",
+  storageBucket: "madurai-reading-club.firebasestorage.app",
+  messagingSenderId: "790658694650",
+  appId: "1:790658694650:web:0b8cfaf8283f93cf89f843",
+  measurementId: "G-WDDC2GQGBB"
 };
 
 /* Set false to hide the voting section entirely */
