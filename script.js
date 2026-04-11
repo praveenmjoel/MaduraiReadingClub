@@ -641,6 +641,281 @@ document.addEventListener('DOMContentLoaded', async () => {
 }());
 
 
+/* ╔═══════════════════════════════════════════════════════════╗
+   ║  FIREBASE CONFIG  —  ★ PASTE YOUR CONFIG HERE ★         ║
+   ╚═══════════════════════════════════════════════════════════╝
+   1. Go to https://console.firebase.google.com
+   2. Create a project → Add web app → copy the firebaseConfig object
+   3. Replace the placeholder values below
+   4. In Firestore → Rules, paste the security rules from the
+      comment at the bottom of the buildVoting() function        */
+
+const FIREBASE_CONFIG = {
+  apiKey            : 'YOUR_API_KEY',
+  authDomain        : 'YOUR_PROJECT_ID.firebaseapp.com',
+  projectId         : 'YOUR_PROJECT_ID',
+  storageBucket     : 'YOUR_PROJECT_ID.appspot.com',
+  messagingSenderId : 'YOUR_SENDER_ID',
+  appId             : 'YOUR_APP_ID',
+};
+
+/* Set false to hide the voting section entirely */
+const VOTING_ENABLED = true;
+
+
+/* ─────────────────────────────────────────────────────────────
+   12. VOTING
+   ──────────────────────────────────────────────────────────── */
+(function buildVoting() {
+  const grid      = document.getElementById('voteGrid');
+  const confirmed = document.getElementById('voteConfirmed');
+  const section   = document.getElementById('vote');
+
+  if (!grid || !VOTING_ENABLED) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+
+  /* ── Firebase not configured yet — show placeholder ── */
+  const configured = FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY';
+  if (!configured) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:3rem 0;">
+        <p style="font-family:var(--ff-display);font-size:1.1rem;font-style:italic;color:var(--clr-text-soft);">
+          Voting opens soon — stay tuned.
+        </p>
+      </div>`;
+    return;
+  }
+
+  /* ── Init Firebase ── */
+  if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.firestore();
+
+  /* ── Voter identity — UUID stored in localStorage ── */
+  const VOTER_KEY = 'mrc_voter_id';
+  function getVoterId() {
+    let id = localStorage.getItem(VOTER_KEY);
+    if (!id) {
+      id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      localStorage.setItem(VOTER_KEY, id);
+    }
+    return id;
+  }
+
+  /* ── Slug from book title ── */
+  function slug(title) {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  /* ── Render skeleton cards while loading ── */
+  function renderSkeletons(n) {
+    grid.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const card = document.createElement('div');
+      card.className = 'vote-card';
+      card.innerHTML = '<div class="vote-skeleton"></div>';
+      grid.appendChild(card);
+    }
+  }
+
+  /* ── Build a single book card ── */
+  function buildCard(book, votedSlug) {
+    const bookSlug  = slug(book.title);
+    const isVoted   = votedSlug === bookSlug;
+    const hasVoted  = votedSlug !== null;
+
+    const card = document.createElement('div');
+    card.className = 'vote-card fade-up' +
+      (isVoted ? ' voted-this' : hasVoted ? ' voted-other' : '');
+    card.dataset.slug = bookSlug;
+
+    card.innerHTML = `
+      <div class="vote-card-cover">
+        <img src="images/Voting/${encodeURIComponent(book.file)}" alt="${book.title}" loading="lazy" />
+        <span class="vote-your-badge">Your Vote</span>
+      </div>
+      <div class="vote-card-body">
+        <span class="vote-card-genre">${book.genre}</span>
+        <h3 class="vote-card-title">${book.title}</h3>
+        <p class="vote-card-author">by ${book.author}</p>
+        <p class="vote-card-desc">${book.description}</p>
+
+        ${!hasVoted ? `
+          <button class="vote-btn" data-slug="${bookSlug}" aria-label="Vote for ${book.title}">
+            Vote for this book
+          </button>` : ''}
+
+        <div class="vote-result${hasVoted ? ' visible' : ''}" id="result-${bookSlug}">
+          <div class="vote-bar-track">
+            <div class="vote-bar-fill" id="bar-${bookSlug}" style="width:0%"></div>
+          </div>
+          <div class="vote-result-meta">
+            <span id="count-${bookSlug}">0 votes</span>
+            <span class="vote-result-pct" id="pct-${bookSlug}">0%</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  /* ── Update vote bar UI ── */
+  function updateBars(counts) {
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    Object.entries(counts).forEach(([s, count]) => {
+      const pct    = total > 0 ? Math.round((count / total) * 100) : 0;
+      const bar    = document.getElementById(`bar-${s}`);
+      const countEl= document.getElementById(`count-${s}`);
+      const pctEl  = document.getElementById(`pct-${s}`);
+      if (bar)    { requestAnimationFrame(() => bar.style.width = pct + '%'); }
+      if (countEl) countEl.textContent = count === 1 ? '1 vote' : `${count} votes`;
+      if (pctEl)   pctEl.textContent   = pct + '%';
+    });
+  }
+
+  /* ── Handle vote submission ── */
+  async function castVote(bookSlug, buttons) {
+    const voterId = getVoterId();
+    buttons.forEach(b => (b.disabled = true));
+
+    try {
+      const batch   = db.batch();
+      const voterRef= db.collection('mrc_voters').doc(voterId);
+      const voteRef = db.collection('mrc_votes').doc(bookSlug);
+
+      batch.set(voterRef, {
+        book      : bookSlug,
+        timestamp : firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      batch.set(voteRef,
+        { count: firebase.firestore.FieldValue.increment(1) },
+        { merge: true }
+      );
+
+      await batch.commit();
+
+      /* Show results state */
+      localStorage.setItem('mrc_voted_book', bookSlug);
+      applyVotedState(bookSlug);
+      confirmed.hidden = false;
+      confirmed.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    } catch (err) {
+      console.error('Vote failed:', err);
+      buttons.forEach(b => (b.disabled = false));
+    }
+  }
+
+  /* ── Switch UI from pre-vote → post-vote ── */
+  function applyVotedState(votedSlug) {
+    grid.querySelectorAll('.vote-card').forEach(card => {
+      const s = card.dataset.slug;
+      card.classList.toggle('voted-this',  s === votedSlug);
+      card.classList.toggle('voted-other', s !== votedSlug);
+
+      /* Hide buttons, show bars */
+      const btn = card.querySelector('.vote-btn');
+      if (btn) btn.style.display = 'none';
+      const result = card.querySelector('.vote-result');
+      if (result) result.classList.add('visible');
+    });
+  }
+
+  /* ── Main init ── */
+  async function init() {
+    const voterId   = getVoterId();
+    renderSkeletons(5);
+
+    /* Load books manifest */
+    let books = [];
+    try {
+      const res = await fetch('images/Voting/manifest.json', { cache: 'no-store' });
+      books = await res.json();
+    } catch { return; }
+
+    /* Check if already voted */
+    let votedSlug = localStorage.getItem('mrc_voted_book');
+
+    /* Also verify against Firestore (handles cleared localStorage) */
+    try {
+      const voterDoc = await db.collection('mrc_voters').doc(voterId).get();
+      if (voterDoc.exists) {
+        votedSlug = voterDoc.data().book;
+        localStorage.setItem('mrc_voted_book', votedSlug);
+      }
+    } catch { /* offline — trust localStorage */ }
+
+    /* Render cards */
+    grid.innerHTML = '';
+    books.forEach(book => grid.appendChild(buildCard(book, votedSlug)));
+
+    /* Attach vote button listeners */
+    const allBtns = [...grid.querySelectorAll('.vote-btn')];
+    allBtns.forEach(btn => {
+      btn.addEventListener('click', () => castVote(btn.dataset.slug, allBtns));
+    });
+
+    /* Show confirmation if already voted */
+    if (votedSlug) {
+      confirmed.hidden = false;
+    }
+
+    /* ── Real-time vote counts listener ── */
+    db.collection('mrc_votes').onSnapshot(snapshot => {
+      const counts = {};
+      books.forEach(b => (counts[slug(b.title)] = 0));
+      snapshot.forEach(doc => {
+        if (counts.hasOwnProperty(doc.id)) {
+          counts[doc.id] = doc.data().count || 0;
+        }
+      });
+      updateBars(counts);
+    });
+
+    /* Trigger fade-up on new cards */
+    grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+  }
+
+  init();
+
+  /*
+  ════════════════════════════════════════════════════════════
+  FIRESTORE SECURITY RULES  —  paste into Firebase Console
+  ════════════════════════════════════════════════════════════
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+
+      // Vote counts — anyone can read, only increment by 1
+      match /mrc_votes/{bookId} {
+        allow read: if true;
+        allow write: if request.resource.data.count ==
+                        resource.data.count + 1
+                     && request.resource.data.keys().hasOnly(['count']);
+        // Allow create (first vote for a book)
+        allow create: if request.resource.data.count == 1
+                      && request.resource.data.keys().hasOnly(['count']);
+      }
+
+      // Voter records — create once, never update or delete
+      match /mrc_voters/{voterId} {
+        allow read:   if false;
+        allow create: if !exists(
+                          /databases/$(database)/documents/mrc_voters/$(voterId)
+                        );
+        allow update, delete: if false;
+      }
+    }
+  }
+  ════════════════════════════════════════════════════════════ */
+}());
+
+
 /* ─────────────────────────────────────────────────────────────
    12. EVENTS GALLERY
    ─────────────────────────────────────────────────────────────

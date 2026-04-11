@@ -52,6 +52,7 @@
         <li><a href="#about"       class="nav-link">About</a></li>
         <li><a href="#book-club"   class="nav-link">Book Club</a></li>
         <li><a href="#join"        class="nav-link">Join</a></li>
+        <li><a href="#vote"        class="nav-link">Vote</a></li>
         <li><a href="#past-books"  class="nav-link">Past Books</a></li>
         <li><a href="#bookmarks"   class="nav-link">Bookmarks</a></li>
         <li><a href="#events"      class="nav-link">Events</a></li>
@@ -392,6 +393,29 @@
 
 
   <!-- ============================================================
+       VOTE — Next Book Discussion
+       ============================================================ -->
+  <section class="section vote-section" id="vote">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Your Voice</span>
+        <h2 class="section-title">Vote for Our<br>Next Read.</h2>
+        <p class="section-intro" id="voteIntro">One vote per member. Results update in real time.</p>
+      </div>
+
+      <!-- Cards injected by script.js → buildVoting() -->
+      <div class="vote-grid" id="voteGrid"></div>
+
+      <!-- Voted confirmation banner -->
+      <div class="vote-confirmed" id="voteConfirmed" hidden>
+        <span class="vote-confirmed-glyph">✦</span>
+        <p>Your vote has been cast. Results update live below.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
        PAST DISCUSSIONS — Book Cover Gallery
        ============================================================ -->
   <section class="section gallery-section" id="past-books">
@@ -602,6 +626,7 @@
           <a href="#about">About</a>
           <a href="#book-club">Book Club</a>
           <a href="#join">Join</a>
+          <a href="#vote">Vote</a>
           <a href="#past-books">Past Books</a>
           <a href="#bookmarks">Bookmarks</a>
           <a href="#events">Events</a>
@@ -633,6 +658,10 @@
     </div>
   </div>
 
+
+  <!-- Firebase SDK (for voting) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script src="script.js"></script>
 </body>

@@ -1,0 +1,37 @@
+[
+  {
+    "file": "Becoming.jpg",
+    "title": "Becoming",
+    "author": "Michelle Obama",
+    "genre": "Memoir",
+    "description": "Michelle Obama traces her journey from a working-class neighbourhood in Chicago's South Side to the most famous address in the world. Candid about race, ambition, and the tension between private life and public duty, it is both an intimate portrait of a marriage and a meditation on finding one's voice."
+  },
+  {
+    "file": "Guns, Germs, and Steel.jpg",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "genre": "History",
+    "description": "Why did certain civilisations come to conquer others — not through superior intelligence or culture, but through an accident of geography and biology? Diamond's Pulitzer Prize-winning argument dismantles racial explanations of history and replaces them with a rigorous account of how environment shaped the fate of human societies."
+  },
+  {
+    "file": "One Hundred Years of Solitude.jpg",
+    "title": "One Hundred Years of Solitude",
+    "author": "Gabriel García Márquez",
+    "genre": "Magical Realism",
+    "description": "Seven generations of the Buendía family rise and fall in the mythical town of Macondo, where ghosts walk alongside the living and the miraculous is entirely unremarkable. The novel that defined magical realism and won García Márquez the Nobel Prize remains one of the most dazzling feats of imagination in world literature."
+  },
+  {
+    "file": "The God of Small Things.jpg",
+    "title": "The God of Small Things",
+    "author": "Arundhati Roy",
+    "genre": "Literary Fiction",
+    "description": "Set in Kerala, Roy's Booker Prize-winning debut follows twins Rahel and Estha, whose lives are shattered by caste, forbidden love, and the unforgiving 'Love Laws' that govern who may be loved and how much. Written in lyrical, non-linear prose, it is a devastating portrait of a world undone by its own rules."
+  },
+  {
+    "file": "The Silk Roads- A New History of the World.jpg",
+    "title": "The Silk Roads",
+    "author": "Peter Frankopan",
+    "genre": "History",
+    "description": "Frankopan moves the centre of world history from Europe to the ancient trade corridors of Central Asia, showing how the flow of goods, faiths, and ideas along the Silk Roads shaped every civilisation from Rome to the modern Middle East. A genuinely revisionary work that makes the familiar world look entirely new."
+  }
+]
