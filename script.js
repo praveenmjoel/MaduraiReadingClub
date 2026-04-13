@@ -627,6 +627,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// Handle direct URL hash navigation (e.g. site.com/#suggest)
+// Wait for full page load so layout is stable, then scroll with nav offset
+window.addEventListener('load', () => {
+  if (!window.location.hash) return;
+  const target = document.querySelector(window.location.hash);
+  if (!target) return;
+  // Small delay lets any dynamic content finish rendering
+  setTimeout(() => {
+    const top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, 100);
+});
+
 
 /* ─────────────────────────────────────────────────────────────
    INITIALISE GALLERIES
