@@ -33,9 +33,10 @@ document.body.classList.add('js-ready');
 
 const CURRENT_BOOK = {
   show   : true,
-  title  : 'Homo Deus',
-  author : 'Yuval Noah Harari',
-  date   : '12 Apr 2026',
+  title  : 'Project Hail Mary',
+  author : 'Andy Weir',
+  date   : '3 May 2026',
+  cover  : 'images/Voting/Project%20Hail%20Mary.jpg',
 };
 
 
@@ -620,13 +621,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   ribbon.innerHTML = `
     <button class="nr-dismiss" aria-label="Dismiss">&#x2715;</button>
     <p class="nr-eyebrow">Now Reading</p>
-    <p class="nr-title">${CURRENT_BOOK.title}</p>
-    <p class="nr-author">by ${CURRENT_BOOK.author}</p>
-    <div class="nr-divider"></div>
-    <p class="nr-date">
-      <span class="nr-date-label">Discussion</span>
-      <span>${CURRENT_BOOK.date} &nbsp;·&nbsp; 4 PM</span>
-    </p>
+    <div class="nr-body">
+      ${CURRENT_BOOK.cover ? `<img class="nr-cover" src="${CURRENT_BOOK.cover}" alt="${CURRENT_BOOK.title} cover" />` : ''}
+      <div class="nr-text">
+        <p class="nr-title">${CURRENT_BOOK.title}</p>
+        <p class="nr-author">by ${CURRENT_BOOK.author}</p>
+        <div class="nr-divider"></div>
+        <p class="nr-date">
+          <span class="nr-date-label">Discussion</span>
+          <span>${CURRENT_BOOK.date} &nbsp;·&nbsp; 4 PM</span>
+        </p>
+      </div>
+    </div>
   `;
 
   document.body.appendChild(ribbon);
