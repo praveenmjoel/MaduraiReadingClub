@@ -771,7 +771,7 @@ const VOTING_ENABLED = false;
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:3rem 0;">
         <p style="font-family:var(--ff-display);font-size:1.1rem;font-style:italic;color:var(--clr-text-soft);">
-          Voting opens soon — stay tuned.
+          Voting opens soon. Stay tuned.
         </p>
       </div>`;
     return;
@@ -1065,7 +1065,7 @@ const VOTING_ENABLED = false;
 
       const img = document.createElement('img');
       img.src     = src;
-      img.alt     = `${name} — photo ${i + 1}`;
+      img.alt     = `${name}, photo ${i + 1}`;
       img.loading = 'lazy';
 
       fig.appendChild(img);
