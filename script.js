@@ -393,8 +393,22 @@ updateActiveNavLink();
 
 
 /* ─────────────────────────────────────────────────────────────
-   5.  MOBILE HAMBURGER MENU
+   5.  MOBILE HAMBURGER + DROPDOWN GROUPS
    ──────────────────────────────────────────────────────────── */
+const navGroups = document.querySelectorAll('.nav-group');
+
+function closeAllMenus() {
+  navMenu.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  navGroups.forEach(g => {
+    g.classList.remove('open');
+    g.querySelector('.nav-group-btn')?.setAttribute('aria-expanded', 'false');
+  });
+}
+
+/* Hamburger toggle */
 navToggle.addEventListener('click', () => {
   const open = navMenu.classList.toggle('open');
   navToggle.classList.toggle('open', open);
@@ -402,23 +416,38 @@ navToggle.addEventListener('click', () => {
   document.body.style.overflow = open ? 'hidden' : '';
 });
 
-navLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    navToggle.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+/* Group buttons — desktop hover is CSS; this handles click/tap for mobile */
+navGroups.forEach(group => {
+  const btn = group.querySelector('.nav-group-btn');
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = group.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    /* Close other groups */
+    navGroups.forEach(other => {
+      if (other !== group) {
+        other.classList.remove('open');
+        other.querySelector('.nav-group-btn')?.setAttribute('aria-expanded', 'false');
+      }
+    });
   });
 });
 
+/* Any nav link click → close everything */
+navLinks.forEach(link => {
+  link.addEventListener('click', closeAllMenus);
+});
+
+/* Click outside → close */
 document.addEventListener('click', e => {
-  if (navMenu.classList.contains('open') &&
-      !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-    navMenu.classList.remove('open');
-    navToggle.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+  if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+    closeAllMenus();
   }
+});
+
+/* Escape key → close */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAllMenus();
 });
 
 
@@ -533,6 +562,46 @@ document.addEventListener('keydown', e => {
       });
     } catch (_) {
       // no-cors fetch throws on network errors only; a TypeError from opaque response is normal
+    }
+
+    // Show success regardless — Google Forms silently records the submission
+    form.querySelectorAll('.cjf-grid, .cjf-field, .cjf-submit')
+        .forEach(el => (el.style.display = 'none'));
+    successEl.hidden = false;
+  });
+}());
+
+
+/* ─────────────────────────────────────────────────────────────
+   9b. SUGGEST A BOOK FORM  (Google Form silent POST)
+   ──────────────────────────────────────────────────────────── */
+(function initSuggestForm() {
+  const form      = document.getElementById('suggestForm');
+  const successEl = document.getElementById('suggestSuccess');
+  const submitBtn = form ? form.querySelector('.cjf-submit') : null;
+  if (!form) return;
+
+  const GF_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdYGB0z-lc9IHRJsQ2A8u-ZRapG_QrXyj9ZcmQe3xfNglc-sg/formResponse';
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.querySelectorAll(':invalid')[0]?.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.cjf-submit-text').textContent = 'Submitting…';
+
+    try {
+      await fetch(GF_ACTION, {
+        method : 'POST',
+        mode   : 'no-cors',
+        body   : new FormData(form),
+      });
+    } catch (_) {
+      // no-cors fetch may throw on network error; opaque response is expected
     }
 
     // Show success regardless — Google Forms silently records the submission

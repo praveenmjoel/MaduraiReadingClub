@@ -258,6 +258,159 @@ button   { cursor: pointer; font: inherit; -webkit-appearance: none; appearance:
 .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
 
 
+/* ── Nav group dropdowns ───────────────────────────────────── */
+.nav-group {
+  position: relative;
+}
+.nav-group-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 242, 0.78);
+  background: none;
+  border: none;
+  padding: 0 0 3px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-group-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--clr-gold);
+  transition: width 0.35s var(--ease);
+}
+.nav-group:hover .nav-group-btn,
+.nav-group.open  .nav-group-btn { color: var(--clr-gold-light); }
+.nav-group:hover .nav-group-btn::after,
+.nav-group.open  .nav-group-btn::after { width: 100%; }
+
+.nav.scrolled .nav-group-btn { color: var(--clr-text-mid); }
+.nav.scrolled .nav-group:hover .nav-group-btn { color: var(--clr-purple-mid); }
+
+.nav-chevron {
+  transition: transform 0.25s var(--ease);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.nav-group:hover .nav-chevron,
+.nav-group.open  .nav-chevron { transform: rotate(180deg); opacity: 1; }
+
+/* Dropdown panel */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 0.9rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 170px;
+  background: var(--clr-purple-deep);
+  border: 1px solid rgba(196,164,74,0.15);
+  border-top: 2px solid var(--clr-gold);
+  border-radius: 0 0 3px 3px;
+  padding: 0.5rem 0;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 920;
+  list-style: none;
+}
+.nav-group:hover .nav-dropdown,
+.nav-group.open  .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-drop-link {
+  display: block;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: rgba(250,247,242,0.7) !important;
+  white-space: nowrap;
+}
+.nav-drop-link:hover { color: var(--clr-gold) !important; background: rgba(196,164,74,0.06); }
+.nav-drop-link::after { display: none; }
+
+/* Mobile overrides for dropdown */
+@media (max-width: 768px) {
+  .nav-group-btn {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: rgba(250,247,242,0.78);
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 0;
+  }
+  .nav-group-btn::after { display: none; }
+  .nav-dropdown {
+    position: static;
+    transform: none !important;
+    opacity: 1;
+    pointer-events: auto;
+    background: rgba(255,255,255,0.04);
+    border: none;
+    border-left: 2px solid rgba(196,164,74,0.25);
+    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.35rem 0 0.35rem 1rem;
+    margin-top: 0.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .nav-group.open .nav-dropdown {
+    max-height: 200px;
+  }
+  .nav-drop-link {
+    font-size: 0.78rem;
+    padding: 0.4rem 0;
+    color: rgba(250,247,242,0.6) !important;
+  }
+}
+
+
+/* ── Suggest a Book section ───────────────────────────────── */
+.suggest-section {
+  background: var(--clr-cream-warm);
+}
+.suggest-inner {
+  max-width: 860px;
+}
+.suggest-lead {
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--clr-text-soft);
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.suggest-form-wrap {
+  background: var(--clr-white);
+  margin-top: 2.5rem;
+  border: 1px solid var(--clr-cream-mid);
+  border-radius: 3px;
+}
+.cjf-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: var(--ff-display);
+  font-size: 1rem;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--clr-cream-mid);
+  padding-top: 0.5rem;
+}
+.cjf-textarea:focus { border-bottom-color: var(--clr-gold); outline: none; }
+
+
 /* ═══════════════════════════════════════════════════════════════
    HERO
    ═══════════════════════════════════════════════════════════════ */

@@ -48,16 +48,56 @@
       </button>
 
       <ul class="nav-menu" id="navMenu" role="list">
-        <li><a href="#home"        class="nav-link">Home</a></li>
-        <li><a href="#about"       class="nav-link">About</a></li>
-        <li><a href="#book-club"   class="nav-link">Book Club</a></li>
-        <li><a href="#join"        class="nav-link">Join</a></li>
-        <li><a href="#vote"        class="nav-link">Vote</a></li>
-        <li><a href="#past-books"  class="nav-link">Past Books</a></li>
-        <li><a href="#bookmarks"   class="nav-link">Bookmarks</a></li>
-        <li><a href="#events"      class="nav-link">Events</a></li>
-        <li><a href="#author-meet" class="nav-link">Author Meet</a></li>
-        <li><a href="#contact"     class="nav-link">Contact</a></li>
+
+        <li><a href="#home" class="nav-link">Home</a></li>
+
+        <!-- About group -->
+        <li class="nav-group" id="navGroupAbout">
+          <button class="nav-group-btn" aria-haspopup="true" aria-expanded="false">
+            About
+            <svg class="nav-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="nav-dropdown" role="menu">
+            <li><a href="#about"       class="nav-link nav-drop-link" role="menuitem">About Us</a></li>
+            <li><a href="#book-club"   class="nav-link nav-drop-link" role="menuitem">Book Club</a></li>
+            <li><a href="#author-meet" class="nav-link nav-drop-link" role="menuitem">Author Meet</a></li>
+          </ul>
+        </li>
+
+        <!-- Participate group -->
+        <li class="nav-group" id="navGroupParticipate">
+          <button class="nav-group-btn" aria-haspopup="true" aria-expanded="false">
+            Participate
+            <svg class="nav-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="nav-dropdown" role="menu">
+            <li><a href="#join"    class="nav-link nav-drop-link" role="menuitem">Join Us</a></li>
+            <li><a href="#vote"    class="nav-link nav-drop-link" role="menuitem">Vote</a></li>
+            <li><a href="#suggest" class="nav-link nav-drop-link" role="menuitem">Suggest a Book</a></li>
+          </ul>
+        </li>
+
+        <!-- Explore group -->
+        <li class="nav-group" id="navGroupExplore">
+          <button class="nav-group-btn" aria-haspopup="true" aria-expanded="false">
+            Explore
+            <svg class="nav-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="nav-dropdown" role="menu">
+            <li><a href="#past-books" class="nav-link nav-drop-link" role="menuitem">Past Discussions</a></li>
+            <li><a href="#bookmarks"  class="nav-link nav-drop-link" role="menuitem">Bookmarks</a></li>
+            <li><a href="#events"     class="nav-link nav-drop-link" role="menuitem">Events</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+
       </ul>
     </div>
   </nav>
@@ -393,6 +433,79 @@
 
 
   <!-- ============================================================
+       SUGGEST A BOOK
+       ============================================================ -->
+  <section class="section suggest-section" id="suggest">
+    <div class="container">
+      <div class="suggest-inner fade-up">
+        <span class="section-label">Shape the Reading List</span>
+        <h2 class="section-title">Suggest a Book.</h2>
+        <p class="suggest-lead">Have a book you think the club should read? Tell us about it.</p>
+
+        <div class="suggest-form-wrap">
+          <form class="custom-join-form" id="suggestForm" novalidate>
+
+            <div class="cjf-grid">
+              <div class="cjf-field">
+                <label class="cjf-label" for="sg-name">Your Name <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="text" id="sg-name" name="entry.1597923286" placeholder="Your full name" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="sg-mobile">Mobile <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="tel" id="sg-mobile" name="entry.1940703212" placeholder="+91 00000 00000" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="sg-book">Book Title <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="text" id="sg-book" name="entry.1939044781" placeholder="Title of the book" required />
+              </div>
+              <div class="cjf-field">
+                <label class="cjf-label" for="sg-author">Author <span class="cjf-req">*</span></label>
+                <input class="cjf-input" type="text" id="sg-author" name="entry.1106333972" placeholder="Author's name" required />
+              </div>
+            </div>
+
+            <div class="cjf-field">
+              <label class="cjf-label">Have you read this book? <span class="cjf-req">*</span></label>
+              <div class="cjf-radio-group">
+                <label class="cjf-radio-label">
+                  <input type="radio" name="entry.537987134" value="Yes" required />
+                  <span class="cjf-radio-custom"></span>
+                  <span>Yes</span>
+                </label>
+                <label class="cjf-radio-label">
+                  <input type="radio" name="entry.537987134" value="No" />
+                  <span class="cjf-radio-custom"></span>
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="cjf-field">
+              <label class="cjf-label" for="sg-why">Why are you recommending this book? <span class="cjf-req">*</span></label>
+              <textarea class="cjf-input cjf-textarea" id="sg-why" name="entry.1830698316" placeholder="Tell us what makes this book special..." rows="4" required></textarea>
+            </div>
+
+            <button class="cjf-submit" type="submit">
+              <span class="cjf-submit-text">Submit Recommendation</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="cjf-success" id="suggestSuccess" hidden>
+              <div class="cjf-success-icon">✦</div>
+              <p class="cjf-success-title">Recommendation sent.</p>
+              <p class="cjf-success-body">Thank you — we'll review your suggestion for the next reading list.</p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
        VOTE — Next Book Discussion
        ============================================================ -->
   <section class="section vote-section" id="vote">
@@ -625,9 +738,9 @@
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="#about">About</a>
           <a href="#book-club">Book Club</a>
-          <a href="#join">Join</a>
-          <a href="#vote">Vote</a>
-          <a href="#past-books">Past Books</a>
+          <a href="#join">Join Us</a>
+          <a href="#suggest">Suggest a Book</a>
+          <a href="#past-books">Past Discussions</a>
           <a href="#bookmarks">Bookmarks</a>
           <a href="#events">Events</a>
           <a href="#author-meet">Author Meet</a>
