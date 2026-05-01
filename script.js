@@ -834,6 +834,7 @@ const VOTING_ENABLED = true;
         <h3 class="vote-card-title">${book.title}</h3>
         <p class="vote-card-author">by ${book.author}</p>
         <p class="vote-card-desc">${book.description}</p>
+        <button class="vote-read-more" aria-label="Read full description">Read more</button>
 
         ${!hasVoted ? `
           <button class="vote-btn" data-slug="${bookSlug}" aria-label="Vote for ${book.title}">
@@ -851,6 +852,12 @@ const VOTING_ENABLED = true;
         </div>
       </div>
     `;
+
+    /* Read more toggle (used on mobile / touch devices) */
+    card.querySelector('.vote-read-more').addEventListener('click', () => {
+      const open = card.classList.toggle('desc-open');
+      card.querySelector('.vote-read-more').textContent = open ? 'Read less' : 'Read more';
+    });
 
     return card;
   }

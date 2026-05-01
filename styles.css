@@ -2092,6 +2092,30 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+/* Expand description on desktop hover or when toggled open */
+.vote-card:hover .vote-card-desc,
+.vote-card.desc-open .vote-card-desc {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+/* Read more button — visible only on touch devices */
+.vote-read-more {
+  font-family: var(--ff-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--clr-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  margin-top: 0.3rem;
+  display: none;
+}
+@media (hover: none) {
+  /* Touch screen: show button, hover expansion doesn't apply */
+  .vote-read-more { display: block; }
 }
 
 /* Vote button */
