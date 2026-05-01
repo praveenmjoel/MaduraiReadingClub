@@ -624,6 +624,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
     window.scrollTo({ top, behavior: 'smooth' });
+    // Update the address bar so the link is shareable
+    history.pushState(null, '', id);
   });
 });
 
