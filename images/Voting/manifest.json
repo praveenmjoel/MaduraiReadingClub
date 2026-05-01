@@ -1,37 +1,37 @@
 [
   {
-    "file": "Project Hail Mary.jpg",
-    "title": "Project Hail Mary",
-    "author": "Andy Weir",
-    "genre": "Science Fiction",
-    "description": "Ryland Grace wakes up alone on a spacecraft with no memory of who he is or how he got there — only to discover he is Earth's last hope against an extinction-level threat. Andy Weir's propulsive, witty novel is both a triumph of hard science fiction and a deeply moving story of friendship across the cosmos."
+    "file": "A Field Guide to Lies and Statistics.jpg",
+    "title": "A Field Guide to Lies and Statistics",
+    "author": "Daniel J. Levitin",
+    "genre": "Non-fiction",
+    "description": "A sharp, witty guide to critical thinking in the age of information overload, teaching readers to question data, detect manipulation, and make smarter decisions."
   },
   {
-    "file": "Guns, Germs, and Steel.jpg",
-    "title": "Guns, Germs, and Steel",
-    "author": "Jared Diamond",
-    "genre": "History",
-    "description": "Why did certain civilisations come to conquer others — not through superior intelligence or culture, but through an accident of geography and biology? Diamond's Pulitzer Prize-winning argument dismantles racial explanations of history and replaces them with a rigorous account of how environment shaped the fate of human societies."
+    "file": "All That We See Or Seem by Ken Liu.jpg",
+    "title": "All That We See Or Seem",
+    "author": "Ken Liu",
+    "genre": "Fiction",
+    "description": "A lyrical exploration of perception, reality, and the stories we tell ourselves, woven with the quiet precision and emotional depth Ken Liu is known for."
   },
   {
-    "file": "One Hundred Years of Solitude.jpg",
-    "title": "One Hundred Years of Solitude",
-    "author": "Gabriel García Márquez",
-    "genre": "Magical Realism",
-    "description": "Seven generations of the Buendía family rise and fall in the mythical town of Macondo, where ghosts walk alongside the living and the miraculous is entirely unremarkable. The novel that defined magical realism and won García Márquez the Nobel Prize remains one of the most dazzling feats of imagination in world literature."
+    "file": "Becoming.jpg",
+    "title": "Becoming",
+    "author": "Michelle Obama",
+    "genre": "Memoir",
+    "description": "An intimate and powerful account of Michelle Obama's journey from Chicago's South Side to the White House, a story of identity, ambition, and what it means to use your voice."
   },
   {
-    "file": "The God of Small Things.jpg",
-    "title": "The God of Small Things",
-    "author": "Arundhati Roy",
-    "genre": "Literary Fiction",
-    "description": "Set in Kerala, Roy's Booker Prize-winning debut follows twins Rahel and Estha, whose lives are shattered by caste, forbidden love, and the unforgiving 'Love Laws' that govern who may be loved and how much. Written in lyrical, non-linear prose, it is a devastating portrait of a world undone by its own rules."
+    "file": "Fooled by Randomness.jpg",
+    "title": "Fooled by Randomness",
+    "author": "Nassim Nicholas Taleb",
+    "genre": "Non-fiction",
+    "description": "A provocative argument that we consistently underestimate the role of chance in our lives, markets, and success, and that we are wired to see patterns where none exist."
   },
   {
-    "file": "The Silk Roads- A New History of the World.jpg",
-    "title": "The Silk Roads",
-    "author": "Peter Frankopan",
-    "genre": "History",
-    "description": "Frankopan moves the centre of world history from Europe to the ancient trade corridors of Central Asia, showing how the flow of goods, faiths, and ideas along the Silk Roads shaped every civilisation from Rome to the modern Middle East. A genuinely revisionary work that makes the familiar world look entirely new."
+    "file": "Steve Jobs by Walter Isaacson.jpg",
+    "title": "Steve Jobs",
+    "author": "Walter Isaacson",
+    "genre": "Biography",
+    "description": "The definitive biography of Apple's visionary co-founder, drawn from over forty interviews with Jobs himself, a candid portrait of genius, obsession, and the relentless pursuit of perfection."
   }
 ]
