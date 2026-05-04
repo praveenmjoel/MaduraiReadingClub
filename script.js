@@ -33,10 +33,10 @@ document.body.classList.add('js-ready');
 
 const CURRENT_BOOK = {
   show   : true,
-  title  : 'Project Hail Mary',
-  author : 'Andy Weir',
-  date   : '3 May 2026',
-  cover  : 'images/Voting/Project%20Hail%20Mary.jpg',
+  title  : 'A Field Guide to Lies and Statistics',
+  author : 'Daniel Levitin',
+  date   : '17 May 2026',
+  cover  : 'images/Voting/A%20Field%20Guide%20to%20Lies%20and%20Statistics.jpg',
 };
 
 
@@ -751,7 +751,7 @@ const FIREBASE_CONFIG = {
 };
 
 /* Set false to hide the voting section entirely */
-const VOTING_ENABLED = true;
+const VOTING_ENABLED = false;
 
 
 /* ─────────────────────────────────────────────────────────────
