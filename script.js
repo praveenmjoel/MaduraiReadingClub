@@ -751,7 +751,7 @@ const FIREBASE_CONFIG = {
 };
 
 /* Set false to hide the voting section entirely */
-const VOTING_ENABLED = false;
+const VOTING_ENABLED = true;
 
 
 /* ─────────────────────────────────────────────────────────────

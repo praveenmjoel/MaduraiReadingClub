@@ -1,26 +1,5 @@
 [
   {
-    "file": "A Field Guide to Lies and Statistics.jpg",
-    "title": "A Field Guide to Lies and Statistics",
-    "author": "Daniel J. Levitin",
-    "genre": "Non-fiction",
-    "description": "A sharp, witty guide to critical thinking in the age of information overload, teaching readers to question data, detect manipulation, and make smarter decisions."
-  },
-  {
-    "file": "All That We See Or Seem by Ken Liu.jpg",
-    "title": "All That We See Or Seem",
-    "author": "Ken Liu",
-    "genre": "Fiction",
-    "description": "A lyrical exploration of perception, reality, and the stories we tell ourselves, woven with the quiet precision and emotional depth Ken Liu is known for."
-  },
-  {
-    "file": "Becoming.jpg",
-    "title": "Becoming",
-    "author": "Michelle Obama",
-    "genre": "Memoir",
-    "description": "An intimate and powerful account of Michelle Obama's journey from Chicago's South Side to the White House, a story of identity, ambition, and what it means to use your voice."
-  },
-  {
     "file": "Fooled by Randomness.jpg",
     "title": "Fooled by Randomness",
     "author": "Nassim Nicholas Taleb",
@@ -28,10 +7,31 @@
     "description": "A provocative argument that we consistently underestimate the role of chance in our lives, markets, and success, and that we are wired to see patterns where none exist."
   },
   {
-    "file": "Steve Jobs by Walter Isaacson.jpg",
-    "title": "Steve Jobs",
-    "author": "Walter Isaacson",
-    "genre": "Biography",
-    "description": "The definitive biography of Apple's visionary co-founder, drawn from over forty interviews with Jobs himself, a candid portrait of genius, obsession, and the relentless pursuit of perfection."
+    "file": "Build, Don't Talk.jpg",
+    "title": "Build, Don't Talk: Things You Wish You Were Taught in School",
+    "author": "Raj Shamani",
+    "genre": "Self-help",
+    "description": "A no-nonsense guide to building something real, covering entrepreneurship, money, and mindset with the kind of practical lessons that classrooms never taught and experience always does."
+  },
+  {
+    "file": "Bridge to Terabithia.jpg",
+    "title": "Bridge to Terabithia",
+    "author": "Katherine Paterson",
+    "genre": "Fiction",
+    "description": "A timeless story about friendship, imagination, and grief. Two children create a magical kingdom in the woods, and what happens there changes everything, quietly and forever."
+  },
+  {
+    "file": "Don't Forget 2004.jpg",
+    "title": "Don't Forget 2004: Advertising Secrets of an Impossible Election Victory",
+    "author": "Suhel Seth",
+    "genre": "Non-fiction",
+    "description": "A behind-the-scenes account of how one of India's most unexpected election victories was won, examining the communication strategies, creative decisions, and instincts that defied every prediction."
+  },
+  {
+    "file": "The Lost Bookshop.jpg",
+    "title": "The Lost Bookshop",
+    "author": "Evie Woods",
+    "genre": "Fiction",
+    "description": "A story woven across time, connecting three people through a mysterious bookshop that exists between streets and centuries, where books have a way of finding the readers who need them most."
   }
 ]
