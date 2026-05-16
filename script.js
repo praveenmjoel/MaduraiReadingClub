@@ -753,6 +753,12 @@ const FIREBASE_CONFIG = {
 /* Set false to hide the voting section entirely */
 const VOTING_ENABLED = true;
 
+/* ★ INCREMENT THIS each time you start a new voting round ★
+   Each round gets its own Firestore collections, so all votes reset
+   to 0 and everyone can vote fresh regardless of previous rounds.
+   round-1 = first ever vote, round-2 = second, and so on.        */
+const VOTING_ROUND = 'round-2';
+
 
 /* ─────────────────────────────────────────────────────────────
    12. VOTING
@@ -784,7 +790,8 @@ const VOTING_ENABLED = true;
   const db = firebase.firestore();
 
   /* ── Voter identity — UUID stored in localStorage ── */
-  const VOTER_KEY = 'mrc_voter_id';
+  const VOTER_KEY  = 'mrc_voter_id';
+  const VOTED_KEY  = `mrc_voted_book_${VOTING_ROUND}`;
   function getVoterId() {
     let id = localStorage.getItem(VOTER_KEY);
     if (!id) {
@@ -883,8 +890,8 @@ const VOTING_ENABLED = true;
 
     try {
       const batch   = db.batch();
-      const voterRef= db.collection('mrc_voters').doc(voterId);
-      const voteRef = db.collection('mrc_votes').doc(bookSlug);
+      const voterRef= db.collection(`mrc_voters_${VOTING_ROUND}`).doc(voterId);
+      const voteRef = db.collection(`mrc_votes_${VOTING_ROUND}`).doc(bookSlug);
 
       batch.set(voterRef, {
         book      : bookSlug,
@@ -898,7 +905,7 @@ const VOTING_ENABLED = true;
       await batch.commit();
 
       /* Show results state */
-      localStorage.setItem('mrc_voted_book', bookSlug);
+      localStorage.setItem(VOTED_KEY, bookSlug);
       applyVotedState(bookSlug);
       confirmed.hidden = false;
       confirmed.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -937,14 +944,14 @@ const VOTING_ENABLED = true;
     } catch { return; }
 
     /* Check if already voted */
-    let votedSlug = localStorage.getItem('mrc_voted_book');
+    let votedSlug = localStorage.getItem(VOTED_KEY);
 
     /* Also verify against Firestore (handles cleared localStorage) */
     try {
-      const voterDoc = await db.collection('mrc_voters').doc(voterId).get();
+      const voterDoc = await db.collection(`mrc_voters_${VOTING_ROUND}`).doc(voterId).get();
       if (voterDoc.exists) {
         votedSlug = voterDoc.data().book;
-        localStorage.setItem('mrc_voted_book', votedSlug);
+        localStorage.setItem(VOTED_KEY, votedSlug);
       }
     } catch { /* offline — trust localStorage */ }
 
@@ -964,7 +971,7 @@ const VOTING_ENABLED = true;
     }
 
     /* ── Real-time vote counts listener ── */
-    db.collection('mrc_votes').onSnapshot(snapshot => {
+    db.collection(`mrc_votes_${VOTING_ROUND}`).onSnapshot(snapshot => {
       const counts = {};
       books.forEach(b => (counts[slug(b.title)] = 0));
       snapshot.forEach(doc => {
@@ -990,7 +997,8 @@ const VOTING_ENABLED = true;
     match /databases/{database}/documents {
 
       // Vote counts — anyone can read, only increment by 1
-      match /mrc_votes/{bookId} {
+      // NOTE: collection name is mrc_votes_{round} e.g. mrc_votes_round-2
+      match /mrc_votes_{round}/{bookId} {
         allow read: if true;
         allow write: if request.resource.data.count ==
                         resource.data.count + 1
@@ -1001,10 +1009,11 @@ const VOTING_ENABLED = true;
       }
 
       // Voter records — create once, never update or delete
-      match /mrc_voters/{voterId} {
+      // NOTE: collection name is mrc_voters_{round} e.g. mrc_voters_round-2
+      match /mrc_voters_{round}/{voterId} {
         allow read:   if false;
         allow create: if !exists(
-                          /databases/$(database)/documents/mrc_voters/$(voterId)
+                          /databases/$(database)/documents/mrc_voters_$(round)/$(voterId)
                         );
         allow update, delete: if false;
       }
