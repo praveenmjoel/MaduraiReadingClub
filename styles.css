@@ -236,6 +236,13 @@ button   { cursor: pointer; font: inherit; -webkit-appearance: none; appearance:
 .nav.scrolled .nav-link        { color: var(--clr-text-mid); }
 .nav.scrolled .nav-link:hover  { color: var(--clr-purple-mid); }
 
+/* Pages external link — subtle gold accent */
+.nav-link-pages {
+  color: var(--clr-gold) !important;
+  opacity: 0.85;
+}
+.nav-link-pages:hover { opacity: 1; }
+
 /* Hamburger */
 .nav-toggle {
   display: none;
