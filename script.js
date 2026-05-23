@@ -799,40 +799,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* ─────────────────────────────────────────────────────────────
-   11. NOW-READING RIBBON
+   11. NOW-READING RIBBON  (config fetched live from admin)
    ──────────────────────────────────────────────────────────── */
 (function buildNowReading() {
-  if (!CURRENT_BOOK.show) return;
+  const CONFIG_URL = 'https://pages.maduraireadingclub.com/api/config/now-reading';
 
-  const ribbon = document.createElement('aside');
-  ribbon.className = 'now-reading';
-  ribbon.setAttribute('aria-label', 'Currently reading');
-  ribbon.innerHTML = `
-    <button class="nr-dismiss" aria-label="Dismiss">&#x2715;</button>
-    <p class="nr-eyebrow">Now Reading</p>
-    <div class="nr-body">
-      ${CURRENT_BOOK.cover ? `<img class="nr-cover" src="${CURRENT_BOOK.cover}" alt="${CURRENT_BOOK.title} cover" />` : ''}
-      <div class="nr-text">
-        <p class="nr-title">${CURRENT_BOOK.title}</p>
-        <p class="nr-author">by ${CURRENT_BOOK.author}</p>
-        <div class="nr-divider"></div>
-        <p class="nr-date">
-          <span class="nr-date-label">Discussion</span>
-          <span>${CURRENT_BOOK.date} &nbsp;·&nbsp; 4 PM</span>
-        </p>
+  function renderRibbon(book) {
+    if (!book || !book.show) return;
+
+    const ribbon = document.createElement('aside');
+    ribbon.className = 'now-reading';
+    ribbon.setAttribute('aria-label', 'Currently reading');
+    ribbon.innerHTML = `
+      <button class="nr-dismiss" aria-label="Dismiss">&#x2715;</button>
+      <p class="nr-eyebrow">Now Reading</p>
+      <div class="nr-body">
+        ${book.cover ? `<img class="nr-cover" src="${book.cover}" alt="${book.title} cover" loading="lazy" />` : ''}
+        <div class="nr-text">
+          <p class="nr-title">${book.title}</p>
+          <p class="nr-author">by ${book.author}</p>
+          <div class="nr-divider"></div>
+          <p class="nr-date">
+            <span class="nr-date-label">Discussion</span>
+            <span>${book.date} &nbsp;·&nbsp; ${book.time || '4 PM'}</span>
+          </p>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  document.body.appendChild(ribbon);
+    document.body.appendChild(ribbon);
+    setTimeout(() => ribbon.classList.add('nr-visible'), 900);
+    ribbon.querySelector('.nr-dismiss').addEventListener('click', () => {
+      ribbon.classList.remove('nr-visible');
+      setTimeout(() => ribbon.remove(), 400);
+    });
+  }
 
-  // Slide in after a short delay so it doesn't compete with page load
-  setTimeout(() => ribbon.classList.add('nr-visible'), 900);
-
-  ribbon.querySelector('.nr-dismiss').addEventListener('click', () => {
-    ribbon.classList.remove('nr-visible');
-    setTimeout(() => ribbon.remove(), 400);
-  });
+  // Fetch live config, fall back to hardcoded CURRENT_BOOK if network fails
+  fetch(CONFIG_URL)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(config => renderRibbon(config))
+    .catch(() => renderRibbon(CURRENT_BOOK));
 }());
 
 
