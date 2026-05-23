@@ -642,6 +642,7 @@ document.addEventListener('keydown', e => {
           phone:       fullPhone,
           name:        document.getElementById('cjf-name').value.trim(),
           email:       document.getElementById('cjf-email').value.trim(),
+          city:        (document.getElementById('cjf-city')?.value || '').trim() || null,
           dob:         document.getElementById('cjf-dob').value || null,
           is_student:  isStudentEl ? isStudentEl.value === 'Yes' : null,
           study_level: studyEl    ? studyEl.value    : null,
