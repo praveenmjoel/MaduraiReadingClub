@@ -529,22 +529,93 @@ document.addEventListener('keydown', e => {
 
 
 /* ─────────────────────────────────────────────────────────────
-   9.  CUSTOM JOIN FORM — posts silently to Google Forms
+   9.  CUSTOM JOIN FORM
+       • Real-time phone validation with country code selector
+       • Posts to Google Forms (backup) + MRC database (primary)
    ──────────────────────────────────────────────────────────── */
 (function initJoinForm() {
-  const form      = document.getElementById('joinForm');
-  const successEl = document.getElementById('cjfSuccess');
-  const submitBtn = form ? form.querySelector('.cjf-submit') : null;
+  const form         = document.getElementById('joinForm');
+  const successEl    = document.getElementById('cjfSuccess');
+  const submitBtn    = form ? form.querySelector('.cjf-submit') : null;
 
   if (!form) return;
 
-  const GF_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScyUgBQy52o3MQgrGxnrYWcRIqSyt2wqT_HOLYq5UevzsN01Q/formResponse';
+  const GF_ACTION    = 'https://docs.google.com/forms/d/e/1FAIpQLScyUgBQy52o3MQgrGxnrYWcRIqSyt2wqT_HOLYq5UevzsN01Q/formResponse';
+  const MRC_API      = 'https://pages.maduraireadingclub.com/api/members';
 
-  // Submit
+  const phoneLocal   = document.getElementById('cjf-mobile-local');
+  const countryCode  = document.getElementById('cjf-country-code');
+  const phoneHidden  = document.getElementById('cjf-mobile');
+  const phoneError   = document.getElementById('cjf-phone-error');
+
+  // ── Phone validation ─────────────────────────────────────
+  function validatePhone(local, code) {
+    const stripped = local.replace(/[\s\-\(\)\.]/g, '');
+    if (!stripped) return { ok: false, msg: 'Phone number is required.' };
+
+    const codeDigits = code.replace('+', '');
+
+    // Detect if user entered the country code themselves
+    if (stripped.startsWith('+') || stripped.startsWith('00')) {
+      return { ok: false, msg: 'Enter only your local number — the country code (' + code + ') is already selected.' };
+    }
+    if (codeDigits.length >= 2 && stripped.startsWith(codeDigits)) {
+      return { ok: false, msg: 'Remove the country code (' + code + ') — enter just your local number.' };
+    }
+
+    // Digits only after stripping
+    if (!/^\d+$/.test(stripped)) {
+      return { ok: false, msg: 'Use digits only, no letters or symbols.' };
+    }
+
+    // India: exactly 10 digits, starting with 6-9
+    if (code === '+91') {
+      if (stripped.length !== 10) return { ok: false, msg: 'Indian mobile numbers are exactly 10 digits.' };
+      if (!/^[6-9]/.test(stripped)) return { ok: false, msg: 'Enter a valid Indian mobile number (starts with 6–9).' };
+    } else {
+      if (stripped.length < 7 || stripped.length > 15) {
+        return { ok: false, msg: 'Enter a valid phone number (7–15 digits).' };
+      }
+    }
+
+    return { ok: true, stripped };
+  }
+
+  function showPhoneError(msg) {
+    phoneError.textContent = msg;
+    phoneLocal.style.borderBottomColor = msg ? '#c0533a' : '';
+  }
+
+  // Real-time validation as the user types
+  phoneLocal.addEventListener('input', function () {
+    const result = validatePhone(this.value, countryCode.value);
+    showPhoneError(result.ok ? '' : result.msg);
+  });
+  countryCode.addEventListener('change', function () {
+    if (phoneLocal.value) {
+      const result = validatePhone(phoneLocal.value, this.value);
+      showPhoneError(result.ok ? '' : result.msg);
+    }
+  });
+
+  // ── Submit ───────────────────────────────────────────────
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    // Basic HTML5 validation
+    // Validate phone first
+    const code   = countryCode.value;
+    const result = validatePhone(phoneLocal.value, code);
+    if (!result.ok) {
+      showPhoneError(result.msg);
+      phoneLocal.focus();
+      return;
+    }
+
+    // Build full phone number and set hidden input for Google Forms
+    const fullPhone = code + result.stripped;
+    phoneHidden.value = fullPhone;
+
+    // HTML5 validation for other fields
     if (!form.checkValidity()) {
       form.querySelectorAll(':invalid')[0]?.focus();
       return;
@@ -553,18 +624,51 @@ document.addEventListener('keydown', e => {
     submitBtn.disabled = true;
     submitBtn.querySelector('.cjf-submit-text').textContent = 'Submitting…';
 
+    // ── 1. Post to Google Forms (silent backup) ──────────
     try {
-      // no-cors: Google Forms accepts the POST; response is opaque — that's fine
-      await fetch(GF_ACTION, {
-        method : 'POST',
-        mode   : 'no-cors',
-        body   : new FormData(form),
+      await fetch(GF_ACTION, { method: 'POST', mode: 'no-cors', body: new FormData(form) });
+    } catch (_) { /* opaque response is expected */ }
+
+    // ── 2. Post to MRC native database ──────────────────
+    const isStudentEl = form.querySelector('[name="entry.2050319011"]:checked');
+    const studyEl     = form.querySelector('[name="entry.2071127740"]:checked');
+    const howHeardEl  = form.querySelector('[name="entry.1615453040"]:checked');
+
+    try {
+      const res = await fetch(MRC_API, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone:       fullPhone,
+          name:        document.getElementById('cjf-name').value.trim(),
+          email:       document.getElementById('cjf-email').value.trim(),
+          dob:         document.getElementById('cjf-dob').value || null,
+          is_student:  isStudentEl ? isStudentEl.value === 'Yes' : null,
+          study_level: studyEl    ? studyEl.value    : null,
+          institution: document.getElementById('cjf-institution').value.trim() || null,
+          how_heard:   howHeardEl ? howHeardEl.value : null,
+        }),
       });
-    } catch (_) {
-      // no-cors fetch throws on network errors only; a TypeError from opaque response is normal
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        // Already registered — show a friendly message
+        if (res.status === 409) {
+          submitBtn.disabled = false;
+          submitBtn.querySelector('.cjf-submit-text').textContent = 'Join the Club';
+          const errEl = form.querySelector('.cjf-phone-error') || phoneError;
+          errEl.textContent = data.message || "You're already registered!";
+          return;
+        }
+        // Other errors: still show success (Google Forms captured the data)
+        console.warn('MRC API error:', data.error);
+      }
+    } catch (err) {
+      // Network error: Google Forms still captured it, so continue
+      console.warn('MRC database unreachable:', err);
     }
 
-    // Show success regardless — Google Forms silently records the submission
+    // Show success
     form.querySelectorAll('.cjf-grid, .cjf-field, .cjf-submit')
         .forEach(el => (el.style.display = 'none'));
     successEl.hidden = false;

@@ -358,8 +358,35 @@
                 <input class="cjf-input" type="text" id="cjf-name" name="entry.687177433" placeholder="Your full name" required />
               </div>
               <div class="cjf-field">
-                <label class="cjf-label" for="cjf-mobile">Mobile Number <span class="cjf-req">*</span></label>
-                <input class="cjf-input" type="tel" id="cjf-mobile" name="entry.2056487195" placeholder="+91 00000 00000" required />
+                <label class="cjf-label" for="cjf-mobile-local">Mobile Number <span class="cjf-req">*</span></label>
+                <!-- Hidden input carries the combined value to Google Forms -->
+                <input type="hidden" id="cjf-mobile" name="entry.2056487195" />
+                <div class="cjf-phone-wrap">
+                  <select class="cjf-country-select" id="cjf-country-code" aria-label="Country code">
+                    <option value="+91"  selected>🇮🇳 +91</option>
+                    <option value="+1"        >🇺🇸 +1</option>
+                    <option value="+44"       >🇬🇧 +44</option>
+                    <option value="+61"       >🇦🇺 +61</option>
+                    <option value="+971"      >🇦🇪 +971</option>
+                    <option value="+65"       >🇸🇬 +65</option>
+                    <option value="+60"       >🇲🇾 +60</option>
+                    <option value="+94"       >🇱🇰 +94</option>
+                    <option value="+880"      >🇧🇩 +880</option>
+                    <option value="+92"       >🇵🇰 +92</option>
+                    <option value="+49"       >🇩🇪 +49</option>
+                    <option value="+33"       >🇫🇷 +33</option>
+                  </select>
+                  <input
+                    class="cjf-input cjf-phone-input"
+                    type="tel"
+                    id="cjf-mobile-local"
+                    placeholder="00000 00000"
+                    autocomplete="tel-national"
+                    inputmode="numeric"
+                    required
+                  />
+                </div>
+                <p class="cjf-phone-error" id="cjf-phone-error"></p>
               </div>
               <div class="cjf-field">
                 <label class="cjf-label" for="cjf-email">Email ID <span class="cjf-req">*</span></label>

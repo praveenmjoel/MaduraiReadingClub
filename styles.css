@@ -1879,6 +1879,42 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
   cursor: pointer;
 }
 
+/* Phone field — country code + local number */
+.cjf-phone-wrap {
+  display:     flex;
+  gap:         0.6rem;
+  align-items: flex-end;
+  width:       100%;
+}
+.cjf-country-select {
+  font-family:       var(--ff-display);
+  font-size:         1rem;
+  color:             var(--clr-text);
+  background:        transparent;
+  border:            none;
+  border-bottom:     1px solid var(--clr-cream-mid);
+  border-radius:     0;
+  padding:           0.45rem 0;
+  outline:           none;
+  cursor:            pointer;
+  -webkit-appearance: none;
+  appearance:        none;
+  flex-shrink:       0;
+  width:             82px;
+  transition:        border-color 0.25s;
+}
+.cjf-country-select:focus { border-bottom-color: var(--clr-gold); }
+.cjf-phone-input { flex: 1; min-width: 0; }
+.cjf-phone-error {
+  font-family:  var(--ff-body);
+  font-size:    0.78rem;
+  color:        #c0533a;
+  margin-top:   0.3rem;
+  min-height:   1em;
+  transition:   opacity 0.2s;
+}
+.cjf-phone-error:empty { display: none; }
+
 /* Radio group */
 .cjf-radio-group {
   display: flex;
