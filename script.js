@@ -869,7 +869,7 @@ const VOTING_ENABLED = true;
    Each round gets its own Firestore collections, so all votes reset
    to 0 and everyone can vote fresh regardless of previous rounds.
    round-1 = first ever vote, round-2 = second, and so on.        */
-const VOTING_ROUND = 'round-2';
+const VOTING_ROUND = 'round-3';
 
 
 /* ─────────────────────────────────────────────────────────────

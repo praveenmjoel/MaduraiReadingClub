@@ -1,37 +1,37 @@
 [
   {
-    "file": "Fooled by Randomness.jpg",
-    "title": "Fooled by Randomness",
-    "author": "Nassim Nicholas Taleb",
-    "genre": "Non-fiction",
-    "description": "A provocative argument that we consistently underestimate the role of chance in our lives, markets, and success, and that we are wired to see patterns where none exist."
-  },
-  {
-    "file": "Build, Don't Talk.jpg",
-    "title": "Build, Don't Talk: Things You Wish You Were Taught in School",
-    "author": "Raj Shamani",
-    "genre": "Self-help",
-    "description": "A no-nonsense guide to building something real, covering entrepreneurship, money, and mindset with the kind of practical lessons that classrooms never taught and experience always does."
-  },
-  {
-    "file": "Bridge to Terabithia.jpg",
-    "title": "Bridge to Terabithia",
-    "author": "Katherine Paterson",
-    "genre": "Fiction",
-    "description": "A timeless story about friendship, imagination, and grief. Two children create a magical kingdom in the woods, and what happens there changes everything, quietly and forever."
-  },
-  {
-    "file": "Don't Forget 2004.jpg",
-    "title": "Don't Forget 2004: Advertising Secrets of an Impossible Election Victory",
-    "author": "Jayshree M Sundar",
-    "genre": "Non-fiction",
-    "description": "A behind-the-scenes account of how one of India's most unexpected election victories was won, examining the communication strategies, creative decisions, and instincts that defied every prediction."
-  },
-  {
     "file": "The Lost Bookshop.jpg",
     "title": "The Lost Bookshop",
     "author": "Evie Woods",
     "genre": "Fiction",
     "description": "A story woven across time, connecting three people through a mysterious bookshop that exists between streets and centuries, where books have a way of finding the readers who need them most."
+  },
+  {
+    "file": "The Upstarts.jpg",
+    "title": "The Upstarts",
+    "author": "Brad Stone",
+    "genre": "Non-fiction",
+    "description": "The inside story of how Uber and Airbnb defied every conventional rule, disrupted entire industries, and remade the world — told by the journalist who had the closest access to both companies at their most chaotic."
+  },
+  {
+    "file": "The Fountainhead.jpg",
+    "title": "The Fountainhead",
+    "author": "Ayn Rand",
+    "genre": "Fiction",
+    "description": "The story of Howard Roark, an uncompromising architect who refuses to surrender his vision to convention or popular taste — a towering argument for individualism, integrity, and the creative spirit at any cost."
+  },
+  {
+    "file": "The Time Traveler's Wife.jpg",
+    "title": "The Time Traveler's Wife",
+    "author": "Audrey Niffenegger",
+    "genre": "Fiction",
+    "description": "A love story unlike any other — a man with a genetic disorder that pulls him involuntarily through time, and the woman who must love him across a life that is never quite linear, never quite safe."
+  },
+  {
+    "file": "The Forty Rules of Love.jpg",
+    "title": "The Forty Rules of Love",
+    "author": "Elif Shafak",
+    "genre": "Fiction",
+    "description": "Two stories running in parallel — a modern woman discovering a manuscript about the transformative friendship between the poet Rumi and the wandering dervish Shams of Tabriz — and the forty rules of love that connect them."
   }
 ]
