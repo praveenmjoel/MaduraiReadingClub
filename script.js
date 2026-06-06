@@ -1001,9 +1001,10 @@ const VOTING_ROUND = 'round-3';
     buttons.forEach(b => (b.disabled = true));
 
     try {
-      const batch   = db.batch();
-      const voterRef= db.collection(`mrc_voters_${VOTING_ROUND}`).doc(voterId);
-      const voteRef = db.collection(`mrc_votes_${VOTING_ROUND}`).doc(bookSlug);
+      const batch    = db.batch();
+      const roundRef = db.collection('mrc_voting').doc(VOTING_ROUND);
+      const voterRef = roundRef.collection('voters').doc(voterId);
+      const voteRef  = roundRef.collection('votes').doc(bookSlug);
 
       batch.set(voterRef, {
         book      : bookSlug,
@@ -1060,7 +1061,7 @@ const VOTING_ROUND = 'round-3';
 
     /* Also verify against Firestore (handles cleared localStorage) */
     try {
-      const voterDoc = await db.collection(`mrc_voters_${VOTING_ROUND}`).doc(voterId).get();
+      const voterDoc = await db.collection('mrc_voting').doc(VOTING_ROUND).collection('voters').doc(voterId).get();
       if (voterDoc.exists) {
         votedSlug = voterDoc.data().book;
         localStorage.setItem(VOTED_KEY, votedSlug);
@@ -1083,7 +1084,7 @@ const VOTING_ROUND = 'round-3';
     }
 
     /* ── Real-time vote counts listener ── */
-    db.collection(`mrc_votes_${VOTING_ROUND}`).onSnapshot(snapshot => {
+    db.collection('mrc_voting').doc(VOTING_ROUND).collection('votes').onSnapshot(snapshot => {
       const counts = {};
       books.forEach(b => (counts[slug(b.title)] = 0));
       snapshot.forEach(doc => {
@@ -1103,29 +1104,30 @@ const VOTING_ROUND = 'round-3';
   /*
   ════════════════════════════════════════════════════════════
   FIRESTORE SECURITY RULES  —  paste into Firebase Console
+  (Firestore → Rules tab)
+  Works for ALL voting rounds automatically — no changes
+  needed when VOTING_ROUND is incremented.
   ════════════════════════════════════════════════════════════
   rules_version = '2';
   service cloud.firestore {
     match /databases/{database}/documents {
 
-      // Vote counts — anyone can read, only increment by 1
-      // NOTE: collection name is mrc_votes_{round} e.g. mrc_votes_round-2
-      match /mrc_votes_{round}/{bookId} {
+      // Vote counts — anyone reads, only allowed to increment by 1
+      match /mrc_voting/{round}/votes/{bookId} {
         allow read: if true;
-        allow write: if request.resource.data.count ==
-                        resource.data.count + 1
-                     && request.resource.data.keys().hasOnly(['count']);
-        // Allow create (first vote for a book)
+        // First vote for this book (document doesn't exist yet)
         allow create: if request.resource.data.count == 1
+                      && request.resource.data.keys().hasOnly(['count']);
+        // Subsequent votes — only increment by 1
+        allow update: if request.resource.data.count == resource.data.count + 1
                       && request.resource.data.keys().hasOnly(['count']);
       }
 
-      // Voter records — create once, never update or delete
-      // NOTE: collection name is mrc_voters_{round} e.g. mrc_voters_round-2
-      match /mrc_voters_{round}/{voterId} {
+      // Voter records — create once per round, never update or delete
+      match /mrc_voting/{round}/voters/{voterId} {
         allow read:   if false;
         allow create: if !exists(
-                          /databases/$(database)/documents/mrc_voters_$(round)/$(voterId)
+                          /databases/$(database)/documents/mrc_voting/$(round)/voters/$(voterId)
                         );
         allow update, delete: if false;
       }
