@@ -1,12 +1,5 @@
 [
   {
-    "file": "The Lost Bookshop.jpg",
-    "title": "The Lost Bookshop",
-    "author": "Evie Woods",
-    "genre": "Fiction",
-    "description": "A story woven across time, connecting three people through a mysterious bookshop that exists between streets and centuries, where books have a way of finding the readers who need them most."
-  },
-  {
     "file": "The Upstarts.jpg",
     "title": "The Upstarts",
     "author": "Brad Stone",
@@ -14,24 +7,31 @@
     "description": "The inside story of how Uber and Airbnb defied every conventional rule, disrupted entire industries, and remade the world — told by the journalist who had the closest access to both companies at their most chaotic."
   },
   {
-    "file": "The Fountainhead.jpg",
-    "title": "The Fountainhead",
-    "author": "Ayn Rand",
+    "file": "The Silent Patient.jpg",
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
     "genre": "Fiction",
-    "description": "The story of Howard Roark, an uncompromising architect who refuses to surrender his vision to convention or popular taste — a towering argument for individualism, integrity, and the creative spirit at any cost."
+    "description": "A famous painter shoots her husband five times and then never speaks again. A criminal psychotherapist becomes obsessed with uncovering her motive — and the truth, when it comes, changes everything."
   },
   {
-    "file": "The Time Traveler's Wife.jpg",
-    "title": "The Time Traveler's Wife",
-    "author": "Audrey Niffenegger",
-    "genre": "Fiction",
-    "description": "A love story unlike any other — a man with a genetic disorder that pulls him involuntarily through time, and the woman who must love him across a life that is never quite linear, never quite safe."
+    "file": "Make Your Bed.jpg",
+    "title": "Make Your Bed",
+    "author": "Admiral William H. McRaven",
+    "genre": "Non-fiction",
+    "description": "Ten lessons drawn from Navy SEAL training that argue small disciplined acts — starting with making your bed every morning — build the mental toughness to change your world and the world around you."
   },
   {
-    "file": "The Forty Rules of Love.jpg",
-    "title": "The Forty Rules of Love",
-    "author": "Elif Shafak",
-    "genre": "Fiction",
-    "description": "Two stories running in parallel — a modern woman discovering a manuscript about the transformative friendship between the poet Rumi and the wandering dervish Shams of Tabriz — and the forty rules of love that connect them."
+    "file": "The Body Keeps The Score.jpg",
+    "title": "The Body Keeps the Score",
+    "author": "Bessel van der Kolk",
+    "genre": "Non-fiction",
+    "description": "A landmark work on trauma — how it reshapes the brain and body, why it can't be talked away, and the range of therapies that offer genuine healing. Challenging to read, impossible to ignore."
+  },
+  {
+    "file": "$100M Offers.jpg",
+    "title": "$100M Offers",
+    "author": "Alex Hormozi",
+    "genre": "Non-fiction",
+    "description": "A direct, no-fluff guide to crafting offers so compelling that customers feel foolish saying no — built from Hormozi's experience scaling multiple businesses past eight figures."
   }
 ]
