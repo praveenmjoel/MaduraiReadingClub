@@ -1,37 +1,37 @@
 [
   {
-    "file": "The Upstarts.jpg",
-    "title": "The Upstarts",
-    "author": "Brad Stone",
-    "genre": "Non-fiction",
-    "description": "The inside story of how Uber and Airbnb defied every conventional rule, disrupted entire industries, and remade the world — told by the journalist who had the closest access to both companies at their most chaotic."
-  },
-  {
-    "file": "The Silent Patient.jpg",
-    "title": "The Silent Patient",
-    "author": "Alex Michaelides",
+    "file": "My Brilliant Friend.jpg",
+    "title": "My Brilliant Friend",
+    "author": "Elena Ferrante",
     "genre": "Fiction",
-    "description": "A famous painter shoots her husband five times and then never speaks again. A criminal psychotherapist becomes obsessed with uncovering her motive — and the truth, when it comes, changes everything."
+    "description": "The first of Ferrante's Neapolitan novels — a fierce, intimate portrait of two girls growing up in postwar Naples, bound by a friendship that is loving, competitive, and impossible to escape."
   },
   {
-    "file": "Make Your Bed.jpg",
-    "title": "Make Your Bed",
-    "author": "Admiral William H. McRaven",
-    "genre": "Non-fiction",
-    "description": "Ten lessons drawn from Navy SEAL training that argue small disciplined acts — starting with making your bed every morning — build the mental toughness to change your world and the world around you."
+    "file": "The Book of Disquiet.jpg",
+    "title": "The Book of Disquiet",
+    "author": "Fernando Pessoa",
+    "genre": "Fiction",
+    "description": "An unfinished masterpiece of 20th-century literature: a dreamlike, fragmentary diary of a Lisbon bookkeeper wrestling with loneliness, identity, and the unbearable beauty of ordinary existence."
   },
   {
-    "file": "The Body Keeps The Score.jpg",
-    "title": "The Body Keeps the Score",
-    "author": "Bessel van der Kolk",
-    "genre": "Non-fiction",
-    "description": "A landmark work on trauma — how it reshapes the brain and body, why it can't be talked away, and the range of therapies that offer genuine healing. Challenging to read, impossible to ignore."
+    "file": "Anna Karenina.jpg",
+    "title": "Anna Karenina",
+    "author": "Leo Tolstoy",
+    "genre": "Fiction",
+    "description": "Tolstoy's towering novel of passion and consequence — a married aristocrat's doomed affair set against the glittering and hypocritical world of 19th-century Russian society."
   },
   {
-    "file": "$100M Offers.jpg",
-    "title": "$100M Offers",
-    "author": "Alex Hormozi",
-    "genre": "Non-fiction",
-    "description": "A direct, no-fluff guide to crafting offers so compelling that customers feel foolish saying no — built from Hormozi's experience scaling multiple businesses past eight figures."
+    "file": "The Namesake.jpg",
+    "title": "The Namesake",
+    "author": "Jhumpa Lahiri",
+    "genre": "Fiction",
+    "description": "A Bengali family navigates the gap between old-world tradition and American life across generations — a quiet, luminous novel about belonging, names, and the weight of identity."
+  },
+  {
+    "file": "Aram.jpg",
+    "title": "Aram",
+    "author": "Perumal Murugan",
+    "genre": "Fiction",
+    "description": "A Tamil novel exploring the meaning of dharma and righteous living — written by one of contemporary Tamil literature's most celebrated and fearless voices."
   }
 ]
