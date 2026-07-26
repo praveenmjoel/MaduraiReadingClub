@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MRC T-Shirt — Madurai Reading Club</title>
+  <link rel="icon" type="image/png" href="images/Logo Circular.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:      #C62828;
+      --red-dark: #8E0000;
+      --red-light:#FFCDD2;
+      --gold:     #F5A623;
+      --text:     #1a1a1a;
+      --muted:    #666;
+      --border:   #e0e0e0;
+      --bg:       #fafafa;
+      --white:    #ffffff;
+      --radius:   12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    .topbar {
+      background: var(--red);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar-logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      line-height: 1.1;
+    }
+    .topbar-logo span:first-child {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .topbar-logo span:last-child {
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .topbar-back {
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .topbar-back:hover { color: #fff; }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .page { grid-template-columns: 1fr; gap: 28px; padding: 20px 14px 48px; }
+    }
+
+    /* ── Product gallery ── */
+    .gallery { position: sticky; top: 24px; }
+    .gallery-main {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(0,0,0,.08);
+      aspect-ratio: 1 / 1;
+      position: relative;
+    }
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0; left: 0;
+      transition: opacity .3s;
+    }
+    .gallery-main img.hidden { opacity: 0; }
+    .gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .gallery-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color .2s;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    }
+    .gallery-thumb.active { border-color: var(--red); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Right column ── */
+    .detail { display: flex; flex-direction: column; gap: 24px; }
+
+    .badge {
+      display: inline-block;
+      background: var(--red-light);
+      color: var(--red-dark);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .price {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .price-note {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Size selector ── */
+    .label { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .size-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .size-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .size-btn:hover { border-color: var(--red); color: var(--red); }
+    .size-btn.selected { border-color: var(--red); background: var(--red); color: #fff; }
+    .size-guide-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .size-error { color: var(--red); font-size: 13px; display: none; margin-top: 6px; }
+
+    /* ── Delivery ── */
+    .delivery-options { display: flex; flex-direction: column; gap: 10px; }
+    .delivery-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .delivery-option:has(input:checked) {
+      border-color: var(--red);
+      background: #fff8f8;
+    }
+    .delivery-option input[type="radio"] { accent-color: var(--red); margin-top: 2px; flex-shrink: 0; }
+    .delivery-option-body { flex: 1; }
+    .delivery-option-title { font-weight: 600; font-size: 14px; }
+    .delivery-option-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .delivery-badge-free {
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: auto;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .delivery-badge-ship {
+      background: #fff3e0;
+      color: #e65100;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: auto;
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* ── Address fields ── */
+    #address-fields { display: none; flex-direction: column; gap: 12px; }
+    #address-fields.visible { display: flex; }
+
+    /* ── Form ── */
+    .form-section { display: flex; flex-direction: column; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+    .field input, .field textarea {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .15s;
+      background: #fff;
+      width: 100%;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--red); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ── Phone field ── */
+    .phone-input-wrap {
+      display: flex;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      transition: border-color .15s;
+    }
+    .phone-input-wrap:focus-within { border-color: var(--red); }
+    .phone-prefix {
+      padding: 11px 12px;
+      background: #f5f5f5;
+      border-right: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--muted);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+    .phone-input-wrap input {
+      border: none;
+      border-radius: 0;
+      flex: 1;
+      min-width: 0;
+    }
+    .phone-input-wrap input:focus { border: none; outline: none; }
+
+    /* ── Order total ── */
+    .order-total {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .total-row + .total-row { margin-top: 8px; }
+    .total-row.grand {
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+      padding-top: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .total-row.grand span:last-child { color: var(--red); }
+
+    /* ── Buy button ── */
+    .buy-btn {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background .2s, transform .1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+    .buy-btn:hover { background: var(--red-dark); }
+    .buy-btn:active { transform: scale(.99); }
+    .buy-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+    /* ── Success screen ── */
+    #success-screen {
+      display: none;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    #success-screen.visible { display: block; }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #e8f5e9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 40px;
+    }
+    #success-screen h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    #success-screen p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .success-details {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 24px 0;
+      text-align: left;
+    }
+    .success-details dt { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .success-details dd { font-size: 15px; font-weight: 600; margin: 4px 0 14px; }
+    .success-details dd:last-child { margin-bottom: 0; }
+
+    /* ── Size chart modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-header h3 { font-size: 18px; font-weight: 700; }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--muted);
+      line-height: 1;
+      padding: 4px;
+    }
+    .size-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .size-table th, .size-table td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .size-table th {
+      background: var(--red);
+      color: #fff;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .size-table tr:nth-child(even) td { background: #fafafa; }
+    .size-table td:first-child { text-align: left; font-weight: 600; color: var(--muted); }
+    .table-scroll { overflow-x: auto; }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>Madurai</span>
+    <span>Reading Club</span>
+  </a>
+  <a href="index.html" class="topbar-back">← Back to main site</a>
+</header>
+
+<!-- Success screen (hidden until payment done) -->
+<div id="success-screen">
+  <div class="success-icon">✅</div>
+  <h2>Order Confirmed!</h2>
+  <p>Thank you — a confirmation has been sent to your email.</p>
+  <div class="success-details">
+    <dl>
+      <dt>Name</dt>       <dd id="s-name"></dd>
+      <dt>Size</dt>       <dd id="s-size"></dd>
+      <dt>Delivery</dt>   <dd id="s-delivery"></dd>
+      <dt>Amount Paid</dt><dd id="s-amount"></dd>
+    </dl>
+  </div>
+  <p style="font-size:13px;color:#aaa;">Order ID: <span id="s-orderid"></span></p>
+</div>
+
+<!-- Main shop content -->
+<div class="page" id="shop-page">
+
+  <!-- Left: Gallery -->
+  <div class="gallery">
+    <div class="gallery-main">
+      <img id="img-front" src="images/tshirt-front.jpg" alt="T-Shirt Front" />
+      <img id="img-back"  src="images/tshirt-back.jpg"  alt="T-Shirt Back" class="hidden" />
+    </div>
+    <div class="gallery-thumbs">
+      <div class="gallery-thumb active" id="thumb-front" onclick="showView('front')">
+        <img src="images/tshirt-front.jpg" alt="Front" />
+      </div>
+      <div class="gallery-thumb" id="thumb-back" onclick="showView('back')">
+        <img src="images/tshirt-back.jpg" alt="Back" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Details + Form -->
+  <div class="detail">
+
+    <div>
+      <span class="badge">Limited Edition Merch</span>
+      <h1 class="product-title" style="margin-top:12px;">I'd Rather Be Reading</h1>
+      <p style="color:var(--muted);font-size:14px;margin-top:6px;">Madurai Reading Club · Unisex T-Shirt · 100% Cotton</p>
+    </div>
+
+    <div class="price-row">
+      <span class="price">₹499</span>
+      <span class="price-note">+ ₹80 shipping (or collect free)</span>
+    </div>
+
+    <!-- Size picker -->
+    <div>
+      <div class="label">Select Size</div>
+      <div class="size-grid">
+        <button class="size-btn" data-size="S"   onclick="selectSize('S')">S</button>
+        <button class="size-btn" data-size="M"   onclick="selectSize('M')">M</button>
+        <button class="size-btn" data-size="L"   onclick="selectSize('L')">L</button>
+        <button class="size-btn" data-size="XL"  onclick="selectSize('XL')">XL</button>
+        <button class="size-btn" data-size="2XL" onclick="selectSize('2XL')">2XL</button>
+      </div>
+      <button class="size-guide-btn" onclick="openSizeChart()">📏 View size guide</button>
+      <div class="size-error" id="size-error">Please select a size to continue.</div>
+    </div>
+
+    <!-- Delivery -->
+    <div>
+      <div class="label">Delivery</div>
+      <div class="delivery-options">
+        <label class="delivery-option">
+          <input type="radio" name="delivery" value="collect" checked onchange="updateDelivery()" />
+          <div class="delivery-option-body">
+            <div class="delivery-option-title">Collect at book discussion</div>
+            <div class="delivery-option-sub">Pick up at the next MRC discussion in Madurai</div>
+          </div>
+          <span class="delivery-badge-free">FREE</span>
+        </label>
+        <label class="delivery-option">
+          <input type="radio" name="delivery" value="ship" onchange="updateDelivery()" />
+          <div class="delivery-option-body">
+            <div class="delivery-option-title">Ship to my address</div>
+            <div class="delivery-option-sub">Delivery within India only</div>
+          </div>
+          <span class="delivery-badge-ship">+₹80</span>
+        </label>
+      </div>
+
+      <!-- Address fields -->
+      <div id="address-fields" style="margin-top:16px;">
+        <div class="field">
+          <label>Street Address</label>
+          <input type="text" id="address" placeholder="House / flat no., street, area" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>City</label>
+            <input type="text" id="city" placeholder="City" />
+          </div>
+          <div class="field">
+            <label>Pincode</label>
+            <input type="text" id="pincode" placeholder="600001" maxlength="6" inputmode="numeric" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buyer details -->
+    <div class="form-section">
+      <div class="label" style="margin-bottom:0;">Your Details</div>
+      <div class="field">
+        <label>Full Name *</label>
+        <input type="text" id="name" placeholder="Your name" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label>Phone *</label>
+        <div class="phone-input-wrap">
+          <span class="phone-prefix">🇮🇳 +91</span>
+          <input type="tel" id="phone" placeholder="9876543210" maxlength="10" inputmode="numeric" autocomplete="tel-national" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Email *</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+    </div>
+
+    <!-- Order total -->
+    <div class="order-total">
+      <div class="total-row"><span>T-Shirt</span><span>₹499</span></div>
+      <div class="total-row" id="shipping-row" style="display:none;"><span>Shipping</span><span>₹80</span></div>
+      <div class="total-row grand"><span>Total</span><span id="total-display">₹499</span></div>
+    </div>
+
+    <!-- Pay button -->
+    <button class="buy-btn" id="pay-btn" onclick="startCheckout()">
+      🔒 Pay Securely via Razorpay
+    </button>
+
+    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:-12px;">
+      Powered by Razorpay · No abroad shipping
+    </p>
+
+  </div>
+</div>
+
+<!-- Size Chart Modal -->
+<div class="modal-overlay" id="size-modal" onclick="closeSizeChart(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Size Guide</h3>
+      <button class="modal-close" onclick="closeSizeChart()">✕</button>
+    </div>
+    <div class="table-scroll">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Measurement</th>
+            <th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Size (in/cm)</td>       <td>36/91.44</td><td>38/96.52</td><td>40/101.6</td><td>42/106.68</td><td>44/111.76</td></tr>
+          <tr><td>Full Chest (in/cm)</td> <td>37.80/96</td><td>40.16/108</td><td>42.52/108</td><td>44.09/112</td><td>45.67/116</td></tr>
+          <tr><td>Length (in/cm)</td>     <td>25.79/65.51</td><td>26.38/67.49</td><td>27.36/69.49</td><td>28.94/73.51</td><td>29.33/74.5</td></tr>
+          <tr><td>Across Shoulder (in/cm)</td><td>14.57/37.01</td><td>15.35/38.99</td><td>16.54/42.01</td><td>17.72/45.01</td><td>18.50/46.99</td></tr>
+          <tr><td>Sleeve Length (in/cm)</td><td>8.27/21.01</td><td>8.66/22</td><td>9.25/23.5</td><td>9.45/24</td><td>9.84/24.99</td></tr>
+          <tr><td>Tolerance</td>          <td colspan="5" style="text-align:center;">(+/−) 5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:#aaa;margin-top:16px;">All measurements are in inches / centimetres.</p>
+  </div>
+</div>
+
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  const API_BASE = 'https://pages.maduraireadingclub.com'
+
+  let selectedSize = null
+
+  // ── Gallery ──────────────────────────────────────────────────────────────
+  function showView(view) {
+    document.getElementById('img-front').classList.toggle('hidden', view !== 'front')
+    document.getElementById('img-back').classList.toggle('hidden',  view !== 'back')
+    document.getElementById('thumb-front').classList.toggle('active', view === 'front')
+    document.getElementById('thumb-back').classList.toggle('active',  view === 'back')
+  }
+
+  // ── Size ─────────────────────────────────────────────────────────────────
+  function selectSize(size) {
+    selectedSize = size
+    document.querySelectorAll('.size-btn').forEach(b =>
+      b.classList.toggle('selected', b.dataset.size === size)
+    )
+    document.getElementById('size-error').style.display = 'none'
+  }
+
+  // ── Delivery ─────────────────────────────────────────────────────────────
+  function updateDelivery() {
+    const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
+    document.getElementById('address-fields').classList.toggle('visible', isShip)
+    document.getElementById('shipping-row').style.display = isShip ? 'flex' : 'none'
+    document.getElementById('total-display').textContent = isShip ? '₹579' : '₹499'
+  }
+
+  // ── Size chart modal ──────────────────────────────────────────────────────
+  function openSizeChart() {
+    document.getElementById('size-modal').classList.add('open')
+    document.body.style.overflow = 'hidden'
+  }
+  function closeSizeChart(e) {
+    if (!e || e.target === document.getElementById('size-modal')) {
+      document.getElementById('size-modal').classList.remove('open')
+      document.body.style.overflow = ''
+    }
+  }
+
+  // ── Validation ───────────────────────────────────────────────────────────
+  function validate() {
+    if (!selectedSize) {
+      document.getElementById('size-error').style.display = 'block'
+      document.querySelector('.size-grid').scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return false
+    }
+    const name  = document.getElementById('name').value.trim()
+    const phone = document.getElementById('phone').value.trim()
+    const email = document.getElementById('email').value.trim()
+    if (!name || !phone || !email) {
+      alert('Please fill in your name, phone, and email.')
+      return false
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      alert('Please enter a valid 10-digit phone number.')
+      return false
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Please enter a valid email address.')
+      return false
+    }
+    const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
+    if (isShip) {
+      const address = document.getElementById('address').value.trim()
+      const city    = document.getElementById('city').value.trim()
+      const pincode = document.getElementById('pincode').value.trim()
+      if (!address || !city || !pincode) {
+        alert('Please fill in your full shipping address.')
+        return false
+      }
+      if (!/^\d{6}$/.test(pincode)) {
+        alert('Please enter a valid 6-digit pincode.')
+        return false
+      }
+    }
+    return true
+  }
+
+  // ── Checkout ─────────────────────────────────────────────────────────────
+  async function startCheckout() {
+    if (!validate()) return
+
+    const btn = document.getElementById('pay-btn')
+    btn.disabled = true
+    btn.textContent = 'Creating order…'
+
+    const delivery = document.querySelector('input[name="delivery"]:checked').value
+    const body = {
+      name:          document.getElementById('name').value.trim(),
+      phone:         '+91' + document.getElementById('phone').value.trim(),
+      email:         document.getElementById('email').value.trim(),
+      size:          selectedSize,
+      delivery_type: delivery,
+      address:       delivery === 'ship' ? document.getElementById('address').value.trim() : '',
+      city:          delivery === 'ship' ? document.getElementById('city').value.trim()    : '',
+      pincode:       delivery === 'ship' ? document.getElementById('pincode').value.trim() : '',
+    }
+
+    let orderData
+    try {
+      const res = await fetch(API_BASE + '/api/shop/orders', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body),
+      })
+      orderData = await res.json()
+      if (!res.ok) throw new Error(orderData.error || 'Order creation failed')
+    } catch (err) {
+      alert('Could not create order: ' + err.message)
+      btn.disabled = false
+      btn.innerHTML = '🔒 Pay Securely via Razorpay'
+      return
+    }
+
+    const options = {
+      key:         orderData.key_id,
+      amount:      orderData.amount,
+      currency:    'INR',
+      name:        'Madurai Reading Club',
+      description: 'MRC T-Shirt — Size ' + selectedSize,
+      image:       'https://maduraireadingclub.com/images/Logo Circular.png',
+      order_id:    orderData.order_id,
+      prefill: {
+        name:    body.name,
+        email:   body.email,
+        contact: body.phone,
+      },
+      theme: { color: '#C62828' },
+      handler: async function(response) {
+        btn.textContent = 'Confirming…'
+        try {
+          const vRes = await fetch(API_BASE + '/api/shop/verify', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({
+              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature:  response.razorpay_signature,
+            }),
+          })
+          if (!vRes.ok) throw new Error('Verification failed')
+        } catch (err) {
+          alert('Payment received but confirmation failed. Please contact us with your payment ID: ' + response.razorpay_payment_id)
+          btn.disabled = false
+          btn.innerHTML = '🔒 Pay Securely via Razorpay'
+          return
+        }
+        showSuccess(body, orderData, response.razorpay_order_id)
+      },
+      modal: {
+        ondismiss: function() {
+          btn.disabled = false
+          btn.innerHTML = '🔒 Pay Securely via Razorpay'
+        }
+      }
+    }
+
+    const rzp = new Razorpay(options)
+    rzp.open()
+  }
+
+  function showSuccess(body, orderData, orderId) {
+    document.getElementById('shop-page').style.display = 'none'
+    const sc = document.getElementById('success-screen')
+    sc.classList.add('visible')
+    document.getElementById('s-name').textContent     = body.name
+    document.getElementById('s-size').textContent     = selectedSize
+    document.getElementById('s-delivery').textContent = body.delivery_type === 'ship'
+      ? `Shipping to ${body.city} — ${body.pincode}`
+      : 'Collect at next book discussion'
+    document.getElementById('s-amount').textContent   = '₹' + (orderData.amount / 100)
+    document.getElementById('s-orderid').textContent  = orderId
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+</script>
+
+</body>
+</html>
