@@ -1,37 +1,37 @@
 [
   {
-    "file": "My Brilliant Friend.jpg",
-    "title": "My Brilliant Friend",
-    "author": "Elena Ferrante",
-    "genre": "Fiction",
-    "description": "The first of Ferrante's Neapolitan novels — a fierce, intimate portrait of two girls growing up in postwar Naples, bound by a friendship that is loving, competitive, and impossible to escape."
+    "file": "அரசியல் எனக்குப் பிடிக்கும்.jpg",
+    "title": "அரசியல் எனக்குப் பிடிக்கும்",
+    "author": "Cho Ramaswamy",
+    "genre": "Non-fiction",
+    "description": "A witty, incisive Tamil book on Indian politics by the legendary satirist and playwright Cho Ramaswamy — a must-read for anyone trying to make sense of the political landscape."
   },
   {
-    "file": "The Book of Disquiet.jpg",
-    "title": "The Book of Disquiet",
-    "author": "Fernando Pessoa",
-    "genre": "Fiction",
-    "description": "An unfinished masterpiece of 20th-century literature: a dreamlike, fragmentary diary of a Lisbon bookkeeper wrestling with loneliness, identity, and the unbearable beauty of ordinary existence."
+    "file": "Can't Hurt Me.jpg",
+    "title": "Can't Hurt Me",
+    "author": "David Goggins",
+    "genre": "Non-fiction",
+    "description": "David Goggins — Navy SEAL, ultramarathon runner, and one of the world's toughest endurance athletes — shares how mastering your mind is the only way to unlock your true potential and overcome any obstacle."
   },
   {
-    "file": "Anna Karenina.jpg",
-    "title": "Anna Karenina",
-    "author": "Leo Tolstoy",
-    "genre": "Fiction",
-    "description": "Tolstoy's towering novel of passion and consequence — a married aristocrat's doomed affair set against the glittering and hypocritical world of 19th-century Russian society."
+    "file": "The Diary Of a Young Girl.jpg",
+    "title": "The Diary Of a Young Girl",
+    "author": "Anne Frank",
+    "genre": "Non-fiction",
+    "description": "The remarkable diary kept by Anne Frank during two years in hiding with her family in Nazi-occupied Amsterdam — an enduring testament to the human spirit in the face of unimaginable horror."
   },
   {
-    "file": "The Namesake.jpg",
-    "title": "The Namesake",
-    "author": "Jhumpa Lahiri",
-    "genre": "Fiction",
-    "description": "A Bengali family navigates the gap between old-world tradition and American life across generations — a quiet, luminous novel about belonging, names, and the weight of identity."
+    "file": "Joy.jpg",
+    "title": "Joy: The Happiness that comes from within",
+    "author": "Osho",
+    "genre": "Non-fiction",
+    "description": "Osho challenges the idea that happiness depends on external circumstances, arguing that joy is our natural state — something to be uncovered rather than pursued."
   },
   {
-    "file": "Aram.jpg",
-    "title": "Aram",
-    "author": "Jeyamohan",
-    "genre": "Fiction",
-    "description": "A Tamil novel exploring the meaning of dharma and righteous living — written by one of contemporary Tamil literature's most celebrated and fearless voices."
+    "file": "The Long Tail.jpg",
+    "title": "The Long Tail",
+    "author": "Chris Anderson",
+    "genre": "Non-fiction",
+    "description": "Wired editor Chris Anderson argues that the future of business lies not in blockbusters but in the vast, overlooked market of niche products — a prescient framework for the digital age."
   }
 ]
