@@ -918,7 +918,7 @@ const VOTING_ROUND = 'round-6';
 
   /* ── Slug from book title ── */
   function slug(title) {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return title.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '');
   }
 
   /* ── Render skeleton cards while loading ── */
