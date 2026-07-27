@@ -7,375 +7,378 @@
   <link rel="icon" type="image/png" href="images/Logo Circular.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:      #C62828;
-      --red-dark: #8E0000;
-      --red-light:#FFCDD2;
-      --gold:     #F5A623;
-      --text:     #1a1a1a;
-      --muted:    #666;
-      --border:   #e0e0e0;
-      --bg:       #fafafa;
-      --white:    #ffffff;
-      --radius:   12px;
+      --bg:      #1A0826;
+      --bgDeep:  #0E0418;
+      --card:    #2A0D3A;
+      --gold:    #C4A44A;
+      --cream:   #FAF7F2;
+      --soft:    #9B8FAA;
+      --border:  rgba(196,164,74,0.18);
+      --divider: rgba(255,255,255,0.07);
+      --red:     #C62828;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
-      color: var(--text);
       background: var(--bg);
+      color: var(--cream);
       min-height: 100vh;
     }
 
-    /* ── Nav ── */
+    /* ── Topbar ── */
     .topbar {
-      background: var(--red);
-      padding: 14px 24px;
+      background: var(--bgDeep);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
     .topbar-logo {
+      text-decoration: none;
       display: flex;
       flex-direction: column;
-      text-decoration: none;
       line-height: 1.1;
     }
-    .topbar-logo span:first-child {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold);
-      font-size: 13px;
-      letter-spacing: 1px;
-    }
-    .topbar-logo span:last-child {
-      color: #fff;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
+    .topbar-logo .l1 { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 14px; letter-spacing: 1px; }
+    .topbar-logo .l2 { color: var(--soft); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
     .topbar-back {
-      color: rgba(255,255,255,.85);
+      color: var(--soft);
       text-decoration: none;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 12px;
+      letter-spacing: 1px;
       transition: color .2s;
     }
-    .topbar-back:hover { color: #fff; }
+    .topbar-back:hover { color: var(--cream); }
 
-    /* ── Layout ── */
-    .page {
-      max-width: 1000px;
+    /* ── Hero ── */
+    .hero {
+      border-bottom: 1px solid var(--border);
+      padding: 64px 28px 56px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--bgDeep) 0%, var(--bg) 100%);
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-body {
+      max-width: 560px;
       margin: 0 auto;
-      padding: 32px 16px 64px;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--soft);
+      font-weight: 300;
+    }
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto;
+      opacity: .4;
+    }
+
+    /* ── Main layout ── */
+    .main {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 56px 28px 80px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
+      gap: 56px;
       align-items: start;
     }
-    @media (max-width: 700px) {
-      .page { grid-template-columns: 1fr; gap: 28px; padding: 20px 14px 48px; }
+    @media (max-width: 720px) {
+      .main { grid-template-columns: 1fr; gap: 36px; padding: 36px 18px 64px; }
+      .hero { padding: 44px 18px 40px; }
+      .topbar { padding: 12px 18px; }
     }
 
-    /* ── Product gallery ── */
-    .gallery { position: sticky; top: 24px; }
-    .gallery-main {
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 2px 16px rgba(0,0,0,.08);
-      aspect-ratio: 1 / 1;
+    /* ── Gallery ── */
+    .gallery { position: sticky; top: 72px; }
+    .gallery-frame {
       position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      aspect-ratio: 1 / 1;
     }
-    .gallery-main img {
+    .gallery-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       position: absolute;
-      top: 0; left: 0;
-      transition: opacity .3s;
+      inset: 0;
+      transition: opacity .35s ease;
     }
-    .gallery-main img.hidden { opacity: 0; }
+    .gallery-frame img.hidden { opacity: 0; pointer-events: none; }
     .gallery-thumbs {
       display: flex;
       gap: 10px;
       margin-top: 12px;
     }
-    .gallery-thumb {
-      width: 72px;
-      height: 72px;
-      border-radius: 8px;
+    .g-thumb {
+      width: 68px;
+      height: 68px;
+      border-radius: 3px;
       overflow: hidden;
-      border: 2px solid transparent;
+      border: 1px solid transparent;
       cursor: pointer;
       transition: border-color .2s;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,.1);
+      background: var(--card);
     }
-    .gallery-thumb.active { border-color: var(--red); }
-    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .g-thumb.active { border-color: var(--gold); }
+    .g-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* ── Right column ── */
-    .detail { display: flex; flex-direction: column; gap: 24px; }
-
-    .badge {
-      display: inline-block;
-      background: var(--red-light);
-      color: var(--red-dark);
+    .gallery-note {
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      line-height: 1.7;
+      color: var(--soft);
+      font-style: italic;
+    }
+    .gallery-note strong { color: var(--gold); font-style: normal; font-weight: 500; }
+
+    /* ── Right panel ── */
+    .panel { display: flex; flex-direction: column; gap: 28px; }
+
+    /* Label style */
+    .field-label {
+      font-size: 10px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 20px;
+      color: var(--gold);
+      margin-bottom: 12px;
     }
 
-    .product-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
+    /* Price */
+    .price-block { border-bottom: 1px solid var(--divider); padding-bottom: 28px; }
+    .price-main { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--cream); line-height: 1; }
+    .price-sub { font-size: 12px; color: var(--soft); margin-top: 6px; line-height: 1.6; }
 
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-    .price {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--red);
-    }
-    .price-note {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    /* ── Size selector ── */
-    .label { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-    .size-grid {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    /* Size */
+    .size-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .size-btn {
       width: 52px;
       height: 52px;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      background: #fff;
-      font-size: 14px;
-      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
       cursor: pointer;
       transition: all .15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .size-btn:hover { border-color: var(--gold); color: var(--cream); }
+    .size-btn.selected { border-color: var(--gold); background: var(--gold); color: var(--bgDeep); font-weight: 600; }
+    .size-guide-link {
+      background: none;
+      border: none;
+      color: var(--soft);
+      font-size: 11px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+      margin-top: 10px;
+      font-family: 'Inter', sans-serif;
+      transition: color .2s;
+    }
+    .size-guide-link:hover { color: var(--gold); }
+    .field-error { color: #E57373; font-size: 11px; display: none; margin-top: 6px; }
+
+    /* Quantity */
+    .qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      width: fit-content;
+    }
+    .qty-btn {
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: none;
+      color: var(--soft);
+      font-size: 20px;
+      cursor: pointer;
+      transition: color .15s, background .15s;
+      font-family: 'Inter', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .size-btn:hover { border-color: var(--red); color: var(--red); }
-    .size-btn.selected { border-color: var(--red); background: var(--red); color: #fff; }
-    .size-guide-btn {
-      background: none;
-      border: none;
-      color: var(--red);
-      font-size: 13px;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 0;
-      margin-top: 8px;
+    .qty-btn:hover { color: var(--cream); background: var(--divider); }
+    .qty-btn:disabled { color: rgba(155,143,170,.3); cursor: not-allowed; }
+    .qty-num {
+      width: 48px;
+      text-align: center;
+      font-size: 16px;
+      color: var(--cream);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      line-height: 44px;
+      user-select: none;
     }
-    .size-error { color: var(--red); font-size: 13px; display: none; margin-top: 6px; }
+    .qty-note { font-size: 12px; color: var(--soft); margin-top: 10px; line-height: 1.5; }
 
-    /* ── Delivery ── */
-    .delivery-options { display: flex; flex-direction: column; gap: 10px; }
-    .delivery-option {
+    /* Delivery */
+    .delivery-opts { display: flex; flex-direction: column; gap: 10px; }
+    .delivery-opt {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
+      gap: 14px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 16px;
       cursor: pointer;
-      transition: border-color .15s, background .15s;
+      transition: border-color .15s;
+      position: relative;
     }
-    .delivery-option:has(input:checked) {
-      border-color: var(--red);
-      background: #fff8f8;
-    }
-    .delivery-option input[type="radio"] { accent-color: var(--red); margin-top: 2px; flex-shrink: 0; }
-    .delivery-option-body { flex: 1; }
-    .delivery-option-title { font-weight: 600; font-size: 14px; }
-    .delivery-option-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .delivery-badge-free {
-      background: #e8f5e9;
-      color: #2e7d32;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-left: auto;
-      white-space: nowrap;
+    .delivery-opt:has(input:checked) { border-color: var(--gold); }
+    .delivery-opt input[type="radio"] { accent-color: var(--gold); margin-top: 3px; flex-shrink: 0; }
+    .delivery-opt-body { flex: 1; }
+    .delivery-opt-title { font-size: 14px; color: var(--cream); font-weight: 500; }
+    .delivery-opt-sub { font-size: 12px; color: var(--soft); margin-top: 3px; line-height: 1.5; }
+    .delivery-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
       align-self: center;
-    }
-    .delivery-badge-ship {
-      background: #fff3e0;
-      color: #e65100;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-left: auto;
       white-space: nowrap;
-      align-self: center;
     }
+    .tag-free { background: rgba(74,155,111,0.15); color: #6DBF8A; }
+    .tag-ship { background: rgba(196,164,74,0.12); color: var(--gold); }
 
-    /* ── Address fields ── */
-    #address-fields { display: none; flex-direction: column; gap: 12px; }
+    /* Address */
+    #address-fields { display: none; flex-direction: column; gap: 12px; margin-top: 14px; }
     #address-fields.visible { display: flex; }
 
-    /* ── Form ── */
-    .form-section { display: flex; flex-direction: column; gap: 14px; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
-    .field input, .field textarea {
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-size: 15px;
-      font-family: inherit;
+    /* Form fields */
+    .form-wrap { display: flex; flex-direction: column; gap: 14px; }
+    .f-field { display: flex; flex-direction: column; gap: 6px; }
+    .f-field label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--soft); }
+    .f-field input {
+      background: var(--bgDeep);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
       outline: none;
       transition: border-color .15s;
-      background: #fff;
       width: 100%;
     }
-    .field input:focus, .field textarea:focus { border-color: var(--red); }
+    .f-field input:focus { border-color: var(--gold); }
+    .f-field input::placeholder { color: rgba(155,143,170,.5); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-    /* ── Phone field ── */
-    .phone-input-wrap {
+    .phone-wrap {
       display: flex;
-      border: 2px solid var(--border);
-      border-radius: 8px;
+      background: var(--bgDeep);
+      border: 1px solid var(--border);
+      border-radius: 3px;
       overflow: hidden;
-      background: #fff;
       transition: border-color .15s;
     }
-    .phone-input-wrap:focus-within { border-color: var(--red); }
+    .phone-wrap:focus-within { border-color: var(--gold); }
     .phone-prefix {
-      padding: 11px 12px;
-      background: #f5f5f5;
+      padding: 12px 12px;
+      font-size: 14px;
+      color: var(--soft);
       border-right: 1px solid var(--border);
-      font-size: 15px;
-      color: var(--muted);
       white-space: nowrap;
-      display: flex;
-      align-items: center;
+      background: rgba(196,164,74,0.05);
     }
-    .phone-input-wrap input {
-      border: none;
-      border-radius: 0;
-      flex: 1;
-      min-width: 0;
-    }
-    .phone-input-wrap input:focus { border: none; outline: none; }
+    .phone-wrap input { border: none; border-radius: 0; background: transparent; flex: 1; min-width: 0; padding: 12px 14px; }
+    .phone-wrap input:focus { border: none; outline: none; }
 
-    /* ── Order total ── */
-    .order-total {
-      background: #fff;
+    /* Total card */
+    .total-card {
+      background: var(--bgDeep);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
+      border-radius: 4px;
+      padding: 18px 20px;
     }
     .total-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 14px;
-      color: var(--muted);
+      font-size: 13px;
+      color: var(--soft);
     }
     .total-row + .total-row { margin-top: 8px; }
     .total-row.grand {
       border-top: 1px solid var(--border);
-      margin-top: 12px;
-      padding-top: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
       font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--cream);
+      font-weight: 400;
     }
-    .total-row.grand span:last-child { color: var(--red); }
+    .total-row.grand .grand-amt { color: var(--gold); font-size: 22px; }
 
-    /* ── Buy button ── */
-    .buy-btn {
-      background: var(--red);
-      color: #fff;
+    /* Pay button */
+    .pay-btn {
+      background: linear-gradient(135deg, #C4A44A, #A8893A);
+      color: var(--bgDeep);
       border: none;
-      border-radius: 10px;
-      padding: 16px;
-      font-size: 16px;
+      border-radius: 3px;
+      padding: 18px 24px;
+      font-size: 14px;
       font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       cursor: pointer;
       width: 100%;
-      transition: background .2s, transform .1s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
+      font-family: 'Inter', sans-serif;
+      transition: opacity .2s, transform .1s;
     }
-    .buy-btn:hover { background: var(--red-dark); }
-    .buy-btn:active { transform: scale(.99); }
-    .buy-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-
-    /* ── Success screen ── */
-    #success-screen {
-      display: none;
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 48px 24px;
-      text-align: center;
-    }
-    #success-screen.visible { display: block; }
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: #e8f5e9;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      font-size: 40px;
-    }
-    #success-screen h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      margin-bottom: 12px;
-    }
-    #success-screen p { color: var(--muted); font-size: 15px; line-height: 1.6; }
-    .success-details {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
-      margin: 24px 0;
-      text-align: left;
-    }
-    .success-details dt { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
-    .success-details dd { font-size: 15px; font-weight: 600; margin: 4px 0 14px; }
-    .success-details dd:last-child { margin-bottom: 0; }
+    .pay-btn:hover { opacity: .9; }
+    .pay-btn:active { transform: scale(.99); }
+    .pay-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+    .pay-note { font-size: 11px; color: var(--soft); text-align: center; letter-spacing: .5px; }
 
     /* ── Size chart modal ── */
-    .modal-overlay {
+    .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.5);
+      background: rgba(0,0,0,.7);
       z-index: 100;
       display: flex;
       align-items: center;
@@ -385,328 +388,356 @@
       pointer-events: none;
       transition: opacity .2s;
     }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .overlay.open { opacity: 1; pointer-events: all; }
     .modal {
-      background: #fff;
-      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
       padding: 28px;
       max-width: 680px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
     }
-    .modal-header {
+    .modal-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
     }
-    .modal-header h3 { font-size: 18px; font-weight: 700; }
-    .modal-close {
-      background: none;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      color: var(--muted);
-      line-height: 1;
-      padding: 4px;
-    }
-    .size-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .size-table th, .size-table td {
+    .modal-head h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--cream); }
+    .modal-close { background: none; border: none; color: var(--soft); font-size: 22px; cursor: pointer; }
+    .scroll-x { overflow-x: auto; }
+    .size-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .size-tbl th { background: var(--bgDeep); color: var(--gold); padding: 10px 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); }
+    .size-tbl td { border: 1px solid var(--border); padding: 10px 14px; text-align: center; color: var(--soft); }
+    .size-tbl td:first-child { text-align: left; color: var(--cream); font-weight: 500; }
+    .size-tbl tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+    /* ── Success screen ── */
+    #success { display: none; max-width: 560px; margin: 0 auto; padding: 64px 24px; text-align: center; }
+    #success.visible { display: block; }
+    .success-icon { font-size: 48px; margin-bottom: 20px; }
+    #success h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; margin-bottom: 12px; }
+    #success .sub { color: var(--soft); font-size: 15px; line-height: 1.7; margin-bottom: 28px; }
+    .success-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      padding: 10px 12px;
-      text-align: center;
-      white-space: nowrap;
+      border-radius: 4px;
+      padding: 22px 24px;
+      text-align: left;
+      margin-bottom: 20px;
     }
-    .size-table th {
-      background: var(--red);
-      color: #fff;
-      font-weight: 600;
-      font-size: 12px;
-    }
-    .size-table tr:nth-child(even) td { background: #fafafa; }
-    .size-table td:first-child { text-align: left; font-weight: 600; color: var(--muted); }
-    .table-scroll { overflow-x: auto; }
+    .success-card dt { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--soft); }
+    .success-card dd { font-size: 15px; color: var(--cream); margin: 4px 0 14px; }
+    .success-card dd:last-child { margin-bottom: 0; }
+    .success-note { font-size: 13px; color: var(--soft); font-style: italic; line-height: 1.7; }
   </style>
 </head>
 <body>
 
-<!-- Top bar -->
+<!-- Topbar -->
 <header class="topbar">
   <a href="index.html" class="topbar-logo">
-    <span>Madurai</span>
-    <span>Reading Club</span>
+    <span class="l1">Madurai Reading Club</span>
+    <span class="l2">Est. Madurai</span>
   </a>
-  <a href="index.html" class="topbar-back">← Back to main site</a>
+  <a href="index.html" class="topbar-back">← Back</a>
 </header>
 
-<!-- Success screen (hidden until payment done) -->
-<div id="success-screen">
-  <div class="success-icon">✅</div>
-  <h2>Order Confirmed!</h2>
-  <p>Thank you — a confirmation has been sent to your email.</p>
-  <div class="success-details">
+<!-- Success screen -->
+<div id="success">
+  <div class="success-icon">📚</div>
+  <h2>You're one of us now.</h2>
+  <p class="sub">
+    Your order is confirmed. A receipt has landed in your inbox.<br/>
+    Wear it like you mean it.
+  </p>
+  <div class="success-card">
     <dl>
       <dt>Name</dt>       <dd id="s-name"></dd>
       <dt>Size</dt>       <dd id="s-size"></dd>
+      <dt>Quantity</dt>   <dd id="s-qty"></dd>
       <dt>Delivery</dt>   <dd id="s-delivery"></dd>
-      <dt>Amount Paid</dt><dd id="s-amount"></dd>
+      <dt>Total Paid</dt> <dd id="s-amount" style="color:var(--gold)"></dd>
     </dl>
   </div>
-  <p style="font-size:13px;color:#aaa;">Order ID: <span id="s-orderid"></span></p>
+  <p class="success-note" id="s-orderid"></p>
 </div>
 
-<!-- Main shop content -->
-<div class="page" id="shop-page">
+<!-- Hero -->
+<section class="hero" id="shop-hero">
+  <p class="hero-eyebrow">Madurai Reading Club · Limited Edition</p>
+  <h1 class="hero-title">Not a merch drop.<br/><em>A declaration.</em></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-body">
+    This shirt belongs to a community of people who gather every fortnight in Madurai
+    to talk about books that matter. It is not sold in any store.
+    It does not exist on any marketplace. It is made for members — and for those
+    who want to become one.
+  </p>
+</section>
+
+<!-- Main -->
+<main class="main" id="shop-main">
 
   <!-- Left: Gallery -->
   <div class="gallery">
-    <div class="gallery-main">
-      <img id="img-front" src="images/tshirt-front.jpg" alt="T-Shirt Front" />
-      <img id="img-back"  src="images/tshirt-back.jpg"  alt="T-Shirt Back" class="hidden" />
+    <div class="gallery-frame">
+      <img id="img-front" src="images/tshirt-front.jpg" alt="T-Shirt — Front" />
+      <img id="img-back"  src="images/tshirt-back.jpg"  alt="T-Shirt — Back" class="hidden" />
     </div>
     <div class="gallery-thumbs">
-      <div class="gallery-thumb active" id="thumb-front" onclick="showView('front')">
+      <div class="g-thumb active" id="th-f" onclick="showView('front')">
         <img src="images/tshirt-front.jpg" alt="Front" />
       </div>
-      <div class="gallery-thumb" id="thumb-back" onclick="showView('back')">
+      <div class="g-thumb" id="th-b" onclick="showView('back')">
         <img src="images/tshirt-back.jpg" alt="Back" />
       </div>
     </div>
+    <div class="gallery-note">
+      <strong>I'd Rather Be Reading</strong> — printed on a 100% cotton unisex tee
+      in MRC red. The lamp logo was drawn for us. The words are ours.
+      Made in limited numbers, not restocked.
+    </div>
   </div>
 
-  <!-- Right: Details + Form -->
-  <div class="detail">
+  <!-- Right: Order panel -->
+  <div class="panel">
 
-    <div>
-      <span class="badge">Limited Edition Merch</span>
-      <h1 class="product-title" style="margin-top:12px;">I'd Rather Be Reading</h1>
-      <p style="color:var(--muted);font-size:14px;margin-top:6px;">Madurai Reading Club · Unisex T-Shirt · 100% Cotton</p>
+    <!-- Price -->
+    <div class="price-block">
+      <div class="price-main" id="price-display">₹1</div>
+      <div class="price-sub" id="price-sub">per shirt · collect for free, or ship anywhere in India</div>
     </div>
 
-    <div class="price-row">
-      <span class="price">₹1</span>
-      <span class="price-note">+ ₹1 shipping (or collect free) — TEST MODE</span>
-    </div>
-
-    <!-- Size picker -->
+    <!-- Size -->
     <div>
-      <div class="label">Select Size</div>
-      <div class="size-grid">
-        <button class="size-btn" data-size="S"   onclick="selectSize('S')">S</button>
-        <button class="size-btn" data-size="M"   onclick="selectSize('M')">M</button>
-        <button class="size-btn" data-size="L"   onclick="selectSize('L')">L</button>
-        <button class="size-btn" data-size="XL"  onclick="selectSize('XL')">XL</button>
-        <button class="size-btn" data-size="2XL" onclick="selectSize('2XL')">2XL</button>
+      <div class="field-label">Size</div>
+      <div class="size-row">
+        <button class="size-btn" data-s="S"   onclick="pickSize('S')">S</button>
+        <button class="size-btn" data-s="M"   onclick="pickSize('M')">M</button>
+        <button class="size-btn" data-s="L"   onclick="pickSize('L')">L</button>
+        <button class="size-btn" data-s="XL"  onclick="pickSize('XL')">XL</button>
+        <button class="size-btn" data-s="2XL" onclick="pickSize('2XL')">2XL</button>
       </div>
-      <button class="size-guide-btn" onclick="openSizeChart()">📏 View size guide</button>
-      <div class="size-error" id="size-error">Please select a size to continue.</div>
+      <button class="size-guide-link" onclick="openModal()">View size guide →</button>
+      <div class="field-error" id="size-err">Please select a size.</div>
+    </div>
+
+    <!-- Quantity -->
+    <div>
+      <div class="field-label">Quantity</div>
+      <div class="qty-stepper">
+        <button class="qty-btn" id="qty-minus" onclick="changeQty(-1)" disabled>−</button>
+        <span class="qty-num" id="qty-num">1</span>
+        <button class="qty-btn" id="qty-plus" onclick="changeQty(1)">+</button>
+      </div>
+      <div class="qty-note" id="qty-note">Max 10 per order.</div>
     </div>
 
     <!-- Delivery -->
     <div>
-      <div class="label">Delivery</div>
-      <div class="delivery-options">
-        <label class="delivery-option">
-          <input type="radio" name="delivery" value="collect" checked onchange="updateDelivery()" />
-          <div class="delivery-option-body">
-            <div class="delivery-option-title">Collect at book discussion</div>
-            <div class="delivery-option-sub">Pick up at the next MRC discussion in Madurai</div>
+      <div class="field-label">Delivery</div>
+      <div class="delivery-opts">
+        <label class="delivery-opt">
+          <input type="radio" name="delivery" value="collect" checked onchange="updateTotals()" />
+          <div class="delivery-opt-body">
+            <div class="delivery-opt-title">Collect at the next discussion</div>
+            <div class="delivery-opt-sub">Pick it up in person at the next MRC session in Madurai</div>
           </div>
-          <span class="delivery-badge-free">FREE</span>
+          <span class="delivery-tag tag-free">Free</span>
         </label>
-        <label class="delivery-option">
-          <input type="radio" name="delivery" value="ship" onchange="updateDelivery()" />
-          <div class="delivery-option-body">
-            <div class="delivery-option-title">Ship to my address</div>
-            <div class="delivery-option-sub">Delivery within India only</div>
+        <label class="delivery-opt">
+          <input type="radio" name="delivery" value="ship" onchange="updateTotals()" />
+          <div class="delivery-opt-body">
+            <div class="delivery-opt-title">Ship to my address</div>
+            <div class="delivery-opt-sub">Within India only · <span id="ship-note">₹1 for up to 5 shirts</span></div>
           </div>
-          <span class="delivery-badge-ship">+₹80</span>
+          <span class="delivery-tag tag-ship" id="ship-tag">+₹1</span>
         </label>
       </div>
 
-      <!-- Address fields -->
-      <div id="address-fields" style="margin-top:16px;">
-        <div class="field">
+      <div id="address-fields">
+        <div class="f-field">
           <label>Street Address</label>
-          <input type="text" id="address" placeholder="House / flat no., street, area" />
+          <input type="text" id="address" placeholder="House no., street, area" autocomplete="street-address" />
         </div>
         <div class="field-row">
-          <div class="field">
+          <div class="f-field">
             <label>City</label>
-            <input type="text" id="city" placeholder="City" />
+            <input type="text" id="city" placeholder="City" autocomplete="address-level2" />
           </div>
-          <div class="field">
+          <div class="f-field">
             <label>Pincode</label>
-            <input type="text" id="pincode" placeholder="600001" maxlength="6" inputmode="numeric" />
+            <input type="text" id="pincode" placeholder="600001" maxlength="6" inputmode="numeric" autocomplete="postal-code" />
           </div>
         </div>
       </div>
     </div>
 
     <!-- Buyer details -->
-    <div class="form-section">
-      <div class="label" style="margin-bottom:0;">Your Details</div>
-      <div class="field">
-        <label>Full Name *</label>
-        <input type="text" id="name" placeholder="Your name" autocomplete="name" />
-      </div>
-      <div class="field">
-        <label>Phone *</label>
-        <div class="phone-input-wrap">
-          <span class="phone-prefix">🇮🇳 +91</span>
-          <input type="tel" id="phone" placeholder="9876543210" maxlength="10" inputmode="numeric" autocomplete="tel-national" />
+    <div>
+      <div class="field-label">Your Details</div>
+      <div class="form-wrap">
+        <div class="f-field">
+          <label>Full Name *</label>
+          <input type="text" id="name" placeholder="Your name" autocomplete="name" />
         </div>
-      </div>
-      <div class="field">
-        <label>Email *</label>
-        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+        <div class="f-field">
+          <label>Phone *</label>
+          <div class="phone-wrap">
+            <span class="phone-prefix">🇮🇳 +91</span>
+            <input type="tel" id="phone" placeholder="9876543210" maxlength="10" inputmode="numeric" autocomplete="tel-national" />
+          </div>
+        </div>
+        <div class="f-field">
+          <label>Email *</label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+        </div>
       </div>
     </div>
 
     <!-- Order total -->
-    <div class="order-total">
-      <div class="total-row"><span>T-Shirt</span><span>₹1</span></div>
-      <div class="total-row" id="shipping-row" style="display:none;"><span>Shipping</span><span>₹1</span></div>
-      <div class="total-row grand"><span>Total</span><span id="total-display">₹1</span></div>
+    <div class="total-card">
+      <div class="total-row"><span>Shirt × <span id="t-qty">1</span></span><span id="t-shirt">₹1</span></div>
+      <div class="total-row" id="t-ship-row" style="display:none;"><span>Shipping</span><span id="t-ship">₹1</span></div>
+      <div class="total-row grand"><span>Total</span><span class="grand-amt" id="t-total">₹1</span></div>
     </div>
 
-    <!-- Pay button -->
-    <button class="buy-btn" id="pay-btn" onclick="startCheckout()">
-      🔒 Pay Securely via Razorpay
+    <!-- Pay -->
+    <button class="pay-btn" id="pay-btn" onclick="startCheckout()">
+      Pay Securely · Razorpay
     </button>
-
-    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:-12px;">
-      Powered by Razorpay · No abroad shipping
-    </p>
+    <p class="pay-note">India only · No refunds on change of mind · Questions? WhatsApp us</p>
 
   </div>
-</div>
+</main>
 
-<!-- Size Chart Modal -->
-<div class="modal-overlay" id="size-modal" onclick="closeSizeChart(event)">
+<!-- Size chart modal -->
+<div class="overlay" id="size-modal" onclick="maybeClose(event)">
   <div class="modal">
-    <div class="modal-header">
+    <div class="modal-head">
       <h3>Size Guide</h3>
-      <button class="modal-close" onclick="closeSizeChart()">✕</button>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="table-scroll">
-      <table class="size-table">
+    <div class="scroll-x">
+      <table class="size-tbl">
         <thead>
           <tr>
-            <th>Measurement</th>
-            <th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th>
+            <th>Measurement</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Size (in/cm)</td>       <td>36/91.44</td><td>38/96.52</td><td>40/101.6</td><td>42/106.68</td><td>44/111.76</td></tr>
-          <tr><td>Full Chest (in/cm)</td> <td>37.80/96</td><td>40.16/108</td><td>42.52/108</td><td>44.09/112</td><td>45.67/116</td></tr>
-          <tr><td>Length (in/cm)</td>     <td>25.79/65.51</td><td>26.38/67.49</td><td>27.36/69.49</td><td>28.94/73.51</td><td>29.33/74.5</td></tr>
-          <tr><td>Across Shoulder (in/cm)</td><td>14.57/37.01</td><td>15.35/38.99</td><td>16.54/42.01</td><td>17.72/45.01</td><td>18.50/46.99</td></tr>
-          <tr><td>Sleeve Length (in/cm)</td><td>8.27/21.01</td><td>8.66/22</td><td>9.25/23.5</td><td>9.45/24</td><td>9.84/24.99</td></tr>
-          <tr><td>Tolerance</td>          <td colspan="5" style="text-align:center;">(+/−) 5%</td></tr>
+          <tr><td>Size (in / cm)</td>           <td>36 / 91.44</td><td>38 / 96.52</td><td>40 / 101.6</td><td>42 / 106.68</td><td>44 / 111.76</td></tr>
+          <tr><td>Full Chest (in / cm)</td>     <td>37.80 / 96</td><td>40.16 / 108</td><td>42.52 / 108</td><td>44.09 / 112</td><td>45.67 / 116</td></tr>
+          <tr><td>Length (in / cm)</td>         <td>25.79 / 65.51</td><td>26.38 / 67.49</td><td>27.36 / 69.49</td><td>28.94 / 73.51</td><td>29.33 / 74.5</td></tr>
+          <tr><td>Across Shoulder (in / cm)</td><td>14.57 / 37.01</td><td>15.35 / 38.99</td><td>16.54 / 42.01</td><td>17.72 / 45.01</td><td>18.50 / 46.99</td></tr>
+          <tr><td>Sleeve Length (in / cm)</td>  <td>8.27 / 21.01</td><td>8.66 / 22</td><td>9.25 / 23.5</td><td>9.45 / 24</td><td>9.84 / 24.99</td></tr>
+          <tr><td>Tolerance</td>                <td colspan="5" style="text-align:center;font-style:italic;">(+/−) 5%</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:13px;color:#aaa;margin-top:16px;">All measurements are in inches / centimetres.</p>
+    <p style="font-size:12px;color:var(--soft);margin-top:16px;">When in doubt, size up. The fit is regular.</p>
   </div>
 </div>
 
-<!-- Razorpay SDK -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
 <script>
-  const API_BASE = 'https://pages.maduraireadingclub.com'
+  const API = 'https://pages.maduraireadingclub.com'
+
+  // ── PRICING (test mode — change after testing) ──
+  const PRICE_PER = 1        // ₹1 test  (prod: 499)
+  const SHIP_PER_5 = 1       // ₹1 test  (prod: 80)
 
   let selectedSize = null
+  let qty = 1
 
-  // ── Gallery ──────────────────────────────────────────────────────────────
-  function showView(view) {
-    document.getElementById('img-front').classList.toggle('hidden', view !== 'front')
-    document.getElementById('img-back').classList.toggle('hidden',  view !== 'back')
-    document.getElementById('thumb-front').classList.toggle('active', view === 'front')
-    document.getElementById('thumb-back').classList.toggle('active',  view === 'back')
+  // ── Gallery ─────────────────────────────────────────────────────────────────
+  function showView(v) {
+    document.getElementById('img-front').classList.toggle('hidden', v !== 'front')
+    document.getElementById('img-back').classList.toggle('hidden', v !== 'back')
+    document.getElementById('th-f').classList.toggle('active', v === 'front')
+    document.getElementById('th-b').classList.toggle('active', v === 'back')
   }
 
-  // ── Size ─────────────────────────────────────────────────────────────────
-  function selectSize(size) {
-    selectedSize = size
-    document.querySelectorAll('.size-btn').forEach(b =>
-      b.classList.toggle('selected', b.dataset.size === size)
-    )
-    document.getElementById('size-error').style.display = 'none'
+  // ── Size ────────────────────────────────────────────────────────────────────
+  function pickSize(s) {
+    selectedSize = s
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('selected', b.dataset.s === s))
+    document.getElementById('size-err').style.display = 'none'
+    updateTotals()
   }
 
-  // ── Delivery ─────────────────────────────────────────────────────────────
-  function updateDelivery() {
+  // ── Quantity ─────────────────────────────────────────────────────────────────
+  function changeQty(d) {
+    qty = Math.max(1, Math.min(10, qty + d))
+    document.getElementById('qty-num').textContent = qty
+    document.getElementById('qty-minus').disabled = qty <= 1
+    document.getElementById('qty-plus').disabled  = qty >= 10
+    updateTotals()
+  }
+
+  // ── Totals ───────────────────────────────────────────────────────────────────
+  function updateTotals() {
     const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
     document.getElementById('address-fields').classList.toggle('visible', isShip)
-    document.getElementById('shipping-row').style.display = isShip ? 'flex' : 'none'
-    document.getElementById('total-display').textContent = isShip ? '₹2' : '₹1'
+
+    const shippingTiers = Math.ceil(qty / 5)
+    const shipAmt = isShip ? shippingTiers * SHIP_PER_5 : 0
+    const shirtAmt = PRICE_PER * qty
+    const total = shirtAmt + shipAmt
+
+    document.getElementById('t-qty').textContent   = qty
+    document.getElementById('t-shirt').textContent = '₹' + shirtAmt
+    document.getElementById('t-ship-row').style.display = isShip ? 'flex' : 'none'
+    document.getElementById('t-ship').textContent  = '₹' + shipAmt
+    document.getElementById('t-total').textContent = '₹' + total
+
+    // Update shipping badge on delivery option
+    document.getElementById('ship-tag').textContent = '+₹' + (shippingTiers * SHIP_PER_5)
+    document.getElementById('ship-note').textContent =
+      qty <= 5
+        ? `₹${SHIP_PER_5} for up to 5 shirts`
+        : `₹${shippingTiers * SHIP_PER_5} for ${qty} shirts (₹${SHIP_PER_5} per 5)`
   }
 
-  // ── Size chart modal ──────────────────────────────────────────────────────
-  function openSizeChart() {
-    document.getElementById('size-modal').classList.add('open')
-    document.body.style.overflow = 'hidden'
-  }
-  function closeSizeChart(e) {
-    if (!e || e.target === document.getElementById('size-modal')) {
-      document.getElementById('size-modal').classList.remove('open')
-      document.body.style.overflow = ''
-    }
-  }
+  // ── Modal ────────────────────────────────────────────────────────────────────
+  function openModal()  { document.getElementById('size-modal').classList.add('open'); document.body.style.overflow='hidden' }
+  function closeModal() { document.getElementById('size-modal').classList.remove('open'); document.body.style.overflow='' }
+  function maybeClose(e) { if (e.target === document.getElementById('size-modal')) closeModal() }
 
-  // ── Validation ───────────────────────────────────────────────────────────
+  // ── Validation ───────────────────────────────────────────────────────────────
   function validate() {
     if (!selectedSize) {
-      document.getElementById('size-error').style.display = 'block'
-      document.querySelector('.size-grid').scrollIntoView({ behavior: 'smooth', block: 'center' })
+      document.getElementById('size-err').style.display = 'block'
+      document.querySelector('.size-row').scrollIntoView({ behavior: 'smooth', block: 'center' })
       return false
     }
     const name  = document.getElementById('name').value.trim()
     const phone = document.getElementById('phone').value.trim()
     const email = document.getElementById('email').value.trim()
-    if (!name || !phone || !email) {
-      alert('Please fill in your name, phone, and email.')
-      return false
-    }
-    if (!/^\d{10}$/.test(phone)) {
-      alert('Please enter a valid 10-digit phone number.')
-      return false
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      alert('Please enter a valid email address.')
-      return false
-    }
+    if (!name)  { alert('Please enter your name.'); return false }
+    if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit phone number.'); return false }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return false }
+
     const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
     if (isShip) {
       const address = document.getElementById('address').value.trim()
       const city    = document.getElementById('city').value.trim()
       const pincode = document.getElementById('pincode').value.trim()
-      if (!address || !city || !pincode) {
-        alert('Please fill in your full shipping address.')
-        return false
-      }
-      if (!/^\d{6}$/.test(pincode)) {
-        alert('Please enter a valid 6-digit pincode.')
-        return false
-      }
+      if (!address || !city) { alert('Please fill in your shipping address.'); return false }
+      if (!/^\d{6}$/.test(pincode)) { alert('Please enter a valid 6-digit pincode.'); return false }
     }
     return true
   }
 
-  // ── Checkout ─────────────────────────────────────────────────────────────
+  // ── Checkout ─────────────────────────────────────────────────────────────────
   async function startCheckout() {
     if (!validate()) return
-
     const btn = document.getElementById('pay-btn')
     btn.disabled = true
-    btn.textContent = 'Creating order…'
+    btn.textContent = 'Preparing order…'
 
     const delivery = document.querySelector('input[name="delivery"]:checked').value
     const body = {
@@ -714,89 +745,77 @@
       phone:         '+91' + document.getElementById('phone').value.trim(),
       email:         document.getElementById('email').value.trim(),
       size:          selectedSize,
+      quantity:      qty,
       delivery_type: delivery,
       address:       delivery === 'ship' ? document.getElementById('address').value.trim() : '',
       city:          delivery === 'ship' ? document.getElementById('city').value.trim()    : '',
       pincode:       delivery === 'ship' ? document.getElementById('pincode').value.trim() : '',
     }
 
-    let orderData
+    let od
     try {
-      const res = await fetch(API_BASE + '/api/shop/orders', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(body),
+      const r = await fetch(API + '/api/shop/orders', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
       })
-      orderData = await res.json()
-      if (!res.ok) throw new Error(orderData.error || 'Order creation failed')
+      od = await r.json()
+      if (!r.ok) throw new Error(od.error || 'Could not create order')
     } catch (err) {
-      alert('Could not create order: ' + err.message)
+      alert(err.message)
       btn.disabled = false
-      btn.innerHTML = '🔒 Pay Securely via Razorpay'
+      btn.textContent = 'Pay Securely · Razorpay'
       return
     }
 
-    const options = {
-      key:         orderData.key_id,
-      amount:      orderData.amount,
+    const rzp = new Razorpay({
+      key:         od.key_id,
+      amount:      od.amount,
       currency:    'INR',
       name:        'Madurai Reading Club',
-      description: 'MRC T-Shirt — Size ' + selectedSize,
+      description: `MRC T-Shirt · Size ${selectedSize} · Qty ${qty}`,
       image:       'https://maduraireadingclub.com/images/Logo Circular.png',
-      order_id:    orderData.order_id,
-      prefill: {
-        name:    body.name,
-        email:   body.email,
-        contact: body.phone,
-      },
-      theme: { color: '#C62828' },
-      handler: async function(response) {
+      order_id:    od.order_id,
+      prefill:     { name: body.name, email: body.email, contact: body.phone },
+      theme:       { color: '#C4A44A' },
+      handler: async function(resp) {
         btn.textContent = 'Confirming…'
         try {
-          const vRes = await fetch(API_BASE + '/api/shop/verify', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({
-              razorpay_order_id:   response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature:  response.razorpay_signature,
-            }),
+          const vr = await fetch(API + '/api/shop/verify', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id:   resp.razorpay_order_id,
+              razorpay_payment_id: resp.razorpay_payment_id,
+              razorpay_signature:  resp.razorpay_signature,
+            })
           })
-          if (!vRes.ok) throw new Error('Verification failed')
-        } catch (err) {
-          alert('Payment received but confirmation failed. Please contact us with your payment ID: ' + response.razorpay_payment_id)
+          if (!vr.ok) throw new Error()
+        } catch {
+          alert(`Payment received but confirmation failed. Please save your payment ID: ${resp.razorpay_payment_id}`)
           btn.disabled = false
-          btn.innerHTML = '🔒 Pay Securely via Razorpay'
+          btn.textContent = 'Pay Securely · Razorpay'
           return
         }
-        showSuccess(body, orderData, response.razorpay_order_id)
+        showSuccess(body, od)
       },
-      modal: {
-        ondismiss: function() {
-          btn.disabled = false
-          btn.innerHTML = '🔒 Pay Securely via Razorpay'
-        }
-      }
-    }
-
-    const rzp = new Razorpay(options)
+      modal: { ondismiss: () => { btn.disabled = false; btn.textContent = 'Pay Securely · Razorpay' } }
+    })
     rzp.open()
   }
 
-  function showSuccess(body, orderData, orderId) {
-    document.getElementById('shop-page').style.display = 'none'
-    const sc = document.getElementById('success-screen')
+  function showSuccess(body, od) {
+    document.getElementById('shop-hero').style.display = 'none'
+    document.getElementById('shop-main').style.display = 'none'
+    const sc = document.getElementById('success')
     sc.classList.add('visible')
     document.getElementById('s-name').textContent     = body.name
-    document.getElementById('s-size').textContent     = selectedSize
+    document.getElementById('s-size').textContent     = `${selectedSize}`
+    document.getElementById('s-qty').textContent      = `${qty}`
     document.getElementById('s-delivery').textContent = body.delivery_type === 'ship'
       ? `Shipping to ${body.city} — ${body.pincode}`
       : 'Collect at next book discussion'
-    document.getElementById('s-amount').textContent   = '₹' + (orderData.amount / 100)
-    document.getElementById('s-orderid').textContent  = orderId
+    document.getElementById('s-amount').textContent   = '₹' + (od.amount / 100)
+    document.getElementById('s-orderid').textContent  = `Order ref: ${od.order_id}`
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 </script>
-
 </body>
 </html>
