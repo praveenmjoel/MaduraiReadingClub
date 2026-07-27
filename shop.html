@@ -507,7 +507,7 @@
 
     <!-- Price -->
     <div class="price-block">
-      <div class="price-main" id="price-display">₹1</div>
+      <div class="price-main" id="price-display">₹499</div>
       <div class="price-sub" id="price-sub">per shirt · collect for free, or ship anywhere in India</div>
     </div>
 
@@ -552,9 +552,9 @@
           <input type="radio" name="delivery" value="ship" onchange="updateTotals()" />
           <div class="delivery-opt-body">
             <div class="delivery-opt-title">Ship to my address</div>
-            <div class="delivery-opt-sub">Within India only · <span id="ship-note">₹1 for up to 5 shirts</span></div>
+            <div class="delivery-opt-sub">Within India only · <span id="ship-note">₹80 for up to 5 shirts</span></div>
           </div>
-          <span class="delivery-tag tag-ship" id="ship-tag">+₹1</span>
+          <span class="delivery-tag tag-ship" id="ship-tag">+₹80</span>
         </label>
       </div>
 
@@ -600,9 +600,9 @@
 
     <!-- Order total -->
     <div class="total-card">
-      <div class="total-row"><span>Shirt × <span id="t-qty">1</span></span><span id="t-shirt">₹1</span></div>
-      <div class="total-row" id="t-ship-row" style="display:none;"><span>Shipping</span><span id="t-ship">₹1</span></div>
-      <div class="total-row grand"><span>Total</span><span class="grand-amt" id="t-total">₹1</span></div>
+      <div class="total-row"><span>Shirt × <span id="t-qty">1</span></span><span id="t-shirt">₹499</span></div>
+      <div class="total-row" id="t-ship-row" style="display:none;"><span>Shipping</span><span id="t-ship">₹80</span></div>
+      <div class="total-row grand"><span>Total</span><span class="grand-amt" id="t-total">₹499</span></div>
     </div>
 
     <!-- Pay -->
@@ -800,6 +800,9 @@
     })
     rzp.open()
   }
+
+  // Initialise display on load
+  updateTotals()
 
   function showSuccess(body, od) {
     document.getElementById('shop-hero').style.display = 'none'
