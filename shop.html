@@ -353,6 +353,96 @@
     }
     .total-row.grand .grand-amt { color: var(--gold); font-size: 22px; }
 
+    /* Add to cart button */
+    .atc-btn {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--gold);
+      border-radius: 3px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0 20px;
+      height: 44px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .atc-btn:hover { background: var(--gold); color: var(--bgDeep); }
+
+    /* Cart item row */
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bgDeep);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 12px 16px;
+    }
+    .cart-size-badge {
+      background: var(--gold);
+      color: var(--bgDeep);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 2px;
+      min-width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+    }
+    .cart-qty-btn {
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: none;
+      color: var(--soft);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color .15s;
+    }
+    .cart-qty-btn:hover { color: var(--cream); }
+    .cart-qty-num {
+      width: 36px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--cream);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      line-height: 32px;
+      user-select: none;
+    }
+    .cart-item-price {
+      flex: 1;
+      text-align: right;
+      font-size: 14px;
+      color: var(--cream);
+    }
+    .cart-remove {
+      background: none;
+      border: none;
+      color: rgba(155,143,170,.4);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 0 0 4px;
+      line-height: 1;
+      transition: color .15s;
+    }
+    .cart-remove:hover { color: #E57373; }
+
     /* Pay button */
     .pay-btn {
       background: linear-gradient(135deg, #C4A44A, #A8893A);
@@ -507,14 +597,14 @@
 
     <!-- Price -->
     <div class="price-block">
-      <div class="price-main" id="price-display">₹499</div>
-      <div class="price-sub" id="price-sub">per shirt · collect for free, or ship anywhere in India</div>
+      <div class="price-main">₹499</div>
+      <div class="price-sub">per shirt · collect for free, or ship anywhere in India</div>
     </div>
 
-    <!-- Size -->
+    <!-- Add to cart section -->
     <div>
-      <div class="field-label">Size</div>
-      <div class="size-row">
+      <div class="field-label">Select Size &amp; Add to Cart</div>
+      <div class="size-row" id="size-row">
         <button class="size-btn" data-s="S"   onclick="pickSize('S')">S</button>
         <button class="size-btn" data-s="M"   onclick="pickSize('M')">M</button>
         <button class="size-btn" data-s="L"   onclick="pickSize('L')">L</button>
@@ -522,22 +612,32 @@
         <button class="size-btn" data-s="2XL" onclick="pickSize('2XL')">2XL</button>
       </div>
       <button class="size-guide-link" onclick="openModal()">View size guide →</button>
-      <div class="field-error" id="size-err">Please select a size.</div>
-    </div>
+      <div class="field-error" id="size-err">Please select a size first.</div>
 
-    <!-- Quantity -->
-    <div>
-      <div class="field-label">Quantity</div>
-      <div class="qty-stepper">
-        <button class="qty-btn" id="qty-minus" onclick="changeQty(-1)" disabled>−</button>
-        <span class="qty-num" id="qty-num">1</span>
-        <button class="qty-btn" id="qty-plus" onclick="changeQty(1)">+</button>
+      <!-- Qty + Add to cart (shown after size is selected) -->
+      <div id="add-to-cart-row" style="display:none;margin-top:16px;">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div class="qty-stepper">
+            <button class="qty-btn" id="qty-minus" onclick="changeQty(-1)" disabled>−</button>
+            <span class="qty-num" id="qty-num">1</span>
+            <button class="qty-btn" id="qty-plus" onclick="changeQty(1)">+</button>
+          </div>
+          <button class="atc-btn" id="atc-btn" onclick="addToCart()">Add to cart</button>
+        </div>
       </div>
-      <div class="qty-note" id="qty-note">Max 10 per order.</div>
     </div>
 
-    <!-- Delivery -->
-    <div>
+    <!-- Cart -->
+    <div id="cart-section">
+      <div class="field-label" style="margin-bottom:12px;">Your Cart</div>
+      <div id="cart-empty" style="border:1px dashed var(--border);border-radius:3px;padding:20px;text-align:center;color:var(--soft);font-size:13px;font-style:italic;">
+        No items yet — select a size above.
+      </div>
+      <div id="cart-items" style="display:none;flex-direction:column;gap:8px;"></div>
+    </div>
+
+    <!-- Delivery — hidden until cart has items -->
+    <div id="delivery-section" style="display:none;">
       <div class="field-label">Delivery</div>
       <div class="delivery-opts">
         <label class="delivery-opt">
@@ -576,8 +676,8 @@
       </div>
     </div>
 
-    <!-- Buyer details -->
-    <div>
+    <!-- Buyer details — hidden until cart has items -->
+    <div id="buyer-section" style="display:none;">
       <div class="field-label">Your Details</div>
       <div class="form-wrap">
         <div class="f-field">
@@ -598,18 +698,20 @@
       </div>
     </div>
 
-    <!-- Order total -->
-    <div class="total-card">
-      <div class="total-row"><span>Shirt × <span id="t-qty">1</span></span><span id="t-shirt">₹499</span></div>
+    <!-- Order total — hidden until cart has items -->
+    <div class="total-card" id="total-card" style="display:none;">
+      <div id="t-line-items"></div>
       <div class="total-row" id="t-ship-row" style="display:none;"><span>Shipping</span><span id="t-ship">₹80</span></div>
       <div class="total-row grand"><span>Total</span><span class="grand-amt" id="t-total">₹499</span></div>
     </div>
 
-    <!-- Pay -->
-    <button class="pay-btn" id="pay-btn" onclick="startCheckout()">
-      Pay Securely · Razorpay
-    </button>
-    <p class="pay-note">India only · No refunds on change of mind · Questions? WhatsApp us</p>
+    <!-- Pay — hidden until cart has items -->
+    <div id="pay-section" style="display:none;">
+      <button class="pay-btn" id="pay-btn" onclick="startCheckout()">
+        Pay Securely · Razorpay
+      </button>
+      <p class="pay-note">India only · No refunds on change of mind · Questions? WhatsApp us</p>
+    </div>
 
   </div>
 </main>
@@ -644,74 +746,155 @@
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-  const API = 'https://pages.maduraireadingclub.com'
-
-  // ── PRICING (test mode — change after testing) ──
-  const PRICE_PER = 499
+  const API        = 'https://pages.maduraireadingclub.com'
+  const PRICE_PER  = 499
   const SHIP_PER_5 = 80
 
+  // cart: { 'S': 2, 'L': 1, ... }
+  let cart         = {}
   let selectedSize = null
-  let qty = 1
+  let sizeQty      = 1
 
-  // ── Gallery ─────────────────────────────────────────────────────────────────
+  // ── Gallery ──────────────────────────────────────────────────────────────────
   function showView(v) {
     document.getElementById('img-front').classList.toggle('hidden', v !== 'front')
-    document.getElementById('img-back').classList.toggle('hidden', v !== 'back')
+    document.getElementById('img-back').classList.toggle('hidden',  v !== 'back')
     document.getElementById('th-f').classList.toggle('active', v === 'front')
-    document.getElementById('th-b').classList.toggle('active', v === 'back')
+    document.getElementById('th-b').classList.toggle('active',  v === 'back')
   }
 
-  // ── Size ────────────────────────────────────────────────────────────────────
+  // ── Size picker ──────────────────────────────────────────────────────────────
   function pickSize(s) {
     selectedSize = s
+    sizeQty = 1
+    document.getElementById('qty-num').textContent = 1
+    document.getElementById('qty-minus').disabled  = true
+    document.getElementById('qty-plus').disabled   = false
     document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('selected', b.dataset.s === s))
     document.getElementById('size-err').style.display = 'none'
+    document.getElementById('add-to-cart-row').style.display = 'block'
+    const existing = cart[s] || 0
+    document.getElementById('atc-btn').textContent = existing ? `Update (${s} \xd7${existing} in cart)` : 'Add to cart'
+  }
+
+  // ── Qty stepper (before adding to cart) ─────────────────────────────────────
+  function changeQty(d) {
+    const maxAllowed = 10 - totalCartQty() + (cart[selectedSize] || 0)
+    sizeQty = Math.max(1, Math.min(maxAllowed, sizeQty + d))
+    document.getElementById('qty-num').textContent = sizeQty
+    document.getElementById('qty-minus').disabled  = sizeQty <= 1
+    document.getElementById('qty-plus').disabled   = sizeQty >= maxAllowed
+  }
+
+  // ── Cart helpers ─────────────────────────────────────────────────────────────
+  function totalCartQty() {
+    return Object.values(cart).reduce((s, q) => s + q, 0)
+  }
+
+  function addToCart() {
+    if (!selectedSize) return
+    cart[selectedSize] = sizeQty
+    selectedSize = null
+    sizeQty = 1
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'))
+    document.getElementById('add-to-cart-row').style.display = 'none'
+    document.getElementById('qty-num').textContent = 1
+    document.getElementById('qty-minus').disabled  = true
+    renderCart()
     updateTotals()
   }
 
-  // ── Quantity ─────────────────────────────────────────────────────────────────
-  function changeQty(d) {
-    qty = Math.max(1, Math.min(10, qty + d))
-    document.getElementById('qty-num').textContent = qty
-    document.getElementById('qty-minus').disabled = qty <= 1
-    document.getElementById('qty-plus').disabled  = qty >= 10
+  function updateCartQty(size, d) {
+    const newQty = (cart[size] || 0) + d
+    if (newQty <= 0) {
+      delete cart[size]
+    } else if (totalCartQty() - (cart[size] || 0) + newQty <= 10) {
+      cart[size] = newQty
+    }
+    renderCart()
     updateTotals()
+  }
+
+  function removeFromCart(size) {
+    delete cart[size]
+    renderCart()
+    updateTotals()
+  }
+
+  function renderCart() {
+    const hasItems  = totalCartQty() > 0
+    document.getElementById('cart-empty').style.display    = hasItems ? 'none'  : 'block'
+    document.getElementById('cart-items').style.display    = hasItems ? 'flex'  : 'none'
+    document.getElementById('delivery-section').style.display = hasItems ? 'block' : 'none'
+    document.getElementById('buyer-section').style.display    = hasItems ? 'block' : 'none'
+    document.getElementById('total-card').style.display       = hasItems ? 'block' : 'none'
+    document.getElementById('pay-section').style.display      = hasItems ? 'block' : 'none'
+
+    const wrap = document.getElementById('cart-items')
+    wrap.innerHTML = ''
+    const SIZES = ['S', 'M', 'L', 'XL', '2XL']
+    SIZES.filter(s => cart[s]).forEach(size => {
+      const q   = cart[size]
+      const row = document.createElement('div')
+      row.className = 'cart-item'
+      row.innerHTML = `
+        <span class="cart-size-badge">${size}</span>
+        <div class="cart-item-qty">
+          <button class="cart-qty-btn" onclick="updateCartQty('${size}', -1)">−</button>
+          <span class="cart-qty-num">${q}</span>
+          <button class="cart-qty-btn" onclick="updateCartQty('${size}', 1)">+</button>
+        </div>
+        <span class="cart-item-price">₹${PRICE_PER * q}</span>
+        <button class="cart-remove" onclick="removeFromCart('${size}')" title="Remove">✕</button>
+      `
+      wrap.appendChild(row)
+    })
+
+    if (selectedSize) {
+      const existing = cart[selectedSize] || 0
+      document.getElementById('atc-btn').textContent = existing
+        ? `Update (${selectedSize} \xd7${existing} in cart)`
+        : 'Add to cart'
+    }
   }
 
   // ── Totals ───────────────────────────────────────────────────────────────────
   function updateTotals() {
-    const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
+    const isShip   = document.querySelector('input[name="delivery"]:checked').value === 'ship'
     document.getElementById('address-fields').classList.toggle('visible', isShip)
 
-    const shippingTiers = Math.ceil(qty / 5)
-    const shipAmt = isShip ? shippingTiers * SHIP_PER_5 : 0
-    const shirtAmt = PRICE_PER * qty
-    const total = shirtAmt + shipAmt
+    const totalQty  = totalCartQty()
+    const shirtAmt  = PRICE_PER * totalQty
+    const shipTiers = Math.ceil(totalQty / 5) || 1
+    const shipAmt   = isShip ? shipTiers * SHIP_PER_5 : 0
+    const total     = shirtAmt + shipAmt
 
-    document.getElementById('t-qty').textContent   = qty
-    document.getElementById('t-shirt').textContent = '₹' + shirtAmt
+    const SIZES = ['S', 'M', 'L', 'XL', '2XL']
+    document.getElementById('t-line-items').innerHTML = SIZES
+      .filter(s => cart[s])
+      .map(s => `<div class="total-row"><span>Size ${s} \xd7${cart[s]}</span><span>₹${PRICE_PER * cart[s]}</span></div>`)
+      .join('')
+
     document.getElementById('t-ship-row').style.display = isShip ? 'flex' : 'none'
     document.getElementById('t-ship').textContent  = '₹' + shipAmt
     document.getElementById('t-total').textContent = '₹' + total
 
-    // Update shipping badge on delivery option
-    document.getElementById('ship-tag').textContent = '+₹' + (shippingTiers * SHIP_PER_5)
-    document.getElementById('ship-note').textContent =
-      qty <= 5
-        ? `₹${SHIP_PER_5} for up to 5 shirts`
-        : `₹${shippingTiers * SHIP_PER_5} for ${qty} shirts (₹${SHIP_PER_5} per 5)`
+    document.getElementById('ship-tag').textContent  = '+₹' + (shipTiers * SHIP_PER_5)
+    document.getElementById('ship-note').textContent = totalQty <= 5
+      ? `₹${SHIP_PER_5} for up to 5 shirts`
+      : `₹${shipTiers * SHIP_PER_5} for ${totalQty} shirts (₹${SHIP_PER_5} per 5)`
   }
 
   // ── Modal ────────────────────────────────────────────────────────────────────
-  function openModal()  { document.getElementById('size-modal').classList.add('open'); document.body.style.overflow='hidden' }
-  function closeModal() { document.getElementById('size-modal').classList.remove('open'); document.body.style.overflow='' }
+  function openModal()   { document.getElementById('size-modal').classList.add('open');    document.body.style.overflow = 'hidden' }
+  function closeModal()  { document.getElementById('size-modal').classList.remove('open'); document.body.style.overflow = '' }
   function maybeClose(e) { if (e.target === document.getElementById('size-modal')) closeModal() }
 
   // ── Validation ───────────────────────────────────────────────────────────────
   function validate() {
-    if (!selectedSize) {
+    if (totalCartQty() === 0) {
       document.getElementById('size-err').style.display = 'block'
-      document.querySelector('.size-row').scrollIntoView({ behavior: 'smooth', block: 'center' })
+      document.getElementById('cart-section').scrollIntoView({ behavior: 'smooth', block: 'center' })
       return false
     }
     const name  = document.getElementById('name').value.trim()
@@ -720,14 +903,14 @@
     if (!name)  { alert('Please enter your name.'); return false }
     if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit phone number.'); return false }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return false }
-
     const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
     if (isShip) {
-      const address = document.getElementById('address').value.trim()
-      const city    = document.getElementById('city').value.trim()
-      const pincode = document.getElementById('pincode').value.trim()
-      if (!address || !city) { alert('Please fill in your shipping address.'); return false }
-      if (!/^\d{6}$/.test(pincode)) { alert('Please enter a valid 6-digit pincode.'); return false }
+      if (!document.getElementById('address').value.trim() || !document.getElementById('city').value.trim()) {
+        alert('Please fill in your shipping address.'); return false
+      }
+      if (!/^\d{6}$/.test(document.getElementById('pincode').value.trim())) {
+        alert('Please enter a valid 6-digit pincode.'); return false
+      }
     }
     return true
   }
@@ -740,12 +923,12 @@
     btn.textContent = 'Preparing order…'
 
     const delivery = document.querySelector('input[name="delivery"]:checked').value
+    const items = Object.entries(cart).map(([size, qty]) => ({ size, qty }))
     const body = {
       name:          document.getElementById('name').value.trim(),
       phone:         '+91' + document.getElementById('phone').value.trim(),
       email:         document.getElementById('email').value.trim(),
-      size:          selectedSize,
-      quantity:      qty,
+      items,
       delivery_type: delivery,
       address:       delivery === 'ship' ? document.getElementById('address').value.trim() : '',
       city:          delivery === 'ship' ? document.getElementById('city').value.trim()    : '',
@@ -762,16 +945,17 @@
     } catch (err) {
       alert(err.message)
       btn.disabled = false
-      btn.textContent = 'Pay Securely · Razorpay'
+      btn.textContent = 'Pay Securely \xb7 Razorpay'
       return
     }
 
+    const desc = items.map(i => `${i.size}\xd7${i.qty}`).join(', ')
     const rzp = new Razorpay({
       key:         od.key_id,
       amount:      od.amount,
       currency:    'INR',
       name:        'Madurai Reading Club',
-      description: `MRC T-Shirt · Size ${selectedSize} · Qty ${qty}`,
+      description: `MRC T-Shirt — ${desc}`,
       image:       'https://maduraireadingclub.com/images/Logo Circular.png',
       order_id:    od.order_id,
       prefill:     { name: body.name, email: body.email, contact: body.phone },
@@ -789,29 +973,27 @@
           })
           if (!vr.ok) throw new Error()
         } catch {
-          alert(`Payment received but confirmation failed. Please save your payment ID: ${resp.razorpay_payment_id}`)
+          alert(`Payment received but confirmation failed. Save your payment ID: ${resp.razorpay_payment_id}`)
           btn.disabled = false
-          btn.textContent = 'Pay Securely · Razorpay'
+          btn.textContent = 'Pay Securely \xb7 Razorpay'
           return
         }
         showSuccess(body, od)
       },
-      modal: { ondismiss: () => { btn.disabled = false; btn.textContent = 'Pay Securely · Razorpay' } }
+      modal: { ondismiss: () => { btn.disabled = false; btn.textContent = 'Pay Securely \xb7 Razorpay' } }
     })
     rzp.open()
   }
-
-  // Initialise display on load
-  updateTotals()
 
   function showSuccess(body, od) {
     document.getElementById('shop-hero').style.display = 'none'
     document.getElementById('shop-main').style.display = 'none'
     const sc = document.getElementById('success')
     sc.classList.add('visible')
+    const itemDesc = body.items.map(i => `${i.size} \xd7 ${i.qty}`).join(', ')
     document.getElementById('s-name').textContent     = body.name
-    document.getElementById('s-size').textContent     = `${selectedSize}`
-    document.getElementById('s-qty').textContent      = `${qty}`
+    document.getElementById('s-size').textContent     = itemDesc
+    document.getElementById('s-qty').textContent      = totalCartQty()
     document.getElementById('s-delivery').textContent = body.delivery_type === 'ship'
       ? `Shipping to ${body.city} — ${body.pincode}`
       : 'Collect at next book discussion'
@@ -819,6 +1001,9 @@
     document.getElementById('s-orderid').textContent  = `Order ref: ${od.order_id}`
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // Initialise shipping note on load
+  updateTotals()
 </script>
 </body>
 </html>
