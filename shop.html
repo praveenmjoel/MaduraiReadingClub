@@ -489,8 +489,8 @@
     </div>
 
     <div class="price-row">
-      <span class="price">₹499</span>
-      <span class="price-note">+ ₹80 shipping (or collect free)</span>
+      <span class="price">₹1</span>
+      <span class="price-note">+ ₹1 shipping (or collect free) — TEST MODE</span>
     </div>
 
     <!-- Size picker -->
@@ -570,9 +570,9 @@
 
     <!-- Order total -->
     <div class="order-total">
-      <div class="total-row"><span>T-Shirt</span><span>₹499</span></div>
-      <div class="total-row" id="shipping-row" style="display:none;"><span>Shipping</span><span>₹80</span></div>
-      <div class="total-row grand"><span>Total</span><span id="total-display">₹499</span></div>
+      <div class="total-row"><span>T-Shirt</span><span>₹1</span></div>
+      <div class="total-row" id="shipping-row" style="display:none;"><span>Shipping</span><span>₹1</span></div>
+      <div class="total-row grand"><span>Total</span><span id="total-display">₹1</span></div>
     </div>
 
     <!-- Pay button -->
@@ -646,7 +646,7 @@
     const isShip = document.querySelector('input[name="delivery"]:checked').value === 'ship'
     document.getElementById('address-fields').classList.toggle('visible', isShip)
     document.getElementById('shipping-row').style.display = isShip ? 'flex' : 'none'
-    document.getElementById('total-display').textContent = isShip ? '₹579' : '₹499'
+    document.getElementById('total-display').textContent = isShip ? '₹2' : '₹1'
   }
 
   // ── Size chart modal ──────────────────────────────────────────────────────
