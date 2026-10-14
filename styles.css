@@ -2566,18 +2566,32 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
 .nav.scrolled .bat { background: #2A0D3A; filter: drop-shadow(0 0 3px rgba(255,122,26,.6)); }
 
 @keyframes batFly {
-  0%   { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(var(--sc)); }
+  0%   { opacity: 0; transform: translate(calc(var(--sx) * var(--k, 1)), calc(var(--sy) * var(--k, 1))) scale(var(--sc)); }
   6%   { opacity: .95; }
-  30%  { transform: translate(calc(var(--sx) * .62), calc(var(--sy) * .25)) scale(var(--sc)); }
-  52%  { transform: translate(calc(var(--sx) * .3),  calc(var(--sy) * .5))  scale(var(--sc)); }
-  70%  { opacity: .95; transform: translate(calc(var(--sx) * .08), calc(var(--sy) * .1)) scale(calc(var(--sc) * .85)); }
+  30%  { transform: translate(calc(calc(var(--sx) * var(--k, 1)) * .62), calc(calc(var(--sy) * var(--k, 1)) * .25)) scale(var(--sc)); }
+  52%  { transform: translate(calc(calc(var(--sx) * var(--k, 1)) * .3),  calc(calc(var(--sy) * var(--k, 1)) * .5))  scale(var(--sc)); }
+  70%  { opacity: .95; transform: translate(calc(calc(var(--sx) * var(--k, 1)) * .08), calc(calc(var(--sy) * var(--k, 1)) * .1)) scale(calc(var(--sc) * .85)); }
   80%  { opacity: 0; transform: translate(0, 4px) scale(calc(var(--sc) * .4)); }
   100% { opacity: 0; transform: translate(0, 4px) scale(calc(var(--sc) * .4)); }
 }
 @keyframes batFlap { from { scale: 1 1; } to { scale: 1 .6; } }
 
-@media (max-width: 768px) { .bats { display: none; } }
+/* Mobile: the menu item hides; a pill beside the hamburger takes over */
+.nav-spook-m { display: none; }
+@media (max-width: 768px) {
+  .nav-spook { display: none; }
+  .nav-spook-m { display: block; position: relative; margin-left: auto; margin-right: .6rem; }
+  .nav-link-spook-m {
+    display: inline-block; padding: .5rem .85rem; border: 1px solid rgba(255,150,50,.6); border-radius: 999px;
+    font-size: .62rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #FFA94D;
+    animation: spookGlow 3.4s ease-in-out infinite, spookPill 3.4s ease-in-out infinite;
+  }
+  .nav.scrolled .nav-link-spook-m { color: #C2570C; border-color: rgba(194,87,12,.55); animation-name: spookGlowLight, spookPill; }
+  .nav-spook-m .bats { --k: .3; }
+}
+@keyframes spookPill { 0%,100% { box-shadow: 0 0 6px rgba(255,122,26,.25); } 50% { box-shadow: 0 0 16px rgba(255,122,26,.55); } }
 @media (prefers-reduced-motion: reduce) {
   .bats { display: none; }
+  .nav-link-spook-m { animation: none; box-shadow: 0 0 10px rgba(255,122,26,.4); text-shadow: 0 0 8px rgba(255,122,26,.6); }
   .nav-link-spook { animation: none; text-shadow: 0 0 10px rgba(255,122,26,.7); }
 }
