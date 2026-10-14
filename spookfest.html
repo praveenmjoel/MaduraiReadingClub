@@ -26,6 +26,69 @@
 </head>
 <body class="sf">
 
+  <!-- ── Audio curtain ── -->
+  <div id="sf-curtain" onclick="sfEnter()" aria-label="Enter Spookfest">
+    <div class="sf-curtain-inner">
+      <div class="sf-curtain-candle">🕯️</div>
+      <p class="sf-curtain-text">Enter if you dare</p>
+    </div>
+  </div>
+
+  <!-- Hidden YouTube player (audio only) -->
+  <div id="sf-yt" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
+
+  <style>
+    #sf-curtain {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: opacity .8s ease;
+    }
+    #sf-curtain.sf-fade { opacity: 0; pointer-events: none; }
+    .sf-curtain-inner { text-align: center; user-select: none; }
+    .sf-curtain-candle { font-size: 64px; animation: sfFlicker 2s infinite alternate; }
+    @keyframes sfFlicker {
+      0%   { opacity: 1;    text-shadow: 0 0 20px #ff8c00, 0 0 40px #ff4500; }
+      40%  { opacity: .85;  text-shadow: 0 0 10px #ff6600; }
+      70%  { opacity: .95;  text-shadow: 0 0 30px #ffaa00, 0 0 60px #ff4500; }
+      100% { opacity: .8;   text-shadow: 0 0 15px #ff6600; }
+    }
+    .sf-curtain-text {
+      margin-top: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 18px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c8a96e;
+      opacity: .7;
+    }
+  </style>
+
+  <script>
+    var sfPlayer = null;
+
+    // Load YouTube IFrame API
+    var sfTag = document.createElement('script');
+    sfTag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(sfTag);
+
+    function onYouTubeIframeAPIReady() {
+      sfPlayer = new YT.Player('sf-yt', {
+        videoId: 'NeCjuoqOpew',
+        playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: 'NeCjuoqOpew' },
+        events: { onReady: function() {} }
+      });
+    }
+
+    function sfEnter() {
+      var curtain = document.getElementById('sf-curtain');
+      curtain.classList.add('sf-fade');
+      setTimeout(function() { curtain.style.display = 'none'; }, 900);
+      if (sfPlayer && sfPlayer.playVideo) sfPlayer.playVideo();
+    }
+  </script>
+
   <!-- Shared SVG symbols (decorative) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
