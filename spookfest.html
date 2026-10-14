@@ -26,44 +26,25 @@
 </head>
 <body class="sf">
 
-  <!-- ── Audio curtain ── -->
-  <div id="sf-curtain" onclick="sfEnter()" aria-label="Enter Spookfest">
+  <!-- ── Entrance curtain (the click also unlocks the background music) ── -->
+  <div id="sf-curtain" role="dialog" aria-modal="true" aria-labelledby="sf-curtain-title">
     <div class="sf-curtain-inner">
-      <div class="sf-curtain-candle">🕯️</div>
-      <p class="sf-curtain-text">Enter if you dare</p>
+      <p class="sf-eyebrow">Madurai Reading Club presents</p>
+      <svg class="sf-curtain-lamp" viewBox="0 0 220 300" fill="none" aria-hidden="true">
+        <path d="M70 70 L150 70 L176 128 L44 128Z" fill="#3B1040" stroke="#C4A44A" stroke-opacity=".55"/>
+        <path d="M44 128 L176 128 L172 134 L48 134Z" fill="#E8A857"/>
+        <path d="M110 70 L110 40 L168 18" stroke="#8C7436" stroke-width="3" stroke-linecap="round"/>
+        <path d="M110 134 L110 280" stroke="#6E5A2A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M74 282 Q110 268 146 282" stroke="#8C7436" stroke-width="3" fill="#2A0D3A" stroke-linecap="round"/>
+      </svg>
+      <h2 class="sf-curtain-title" id="sf-curtain-title">Spookfest <span>2026</span></h2>
+      <p class="sf-curtain-sub">Best read after dark, with the sound on.</p>
+      <button type="button" class="sf-door sf-curtain-btn" id="sfEnterBtn" onclick="sfEnter()">Light the lamp</button>
     </div>
   </div>
 
   <!-- Hidden YouTube player (audio only) -->
   <div id="sf-yt" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
-
-  <style>
-    #sf-curtain {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #000;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: opacity .8s ease;
-    }
-    #sf-curtain.sf-fade { opacity: 0; pointer-events: none; }
-    .sf-curtain-inner { text-align: center; user-select: none; }
-    .sf-curtain-candle { font-size: 64px; animation: sfFlicker 2s infinite alternate; }
-    @keyframes sfFlicker {
-      0%   { opacity: 1;    text-shadow: 0 0 20px #ff8c00, 0 0 40px #ff4500; }
-      40%  { opacity: .85;  text-shadow: 0 0 10px #ff6600; }
-      70%  { opacity: .95;  text-shadow: 0 0 30px #ffaa00, 0 0 60px #ff4500; }
-      100% { opacity: .8;   text-shadow: 0 0 15px #ff6600; }
-    }
-    .sf-curtain-text {
-      margin-top: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 18px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #c8a96e;
-      opacity: .7;
-    }
-  </style>
 
   <script>
     var sfPlayer = null;
@@ -72,6 +53,8 @@
     var sfTag = document.createElement('script');
     sfTag.src = 'https://www.youtube.com/iframe_api';
     document.head.appendChild(sfTag);
+
+    window.addEventListener('DOMContentLoaded', function () { var b = document.getElementById('sfEnterBtn'); if (b) b.focus(); });
 
     function onYouTubeIframeAPIReady() {
       sfPlayer = new YT.Player('sf-yt', {
@@ -84,7 +67,7 @@
     function sfEnter() {
       var curtain = document.getElementById('sf-curtain');
       curtain.classList.add('sf-fade');
-      setTimeout(function() { curtain.style.display = 'none'; }, 900);
+      setTimeout(function() { curtain.style.display = 'none'; var d = document.getElementById('sfDoor'); if (d) d.focus({ preventScroll: true }); }, 900);
       if (sfPlayer && sfPlayer.playVideo) sfPlayer.playVideo();
     }
   </script>
