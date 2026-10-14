@@ -2534,3 +2534,50 @@ a.contact-value:hover { color: var(--clr-purple-mid); }
     filter: none;
   }
 }
+
+/* ─── SPOOKFEST NAV: halloween glow + bats flying to the link ── */
+.nav-link-spook {
+  color: #FFA94D !important;
+  font-weight: 500;
+  animation: spookGlow 3.4s ease-in-out infinite;
+}
+.nav-link-spook::after { background: #FF7A1A; }
+.nav.scrolled .nav-link-spook { color: #C2570C !important; animation-name: spookGlowLight; }
+
+@keyframes spookGlow {
+  0%, 100% { text-shadow: 0 0 6px rgba(255,122,26,.55), 0 0 14px rgba(255,122,26,.3); }
+  50%      { text-shadow: 0 0 10px rgba(255,150,50,.95), 0 0 26px rgba(255,100,10,.6), 0 0 44px rgba(150,60,200,.45); }
+}
+@keyframes spookGlowLight {
+  0%, 100% { text-shadow: 0 0 4px rgba(255,122,26,.3); }
+  50%      { text-shadow: 0 0 10px rgba(255,122,26,.65), 0 0 18px rgba(255,122,26,.3); }
+}
+
+.nav-spook { position: relative; }
+.bats { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; z-index: 5; }
+.bat {
+  --bat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'%3E%3Cpath d='M12 3 13.2 1.2 14 3.4Q17 2.4 20 3 23 3.6 24 6 21.5 5 19.8 6.2 18.6 5.2 17 6.2 15 7.2 14 9L12 11 10 9Q9 7.2 7 6.2 5.4 5.2 4.2 6.2 2.5 5 0 6 1 3.6 4 3 7 2.4 10 3.4L10.8 1.2Z'/%3E%3C/svg%3E");
+  position: absolute; left: -17px; top: -9px; width: 34px; height: 17px; opacity: 0;
+  background: #FFB866;
+  -webkit-mask: var(--bat) center / contain no-repeat; mask: var(--bat) center / contain no-repeat;
+  filter: drop-shadow(0 0 4px rgba(255,122,26,.9));
+  animation: batFly 9s cubic-bezier(.45,.05,.35,1) var(--d) infinite, batFlap .22s ease-in-out var(--d) infinite alternate;
+}
+.nav.scrolled .bat { background: #2A0D3A; filter: drop-shadow(0 0 3px rgba(255,122,26,.6)); }
+
+@keyframes batFly {
+  0%   { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(var(--sc)); }
+  6%   { opacity: .95; }
+  30%  { transform: translate(calc(var(--sx) * .62), calc(var(--sy) * .25)) scale(var(--sc)); }
+  52%  { transform: translate(calc(var(--sx) * .3),  calc(var(--sy) * .5))  scale(var(--sc)); }
+  70%  { opacity: .95; transform: translate(calc(var(--sx) * .08), calc(var(--sy) * .1)) scale(calc(var(--sc) * .85)); }
+  80%  { opacity: 0; transform: translate(0, 4px) scale(calc(var(--sc) * .4)); }
+  100% { opacity: 0; transform: translate(0, 4px) scale(calc(var(--sc) * .4)); }
+}
+@keyframes batFlap { from { scale: 1 1; } to { scale: 1 .6; } }
+
+@media (max-width: 768px) { .bats { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .bats { display: none; }
+  .nav-link-spook { animation: none; text-shadow: 0 0 10px rgba(255,122,26,.7); }
+}
